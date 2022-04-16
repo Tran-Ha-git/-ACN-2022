@@ -12,6 +12,14 @@
     <h3>STT</h3>
     <h2>${stt}</h2>
     <h3>Name</h3>
-    <h2>${name}</h2>
+    <h2>${name}</h2> <br>
+    <h2><%= request.getContextPath() %></h2> <br>
+    <h2><%= request.getQueryString() %></h2> <br>
+    <h2><%= request.getRequestURI() %></h2> <br>
+    <h2><%= request.getServletPath() %></h2> <br>
+     <h2><%= request.getHeaderNames() %></h2> <br>
+    
+    <%= request.getPathInfo() %>
+    
 </body>
 </html>
