@@ -28,7 +28,7 @@
 
 .heading-container{
     background-size: 1920px 980px;
-    background-image: url(./../images/bg-search.png);
+    background-image: url('./../../images/bg-search.png');
     background-size: cover;
     background-repeat: no-repeat;
 
