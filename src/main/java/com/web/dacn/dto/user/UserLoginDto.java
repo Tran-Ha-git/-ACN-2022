@@ -1,4 +1,4 @@
-package com.web.dacn.dto;
+package com.web.dacn.dto.user;
 
 import javax.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;

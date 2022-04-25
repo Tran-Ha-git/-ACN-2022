@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.web.dacn.dto.UserDto;
+import com.web.dacn.dto.user.UserDto;
 import com.web.dacn.entity.user.User;
 import com.web.dacn.repository.UserRepository;
 import com.web.dacn.service.demo.IDemoService;

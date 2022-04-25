@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -65,4 +66,11 @@ public class Quote {
             inverseJoinColumns = @JoinColumn(name = "category_id")
             )
 	private Set<QuoteCategory> quoteCategories = new HashSet<>();
+	
+	
+	@OneToMany(mappedBy = "quote", cascade = CascadeType.ALL)
+	private Set<ReviewQuote> reviewQuotes = new HashSet<>();
+	
+	@OneToMany(mappedBy = "quote", cascade = CascadeType.ALL)
+	private Set<CommentQuote> commentQuotes = new HashSet<>();
 }

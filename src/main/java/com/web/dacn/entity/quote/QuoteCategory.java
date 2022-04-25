@@ -1,6 +1,5 @@
 package com.web.dacn.entity.quote;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -36,7 +35,7 @@ public class QuoteCategory {
 	private String metaDescription;
 	@ColumnDefault(value="1")
 	private Boolean status;
-	@ManyToOne(targetEntity = QuoteCategory.class, cascade = CascadeType.ALL)
+	@ManyToOne(targetEntity = QuoteCategory.class)
 	@JoinColumn(name="parent_id")
 	@ColumnDefault(value = "1")
 	private QuoteCategory quoteCategory;

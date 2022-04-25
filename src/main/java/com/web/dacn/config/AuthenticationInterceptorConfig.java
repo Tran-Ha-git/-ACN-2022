@@ -17,9 +17,9 @@ public class AuthenticationInterceptorConfig implements WebMvcConfigurer{
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(siteAuthenticationInterceptor)
-				.addPathPatterns("/**")
-				.excludePathPatterns("/auth/login", "/static/**", "/css/**", "/js/**","/assets/**");		
+//		registry.addInterceptor(siteAuthenticationInterceptor)
+//				.addPathPatterns("/**")
+//				.excludePathPatterns("/auth/login", "/static/**", "/css/**", "/js/**","/assets/**");		
 	}
 	
 }

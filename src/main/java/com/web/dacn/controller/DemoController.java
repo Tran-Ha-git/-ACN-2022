@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.web.dacn.dto.UserDto;
+import com.web.dacn.dto.user.UserDto;
 import com.web.dacn.entity.user.User;
 import com.web.dacn.service.demo.IDemoService;
 

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.web.dacn.dto.UserLoginDto;
+import com.web.dacn.dto.user.UserLoginDto;
 import com.web.dacn.entity.user.User;
 import com.web.dacn.service.user.UserService;
 
@@ -49,11 +49,11 @@ public class AuthController {
 			return new ModelAndView("authPage", model);
 		}
 		session.setAttribute("user", user);
-		Object redirectUri= session.getAttribute("redirect-uri");
-		if(redirectUri!=null) {
-			session.removeAttribute("redirect-uri");
-			return new ModelAndView("redirect:"+redirectUri);
-		}
+//		Object redirectUri= session.getAttribute("redirect-uri");
+//		if(redirectUri!=null) {
+//			session.removeAttribute("redirect-uri");
+//			return new ModelAndView("redirect:"+redirectUri);
+//		}
 		return new ModelAndView("redirect:/");
 	}
 	

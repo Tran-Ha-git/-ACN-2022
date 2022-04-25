@@ -5,9 +5,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.web.dacn.entity.quote.Quote;
+import com.web.dacn.entity.quote.QuoteCategory;
 
 @Repository
-public interface QuoteRepository extends JpaRepository<Quote, Long>{
-	Page<Quote> findByContentContaining(String content, Pageable pageable);
+public interface QuoteCategoryRepository extends JpaRepository<QuoteCategory, Long> {
+	Page<QuoteCategory> findByNameContaining(String name, Pageable pageable);
 }
