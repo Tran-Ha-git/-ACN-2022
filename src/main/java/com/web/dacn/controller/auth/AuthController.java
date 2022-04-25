@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.web.dacn.dto.UserLoginDto;
-import com.web.dacn.entity.User;
+import com.web.dacn.entity.user.User;
+import com.web.dacn.service.user.UserService;
 
 
 
@@ -23,13 +24,16 @@ import com.web.dacn.entity.User;
 public class AuthController {
 	
 	@Autowired
+	private UserService userService;
+	
+	@Autowired
 	private HttpSession session;
 	
 	@GetMapping("login")
 	public ModelAndView login(ModelMap model) {
 		UserLoginDto user = new UserLoginDto();
 		model.addAttribute("user", user);
-		return new ModelAndView("auth/login", model);
+		return new ModelAndView("authPage", model);
 	}
 	
 	@PostMapping("login")
@@ -37,20 +41,19 @@ public class AuthController {
 			@Valid @ModelAttribute("user") UserLoginDto userLoginDto,
 			BindingResult result) {
 		if (result.hasErrors()) {
-			return new ModelAndView("auth/login");
+			return new ModelAndView("authPage");
 		}
-		User user = new User();
-//		if(user==null) {
-//			model.addAttribute("error", "Invalid username or email");
-//			return new ModelAndView("auth/login", model);
-//		}
+		User user = userService.login(userLoginDto.getUsername(), userLoginDto.getPassword());
+		if(user==null) {
+			model.addAttribute("error", "Invalid username or email");
+			return new ModelAndView("authPage", model);
+		}
 		session.setAttribute("user", user);
 		Object redirectUri= session.getAttribute("redirect-uri");
 		if(redirectUri!=null) {
 			session.removeAttribute("redirect-uri");
 			return new ModelAndView("redirect:"+redirectUri);
 		}
-		
 		return new ModelAndView("redirect:/");
 	}
 	

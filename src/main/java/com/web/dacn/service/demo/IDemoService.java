@@ -1,9 +1,9 @@
-package com.web.dacn.service;
+package com.web.dacn.service.demo;
 
 import java.util.Optional;
 
 import com.web.dacn.dto.UserDto;
-import com.web.dacn.entity.User;
+import com.web.dacn.entity.user.User;
 
 public interface IDemoService {
 	UserDto getDemo();

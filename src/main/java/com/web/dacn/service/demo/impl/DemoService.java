@@ -1,4 +1,4 @@
-package com.web.dacn.service.impl;
+package com.web.dacn.service.demo.impl;
 
 import java.util.Optional;
 
@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.web.dacn.dto.UserDto;
-import com.web.dacn.entity.User;
+import com.web.dacn.entity.user.User;
 import com.web.dacn.repository.UserRepository;
-import com.web.dacn.service.IDemoService;
+import com.web.dacn.service.demo.IDemoService;
 
 @Service
 public class DemoService implements IDemoService{
@@ -21,7 +21,7 @@ public class DemoService implements IDemoService{
 				
 		UserDto dto = new UserDto();
         if(user!=null) {
-            dto.setUname(user.getUname());
+            dto.setUsername(user.getUsername());
             return dto;
         }
 		return null;
