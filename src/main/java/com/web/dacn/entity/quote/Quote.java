@@ -93,7 +93,7 @@ public class Quote implements Serializable{
 			for (ReviewQuote reviewQuote : reviewQuotes) {
 				sum+=reviewQuote.getStar();
 			}
-			return sum/reviewQuotes.size();
+			return (double)Math.ceil((sum/reviewQuotes.size())* 2)/2;
 		}
 		return 0;
 	}

@@ -72,12 +72,6 @@ public class QuoteController {
 			List<Integer> pages = IntStream.rangeClosed(start, end).boxed().collect(Collectors.toList());
 			model.addAttribute("pages", pages);
 		}
-		for (Quote quote : results.getContent()) {
-			for (CommentQuote comment : quote.getCommentQuotes()) {
-				System.out.println(comment.getId());
-				System.out.println(comment.getContent());
-			}
-		}
 		model.addAttribute("results", results);
 		return "listQuotePage";
 	}
