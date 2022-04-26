@@ -1,5 +1,8 @@
 package com.web.dacn.entity.quote;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -32,7 +35,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Quote {
+public class Quote implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -43,7 +50,7 @@ public class Quote {
 	@Column(columnDefinition = "nvarchar(MAX)")
 	private String content;
 	private int view;
-	@ManyToOne(targetEntity = Author.class, cascade = CascadeType.ALL)
+	@ManyToOne(targetEntity = Author.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name="author_id")
 	private Author author;
 	@Column(name="meta_title")
@@ -54,7 +61,7 @@ public class Quote {
 	private Boolean status;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date mod_time;
-	@ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL)
+	@ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name="mod_user_id")
 	private User user;
 	
@@ -62,15 +69,32 @@ public class Quote {
 	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinTable(
             name = "quote_quotecategory",
-            joinColumns = @JoinColumn(name = "quote_id"),
+            joinColumns = @JoinColumn(name = "quote_id"), 
             inverseJoinColumns = @JoinColumn(name = "category_id")
             )
 	private Set<QuoteCategory> quoteCategories = new HashSet<>();
-	
-	
-	@OneToMany(mappedBy = "quote", cascade = CascadeType.ALL)
+
+
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "reviewquote",
+            joinColumns = @JoinColumn(name = "quote_id"), 
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+            )
 	private Set<ReviewQuote> reviewQuotes = new HashSet<>();
+
 	
-	@OneToMany(mappedBy = "quote", cascade = CascadeType.ALL)
-	private Set<CommentQuote> commentQuotes = new HashSet<>();
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "quote", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	private Collection<CommentQuote> commentQuotes = new ArrayList<>();
+	
+	public double getAverageStar() {
+		double sum=0;
+		if(reviewQuotes!=null && reviewQuotes.size()>0) {
+			for (ReviewQuote reviewQuote : reviewQuotes) {
+				sum+=reviewQuote.getStar();
+			}
+			return sum/reviewQuotes.size();
+		}
+		return 0;
+	}
 }

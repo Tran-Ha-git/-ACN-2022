@@ -1,5 +1,7 @@
 package com.web.dacn.entity.quote;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,7 +22,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name="quotecategory")
-public class QuoteCategory {
+public class QuoteCategory implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -29,7 +35,7 @@ public class QuoteCategory {
 	private String name;
 	@ColumnDefault(value = "0")
 	private int view;
-	@Column(name="meta_title")
+	@Column(name="meta_title") 
 	private String metaTitle;
 	@Column(name="meta_description")
 	private String metaDescription;

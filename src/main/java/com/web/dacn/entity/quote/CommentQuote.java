@@ -1,12 +1,14 @@
 package com.web.dacn.entity.quote;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,28 +30,31 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name="commentquote")
-public class CommentQuote {
+public class CommentQuote implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@Column(columnDefinition = "nvarchar(MAX)")
 	private String content;
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date mod_time;
+	private Date mod_time; 
 	
-	@ManyToOne(targetEntity = CommentQuote.class)
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name="parent_id")
 	private CommentQuote commentQuote;
 	
-	@ManyToOne(targetEntity = User.class)
+	@ManyToOne
 	@JoinColumn(name="user_id")
-	private User user;
+	private User user; 
 	
-	
-	@ManyToOne(targetEntity = Quote.class)
+	@ManyToOne
 	@JoinColumn(name="quote_id")
-	private Quote quote;
+	private Quote quote; 
 	
-	@OneToMany(mappedBy = "commentQuote", cascade = CascadeType.ALL)
-	private Set<CommentQuote> commentQuotes = new HashSet<>();
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "commentQuote", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	private Collection<CommentQuote> commentQuotes = new ArrayList<>();
 }

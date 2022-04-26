@@ -1,5 +1,6 @@
 package com.web.dacn.entity.quote;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -24,7 +25,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name="reviewquote")
-public class ReviewQuote {
+public class ReviewQuote implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -33,13 +39,10 @@ public class ReviewQuote {
 	private int star;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date mod_time;
+	@Column(name="mod_time")
+	private Date modTime;
 	
-	@ManyToOne(targetEntity = User.class)
-	@JoinColumn(name="user_id")
+	@ManyToOne
+	@JoinColumn(name="user_id") 
 	private User user;
-	
-	@ManyToOne(targetEntity = Quote.class)
-	@JoinColumn(name="quote_id")
-	private Quote quote;
 }

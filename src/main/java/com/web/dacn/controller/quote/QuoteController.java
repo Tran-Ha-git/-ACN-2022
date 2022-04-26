@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.web.dacn.dto.quote.QuoteCategoryDto;
+import com.web.dacn.entity.quote.CommentQuote;
 import com.web.dacn.entity.quote.Quote;
+import com.web.dacn.entity.quote.ReviewQuote;
 import com.web.dacn.service.quote.QuoteCategoryService;
 import com.web.dacn.service.quote.QuoteService;
 
@@ -39,7 +41,7 @@ public class QuoteController {
 			QuoteCategoryDto quoteCategoryDto = new QuoteCategoryDto();
 			BeanUtils.copyProperties(item, quoteCategoryDto);
 			return quoteCategoryDto;
-		}).toList();
+		}).collect(Collectors.toList());
 	}
 	
 	@GetMapping("")
@@ -69,6 +71,12 @@ public class QuoteController {
 			}
 			List<Integer> pages = IntStream.rangeClosed(start, end).boxed().collect(Collectors.toList());
 			model.addAttribute("pages", pages);
+		}
+		for (Quote quote : results.getContent()) {
+			for (CommentQuote comment : quote.getCommentQuotes()) {
+				System.out.println(comment.getId());
+				System.out.println(comment.getContent());
+			}
 		}
 		model.addAttribute("results", results);
 		return "listQuotePage";

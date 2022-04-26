@@ -1,5 +1,6 @@
 package com.web.dacn.entity.user;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,9 +15,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.web.dacn.entity.quote.Quote;
+import com.web.dacn.entity.quote.ReviewQuote;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,7 +30,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "user")
-public class User {
+public class User implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -57,5 +65,6 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "quote_id")
             )
-	private Set<Quote> quotes = new HashSet<>();
+	private Set<Quote> favoriteQuotes = new HashSet<>();
+	
 }

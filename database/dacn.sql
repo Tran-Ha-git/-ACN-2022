@@ -239,10 +239,6 @@ CREATE TABLE commentquote (
 
 
 
-
-
-
-
 insert into User (id, uname, password, fullname, email, birthday, address, phone, status) values (1, 'glambeth0', 'Ntq4Tthn', 'Gus Lambeth', 'glambeth0@irs.gov', '1991-03-12', '46 Spaight Place', '673-960-3590', 0);
 insert into User (id, uname, password, fullname, email, birthday, address, phone, status) values (2, 'ccaffrey1', 'FA9Lw3m8icva', 'Carmelita Caffrey', 'ccaffrey1@dell.com', '1990-07-07', '1565 Arkansas Court', '265-668-4266', 1);
 insert into User (id, uname, password, fullname, email, birthday, address, phone, status) values (3, 'qjaye2', 'ZVw3hWNn', 'Quintina Jaye', 'qjaye2@canalblog.com', '1986-07-04', '6 Garrison Lane', '397-638-9623', 1);
