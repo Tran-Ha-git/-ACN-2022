@@ -34,10 +34,10 @@ public class DemoController {
 		return "onlineReadPage";
 	}
 
-	@GetMapping("/auth")
-	public String getAuthPage(Model model) {
-		return "authPage";
-	}
+//	@GetMapping("/auth")
+//	public String getAuthPage(Model model) {
+//		return "authPage";
+//	}
 
 	@GetMapping("/audio")
 	public String getAudio(Model model) {
