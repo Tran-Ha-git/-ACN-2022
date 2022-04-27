@@ -19,24 +19,24 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "user")
-public class User implements Serializable{
+public class User implements Serializable {
 	public static final String ADMIN = "ADMIN";
 	public static final String CLIENT = "CLIENT";
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Column(name = "uname", nullable = false, unique = true)
 	private String uname;
 
-	@Column( nullable = false)
+	@Column(nullable = false)
 	private String password;
 
-	@Column( nullable = false)
+	@Column(nullable = false)
 	private String fullname;
 
-	@Column( nullable = false)
+	@Column(nullable = false)
 	private String email;
 
 	private Date birthday;
@@ -46,12 +46,10 @@ public class User implements Serializable{
 	private String phone;
 
 	private Integer status;
-	
-	@ManyToMany(fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id", nullable = false),
-            inverseJoinColumns = @JoinColumn(name = "role_id", nullable = false))
-    private List<Role> roles = new ArrayList<>();
+
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id", nullable = false), inverseJoinColumns = @JoinColumn(name = "role_id", nullable = false))
+	private List<Role> roles = new ArrayList<>();
 
 	public User() {
 	}
@@ -68,7 +66,7 @@ public class User implements Serializable{
 		this.phone = phone;
 		this.status = status;
 	}
-	
+
 	public Long getId() {
 		return id;
 	}

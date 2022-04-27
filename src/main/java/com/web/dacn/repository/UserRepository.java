@@ -9,5 +9,7 @@ import com.web.dacn.entity.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 
 	List<User> findByUnameAndStatus(String username, int status);
-	
+
+	User findByUname(String username);
+
 }

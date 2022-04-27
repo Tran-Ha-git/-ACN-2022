@@ -1,14 +1,11 @@
 package com.web.dacn.dto;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.web.dacn.entity.Role;
+public class UserDto implements Serializable {
 
-public class UserDto implements Serializable{
-	
 	private Long id;
 	private String uname;
 	private String password;
@@ -18,14 +15,13 @@ public class UserDto implements Serializable{
 	private String address;
 	private String phone;
 	private Integer status;
-	private List<Role> roles = new ArrayList<>();
-	
-	
+	private List<String> role;
+
 	public UserDto() {
 	}
 
 	public UserDto(Long id, String uname, String password, String fullname, String email, Date birthday, String address,
-			String phone, Integer status, List<Role> roles) {
+			String phone, Integer status, List<String> role) {
 		super();
 		this.id = id;
 		this.uname = uname;
@@ -36,7 +32,7 @@ public class UserDto implements Serializable{
 		this.address = address;
 		this.phone = phone;
 		this.status = status;
-		this.roles = roles;
+		this.role = role;
 	}
 
 	public Long getId() {
@@ -111,13 +107,12 @@ public class UserDto implements Serializable{
 		this.status = status;
 	}
 
-	public List<Role> getRoles() {
-		return roles;
+	public List<String> getRole() {
+		return role;
 	}
 
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
+	public void setRole(List<String> role) {
+		this.role = role;
 	}
-	
-	
+
 }

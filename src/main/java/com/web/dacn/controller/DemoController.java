@@ -1,24 +1,16 @@
 package com.web.dacn.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import com.web.dacn.dto.UserDto;
-import com.web.dacn.entity.User;
-import com.web.dacn.service.IDemoService;
 
 @Controller
 public class DemoController {
 	@GetMapping("/home")
-	public String getHomePage(Model model) {		
+	public String getHomePage(Model model) {
 		return "homePage";
 	}
-	
+
 	@GetMapping("/books")
 	public String getDetailBookPage(Model model) {
 		return "detailBookPage";
@@ -53,10 +45,10 @@ public class DemoController {
 	public String getAdminListBook(Model model) {
 		return "adminListBook";
 	}
-	
+
 	@GetMapping("/admin/new-book")
 	public String getAdminNewBook(Model model) {
 		return "adminNewBook";
 	}
-	
+
 }

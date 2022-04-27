@@ -11,24 +11,25 @@ public class CustomUserDetail extends User {
 			boolean credentialsNonExpired, boolean accountNonLocked,
 			Collection<? extends GrantedAuthority> authorities) {
 		super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
-		
+
 	}
+
 	private Long id;
-    private String fullName;
+	private String fullName;
 
-    public Long getId() {
-        return id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getFullName() {
-        return fullName;
-    }
+	public String getFullName() {
+		return fullName;
+	}
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
 }

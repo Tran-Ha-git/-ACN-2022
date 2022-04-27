@@ -1,7 +1,5 @@
 package com.web.dacn.service.impl;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,19 +9,19 @@ import com.web.dacn.repository.UserRepository;
 import com.web.dacn.service.IDemoService;
 
 @Service
-public class DemoService implements IDemoService{
+public class DemoService implements IDemoService {
 	@Autowired
 	UserRepository userRepository;
 
 	@Override
 	public UserDto getDemo() {
 		User user = userRepository.findById(1L).orElse(null);
-				
+
 		UserDto dto = new UserDto();
-        if(user!=null) {
-            dto.setUname(user.getUname());
-            return dto;
-        }
+		if (user != null) {
+			dto.setUname(user.getUname());
+			return dto;
+		}
 		return null;
 	}
 
