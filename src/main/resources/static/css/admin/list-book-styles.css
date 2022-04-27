@@ -1,6 +1,7 @@
 *{
     box-sizing: border-box;
     margin: 0;
+  
 }
 :root{
     --header-manage-list-height: 64px;
@@ -151,7 +152,7 @@
     top:0;
 }
 .list-book-container{
-    margin-top: 50px;
+    margin-top: 8px;
     width: 100%;
     position: relative;
 }
@@ -227,3 +228,81 @@
 .fas, .far{
     border: none;
 }
+.width-input{
+    width: 100%;
+    height: 32px ;
+    margin-top: 8px;
+}
+.height-input{
+    height: 60px;
+}
+.form-lable-tyle{
+    display: flex;
+  }
+  .form-lable-3{
+      margin-right: 32px;
+      
+  }
+  .form-1{
+    border:1px solid #363636;
+    width:200px;
+            height:100px;
+    overflow-x:hidden;
+    padding-left: 36px;
+    margin-top: 8px;
+
+    
+}
+.form_input{
+    margin-top: 12px;
+}
+.listCheck_two{
+    display: flex;
+}
+.list-checkbox{
+margin-right: 36px;
+
+}
+.spacing{
+    margin-top: 36px;
+
+  }
+  .btn{
+    position: absolute;
+    right: 0;
+    display: flex;
+    
+  }
+  .btn_two{
+    margin-top: 8px;
+    position: absolute;
+    left: 0;
+    display: flex;
+  }
+  .black{
+   
+   margin-left: 8px;
+    background-color: #1a6cf0;
+    border-color: transparent;
+    color: white;
+    padding:3px 6px 3px 6px;
+    
+    
+    
+   
+    
+   
+  }
+  .grey{
+    background-color: #535354;
+    color: #fff;
+    padding:3px 6px 3px 6px;
+    text-decoration:none ;
+
+  }
+  .btn_two-input{
+      
+      margin-left: 100px;
+  }
+  
+  

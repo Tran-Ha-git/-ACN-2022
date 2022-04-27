@@ -49,14 +49,15 @@ public class DemoController {
 		return "listAudioPage";
 	}
 
-	@GetMapping("/admin/books")
-	public String getAdminListBook(Model model) {
-		return "adminListBook";
-	}
-	
-	@GetMapping("/admin/new-book")
-	public String getAdminNewBook(Model model) {
-		return "adminNewBook";
-	}
+//	@GetMapping("/admin/books")
+//	public String getAdminListBook(Model model) {
+//		return "adminListBook";
+//	}
+//	
+//	@GetMapping("/admin/new-book")
+//	public String getAdminNewBook(Model model) {
+//		return "adminNewBook";
+//	}
+
 	
 }

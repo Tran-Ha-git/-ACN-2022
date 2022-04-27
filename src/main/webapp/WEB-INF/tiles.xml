@@ -128,5 +128,15 @@
 			value="/WEB-INF/bodyfragments/admin/new-book.jsp" />
 		<put-attribute name="style" value="css/admin/new-book.css" />
 	</definition>
+	
+	<!--Admin Edit form -->
+
+	<definition name="editForm" extends="admin.base.definition">
+			<put-attribute name="title" value="Edit Form" />
+			<put-attribute name="body"
+				value="/WEB-INF/bodyfragments/admin/edit-book.jsp" />
+			<put-attribute name="style" value="css/admin/new-book.css" />
+			
+	</definition>
 
 </tiles-definitions> 
