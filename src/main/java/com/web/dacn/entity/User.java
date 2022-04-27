@@ -1,12 +1,19 @@
 package com.web.dacn.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -14,17 +21,19 @@ import javax.persistence.Table;
 public class User {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Column(name = "uname", nullable = false, unique = true)
 	private String uname;
 
-	@Column(name = "pwd", nullable = false)
-	private String pwd;
-
+	@Column( nullable = false)
+	private String password;
+	
+	@Column(nullable = false)
 	private String fullname;
-
+	
+	@Column(nullable = false)
 	private String email;
 
 	private Date birthday;
@@ -37,12 +46,15 @@ public class User {
 
 	public User() {
 	}
-
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id", nullable = false), inverseJoinColumns = @JoinColumn(name = "role_id", nullable = false))
+	private List<Role> roles = new ArrayList<>();
+	
 	public User(Long id, String uname, String pwd, String fullname, String email, Date birthday, String address,
 			String phone, Integer status) {
 		this.id = id;
 		this.uname = uname;
-		this.pwd = pwd;
+		this.password = pwd;
 		this.fullname = fullname;
 		this.email = email;
 		this.birthday = birthday;
@@ -67,12 +79,12 @@ public class User {
 		this.uname = uname;
 	}
 
-	public String getPwd() {
-		return pwd;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setPwd(String pwd) {
-		this.pwd = pwd;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getFullname() {
@@ -121,6 +133,20 @@ public class User {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", uname=" + uname + ", password=" + password + ", fullname=" + fullname + ", email="
+				+ email + ", birthday=" + birthday + ", address=" + address + ", phone=" + phone + ", status=" + status
+				+ "]";
 	}
 
 }
