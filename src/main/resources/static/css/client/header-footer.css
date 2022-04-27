@@ -240,10 +240,12 @@ header a:hover {
     border-radius: 16px;
     position: absolute;
     font-weight: 700;
-    bottom: 25px;
+    bottom: -31px;
     z-index: 2;
-    right: 49px;
     background: #4851ce;
+}
+.my-account{
+	position:relative;
 }
 .my-account:hover .logout-btn{
 	visibility: visible ;
