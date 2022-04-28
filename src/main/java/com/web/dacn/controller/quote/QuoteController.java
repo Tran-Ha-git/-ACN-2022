@@ -1,9 +1,12 @@
 package com.web.dacn.controller.quote;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,24 +19,36 @@ import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.web.dacn.dto.quote.QuoteCategoryDto;
+import com.web.dacn.dto.user.UserLoginDto;
 import com.web.dacn.entity.quote.CommentQuote;
 import com.web.dacn.entity.quote.Quote;
 import com.web.dacn.entity.quote.ReviewQuote;
+import com.web.dacn.entity.user.User;
 import com.web.dacn.service.quote.QuoteCategoryService;
 import com.web.dacn.service.quote.QuoteService;
+import com.web.dacn.service.quote.ReviewQuoteService;
 
 @Controller
 @RequestMapping("quotes")
 public class QuoteController {
 	@Autowired
+	private HttpSession session;
+	
+	@Autowired
 	private QuoteService quoteService;
 	
 	@Autowired
 	private QuoteCategoryService quoteCategoryService;
+	
+	@Autowired
+	private ReviewQuoteService reviewQuoteService;
 	
 	@ModelAttribute("categories")
 	public List<QuoteCategoryDto> getQuoteCategories() {
@@ -71,8 +86,51 @@ public class QuoteController {
 			}
 			List<Integer> pages = IntStream.rangeClosed(start, end).boxed().collect(Collectors.toList());
 			model.addAttribute("pages", pages);
-		}
+		} 
 		model.addAttribute("results", results);
 		return "listQuotePage";
+	}
+	
+	
+	@PostMapping("review")
+	public ModelAndView review(
+			@RequestHeader(value = "referer", required = false) String referer,
+			@RequestParam("star") Optional<Integer> star,
+			@RequestParam("content") Optional<String> content,
+			@RequestParam("quote") Optional<Long> quoteId) {
+		
+		User user = (User) session.getAttribute("user");
+		Optional<ReviewQuote> optional = reviewQuoteService.findByUserIdAndQuoteId(user.getId(), quoteId.get());
+		ReviewQuote reviewQuote ;
+		if(optional.isPresent()) {
+			reviewQuote = optional.get();
+		}else {
+			reviewQuote = new ReviewQuote();
+			Quote quote = quoteService.getById(quoteId.get());
+			quote.setView(quote.getView()+1);
+			quoteService.save(quote);
+			reviewQuote.setQuote(quote);
+			reviewQuote.setUser(user);
+		}
+		if(star.isPresent()) {
+			reviewQuote.setStar(star.get());
+		}else {
+			if(!optional.isPresent()) {
+				reviewQuote.setStar(1);
+			}
+		}
+		if(content.isPresent()) {
+			reviewQuote.setContent(content.get());
+		}else {
+			if(!optional.isPresent()) {
+				reviewQuote.setContent("");
+			}
+		}
+		reviewQuote.setModTime(new Date());
+		reviewQuoteService.save(reviewQuote);
+		if(referer!=null) {
+			return new ModelAndView("redirect:" + referer);
+		}
+		return new ModelAndView("redirect:/quotes");
 	}
 }

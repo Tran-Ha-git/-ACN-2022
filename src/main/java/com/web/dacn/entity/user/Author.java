@@ -30,7 +30,7 @@ public class Author implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@Column(columnDefinition = "nvarchar(2000) NOT NULL", unique=true)

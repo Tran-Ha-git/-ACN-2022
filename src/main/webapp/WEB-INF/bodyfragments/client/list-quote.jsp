@@ -103,18 +103,29 @@
 								<p class="font-normal text-center text-gray-700">
 									Keyword:
 									<c:forEach items="${quote.quoteCategories}" var="category">
-										<span class="text-blue-500">${category.name }</span>
+										<span class="text-blue-500">${category.name}</span><span>, </span>
 									</c:forEach>
 								</p>
 							</div>
 							<div class="flex justify-center items-center mt-2">
+								<c:set value="${quote.getMyReview(sessionScope.user.id)}"
+									var="reviewQuote"></c:set>
 								<button
 									class="m-2 inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
 									onclick="openRating({
-											id: ${quote.id} 
+											id: ${quote.id},
+											star: ${reviewQuote!=null ? reviewQuote.star: '0'},
+											content: `${reviewQuote!=null ? reviewQuote.content: ''}`,
 										})">Rate</button>
 								<button
-									class="mx-2 inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">View</button>
+									class="mx-2 inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+									onclick="openQuote({
+											id: ${quote.id},
+											content: `${quote.content}`,
+											author: `${quote.author.fullname}`,
+											keywords: [<c:forEach items="${quote.quoteCategories}" var="category">`${category.name }`,</c:forEach>],
+										})"
+									>View</button>
 							</div>
 						</div>
 					</c:forEach>
@@ -208,24 +219,80 @@
 							clip-rule="evenodd"></path></svg>
 				</button>
 				<div class="p-6 text-center">
-					<h3 class="mb-4 text-xl font-medium text-gray-900">Rating
-						quote</h3>
-					<div class="flex items-center w-full justify-center mt-3">
-						<c:forEach begin="1" end="5" varStatus="loop">
-							<svg class="w-10 h-10 text-yellow-300 star-item"
-								fill="currentColor" viewBox="0 0 20 20"
-								xmlns="http://www.w3.org/2000/svg">
-							<path
-									d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-						</c:forEach>
-					</div>
-					<div class="flex mt-10">
-						<button data-modal-toggle="popup-modal-rate" type="button"
-							class="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
-							Yes, I'm sure</button>
-						<button data-modal-toggle="popup-modal-rate" type="button"
-							class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10">No,
-							cancel</button>
+					<form method="post" action="/quotes/review">
+						<input type="hidden" id="star-quote" name="quote" />
+						<h3 class="mb-4 text-xl font-medium text-gray-900">Rating
+							quote</h3>
+						<div class="flex items-center w-full justify-center mt-3">
+							<c:forEach begin="1" end="5" varStatus="loop" var="index">
+								<label onmouseover="selectStar(${index })" for="start-${index }">
+									<svg id="svg-star-${index }"
+										class="w-10 h-10 text-gray-400 star-item cursor-pointer"
+										fill="currentColor" viewBox="0 0 20 20"
+										xmlns="http://www.w3.org/2000/svg">
+								<path
+											d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+								</label>
+								<input id="star-${index }" type="radio" name="star"
+									value="${index }" class="hidden" />
+							</c:forEach>
+						</div>
+						<div class="mt-3 mb-2">
+							<textarea id="content" name="content" rows="4"
+								class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+								placeholder="Your review..."></textarea>
+						</div>
+						<div class="flex mt-10">
+							<button data-modal-toggle="popup-modal-rate" type="submit"
+								class="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+								Yes, I'm sure</button>
+							<button data-modal-toggle="popup-modal-rate" type="button"
+								class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10">No,
+								cancel</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<button
+		class="hidden text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+		type="button" data-modal-toggle="quote-modal" id="button-modal-quote">
+		Toggle modal</button>
+
+	<!-- Main modal -->
+	<div id="quote-modal" tabindex="-1" aria-hidden="true"
+		class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+		<div class="relative p-4 w-full max-w-4xl h-full md:h-auto">
+			<!-- Modal content -->
+			<div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+				<button type="button"
+					class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+					data-modal-toggle="quote-modal">
+					<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+						xmlns="http://www.w3.org/2000/svg">
+						<path fill-rule="evenodd"
+							d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+							clip-rule="evenodd"></path></svg>
+				</button>
+				<div class="py-6 px-6 lg:px-8">
+					<h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">View quote</h3>
+					<div class=mt-3>
+						<div class="px-3 py-3 bg-gray-50 rounded-md">
+							<p class="mb-3 font-medium text-center">
+								&#34;<span id="quote-content"></span>&#34;
+							</p>
+							<div>
+								<p class="font-normal text-gray-700">
+									Author: <span class="text-blue-500" id="quote-author"></span>
+								</p>
+								<p class="font-normal text-gray-700">
+									Keyword: <span class="text-blue-500" id="quote-keyword"></span>
+								</p>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -249,11 +316,40 @@
                 })
             }
         </script>
-		<script type="text/javascript">
-        	const quote_id;
+	<script type="text/javascript">
+        	var quote_id;
         	function openRating(quote){
+        		for(let i=0;i<5; i++){
+        			$("#svg-star-"+(i+1)).removeClass("text-yellow-300");
+        			$("#svg-star-"+(i+1)).addClass("text-gray-400");
+        		}
+        		for(let i=0;i<quote?.star; i++){
+        			$("#svg-star-"+(i+1)).removeClass("text-gray-400");
+        			$("#svg-star-"+(i+1)).addClass("text-yellow-300");
+        		}
+        		$("#content").val(quote?.content);
+        		$("#star-quote").val(quote?.id);
         		$("#button-modal-star").click();
-        		console.log(quote?.id);
+        	}
+        	
+        	function selectStar(numberStar){
+        		for(let i=0;i<numberStar; i++){
+        			$("#svg-star-"+(i+1)).removeClass("text-gray-400");
+        			$("#svg-star-"+(i+1)).addClass("text-yellow-300");
+        		}
+        		for(let i=numberStar;i<5; i++){
+        			$("#svg-star-"+(i+1)).removeClass("text-yellow-300");
+        			$("#svg-star-"+(i+1)).addClass("text-gray-400");
+        		}
+        		$("#star-"+numberStar).prop("checked", true);
+        	}
+        	
+        	
+        	function openQuote(quote){
+        		$("#quote-content").text(quote?.content);
+        		$("#quote-author").text(quote?.author);
+        		$("#quote-keyword").text(quote?.keywords.join(", "));
+        		$("#button-modal-quote").click();
         	}
         </script>
 </body>

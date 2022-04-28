@@ -41,7 +41,7 @@ public class Quote implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column(columnDefinition = "nvarchar(2000) NOT NULL", unique=true)
 	private String slug;
@@ -75,16 +75,11 @@ public class Quote implements Serializable{
 	private Set<QuoteCategory> quoteCategories = new HashSet<>();
 
 
-	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "reviewquote",
-            joinColumns = @JoinColumn(name = "quote_id"), 
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-            )
-	private Set<ReviewQuote> reviewQuotes = new HashSet<>();
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "quote", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	private Collection<ReviewQuote> reviewQuotes = new ArrayList<>();
 
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "quote", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "quote", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private Collection<CommentQuote> commentQuotes = new ArrayList<>();
 	
 	public double getAverageStar() {
@@ -96,5 +91,18 @@ public class Quote implements Serializable{
 			return (double)Math.ceil((sum/reviewQuotes.size())* 2)/2;
 		}
 		return 0;
+	}
+	
+	
+	public ReviewQuote getMyReview(Long userId) {
+		double sum=0;
+		if(reviewQuotes!=null && reviewQuotes.size()>0) {
+			for (ReviewQuote reviewQuote : reviewQuotes) {
+				if(reviewQuote.getUser().getId().equals(userId)) {
+					return reviewQuote;
+				}
+			}
+		}
+		return null;
 	}
 }

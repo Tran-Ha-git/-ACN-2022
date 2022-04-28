@@ -1,6 +1,8 @@
 package com.web.dacn.entity.user;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,6 +20,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.web.dacn.entity.quote.CommentQuote;
 import com.web.dacn.entity.quote.Quote;
 import com.web.dacn.entity.quote.ReviewQuote;
 
@@ -38,7 +41,7 @@ public class User implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Column(name = "uname", nullable = false, unique = true)
@@ -66,5 +69,13 @@ public class User implements Serializable{
             inverseJoinColumns = @JoinColumn(name = "quote_id")
             )
 	private Set<Quote> favoriteQuotes = new HashSet<>();
+	
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	private Collection<ReviewQuote> reviewQuotes = new ArrayList<>();
+
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	private Collection<CommentQuote> commentQuotes = new ArrayList<>();
 	
 }
