@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.web.dacn.dto.UserDto;
 import com.web.dacn.dto.UserRegisterDto;
 import com.web.dacn.entity.Role;
 import com.web.dacn.entity.User;
 
-@Component
+@Service
 public class UserConverter {
 
 	public UserDto convertToDto(User user) {

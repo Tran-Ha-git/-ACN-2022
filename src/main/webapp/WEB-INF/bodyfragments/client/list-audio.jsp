@@ -1,8 +1,9 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 
 <div class="container">
 	<div class="row">
-		<div class="col-md-9">
+		<div class="col-lg-9">
 			<div class="title">
 				<div class="page-title">
 					<h1></h1>
@@ -18,8 +19,7 @@
 							<option value="rating">Thứ tự theo điểm đánh giá</option>
 							<option value="date">Mới nhất</option>
 							<option value="price">Thứ tự theo giá: thấp đến cao</option>
-							<option value="price-desc">Thứ tự theo giá: cao xuống
-								thấp</option>
+							<option value="price-desc">Thứ tự theo giá: cao xuống thấp</option>
 						</select> <input type="hidden" name="paged" value="1">
 					</form>
 				</div>
@@ -33,114 +33,43 @@
 					</h2>
 				</div>
 				<div class="list-audio row">
-					<div class="item-audio col-md-3">
-						<div class="col-inner">
-							<div class="item-content">
-								<div class="box-img">
-									<a href="#"> <img
-										src="./assets/images/quang-ganh-lo-di-va-vui-song.png" alt="">
-									</a>
+				<!-- <div class="item-audio col-md-3">
+							<div class="col-inner">
+								<div class="item-content">
+									<div class="box-img">
+										<a href="#"> <img
+											src="./../assets/images/quang-ganh-lo-di-va-vui-song.png" alt="">
+										</a>
+									</div>
+									<div class="box-text">
+										<p class="category">Sách nói kinh doanh</p>
+										<p class="name">
+											<a href="#"> Quẳng gánh lo đi và vui sống</a>
+										</p>
+									</div>
 								</div>
-								<div class="box-text">
-									<p class="category">Sách nói kinh doanh</p>
-									<p class="name">
-										<a href="#"> Bạn sẽ tìm thấy gì trong sách nói Quẳng gánh
-											lo đi và vui sống? </a>
-									</p>
+							</div>
+						</div> -->
+					<c:forEach var = "book" items="${books}">
+						<div class="item-audio col-xl-3 col-lg-4 col-md-6">
+							<div class="col-inner">
+								<div class="item-content">
+									<div class="box-img">
+										<a href="/audio/${book.id}"> 
+											<img src="${book.thumbnail}" alt="">
+										</a>
+									</div>
+									<div class="box-text">
+										<p class="category">${book.listCategory}</p>
+										<p class="name">
+											<a href="#"> ${book.name}</a>
+										</p>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="item-audio col-md-3">
-						<div class="col-inner">
-							<div class="item-content">
-								<div class="box-img">
-									<a href="#"> <img
-										src="./assets/images/quang-ganh-lo-di-va-vui-song.png" alt="">
-									</a>
-								</div>
-								<div class="box-text">
-									<p class="category">Sách nói kinh doanh</p>
-									<p class="name">
-										<a href="#"> Bạn sẽ tìm thấy gì trong sách nói Quẳng gánh
-											lo đi và vui sống? </a>
-									</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="item-audio col-md-3">
-						<div class="col-inner">
-							<div class="item-content">
-								<div class="box-img">
-									<a href="#"> <img
-										src="./assets/images/quang-ganh-lo-di-va-vui-song.png" alt="">
-									</a>
-								</div>
-								<div class="box-text">
-									<p class="category">Sách nói kinh doanh</p>
-									<p class="name">
-										<a href="#"> Bạn sẽ tìm thấy gì trong sách nói Quẳng gánh
-											lo đi và vui sống? </a>
-									</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="item-audio col-md-3">
-						<div class="col-inner">
-							<div class="item-content">
-								<div class="box-img">
-									<a href="#"> <img
-										src="./assets/images/quang-ganh-lo-di-va-vui-song.png" alt="">
-									</a>
-								</div>
-								<div class="box-text">
-									<p class="category">Sách nói kinh doanh</p>
-									<p class="name">
-										<a href="#"> Bạn sẽ tìm thấy gì trong sách nói Quẳng gánh
-											lo đi và vui sống? </a>
-									</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="item-audio col-md-3">
-						<div class="col-inner">
-							<div class="item-content">
-								<div class="box-img">
-									<a href="#"> <img
-										src="./assets/images/quang-ganh-lo-di-va-vui-song.png" alt="">
-									</a>
-								</div>
-								<div class="box-text">
-									<p class="category">Sách nói kinh doanh</p>
-									<p class="name">
-										<a href="#"> Bạn sẽ tìm thấy gì trong sách nói Quẳng gánh
-											lo đi và vui sống? </a>
-									</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="item-audio col-md-3">
-						<div class="col-inner">
-							<div class="item-content">
-								<div class="box-img">
-									<a href="#"> <img
-										src="./assets/images/quang-ganh-lo-di-va-vui-song.png" alt="">
-									</a>
-								</div>
-								<div class="box-text">
-									<p class="category">Sách nói kinh doanh</p>
-									<p class="name">
-										<a href="#"> Bạn sẽ tìm thấy gì trong sách nói Quẳng gánh
-											lo đi và vui sống? </a>
-									</p>
-								</div>
-							</div>
-						</div>
-					</div>
+      				</c:forEach>
+				
 				</div>
 			</div>
 
@@ -162,7 +91,7 @@
 
 		</div>
 
-		<div class="col-md-3">
+		<div class="col-lg-3">
 
 			<div class="search-space-audio">
 				<p>Tìm kiếm</p>
@@ -187,7 +116,7 @@
 							<a href="#">
 								<div class="top-range-item">
 									<div class="item-left">
-										<img src="./assets/images/product02.png" alt="">
+										<img src="./../assets/images/product02.png" alt="">
 									</div>
 									<div class="item-right">
 										<h3 class="item-position">01</h3>
@@ -206,7 +135,7 @@
 							</a> <a href="#">
 								<div class="top-range-item">
 									<div class="item-left">
-										<img src="./assets/images/product02.png" alt="">
+										<img src="./../assets/images/product02.png" alt="">
 									</div>
 									<div class="item-right">
 										<h3 class="item-position">01</h3>
@@ -225,7 +154,7 @@
 							</a> <a href="#">
 								<div class="top-range-item">
 									<div class="item-left">
-										<img src="./assets/images/product02.png" alt="">
+										<img src="./../assets/images/product02.png" alt="">
 									</div>
 									<div class="item-right">
 										<h3 class="item-position">01</h3>

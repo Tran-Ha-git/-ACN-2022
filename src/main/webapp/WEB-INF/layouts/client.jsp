@@ -15,6 +15,7 @@
 	<link rel="stylesheet" type="text/css" href="/vendor/swiperjs/swiper-bundle.min.css">
     <link rel="stylesheet" type="text/css" href="/css/client/header-footer.css" />
     <link rel="stylesheet" type="text/css" href="/<tiles:insertAttribute name="style" />">
+    
     <title>Trang chủ</title>
 </head>
 

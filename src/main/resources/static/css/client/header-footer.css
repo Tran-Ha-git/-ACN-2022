@@ -186,16 +186,43 @@ header a:hover {
   text-align: center;
 }
 
-.container-footer .app .store-btn img {
-  width: 100px;
-  cursor: pointer;
+.container-footer .app .store-btn  {
+  	background-size: 100px 34px;
+    height: 34px;
+    object-fit: cover;
+    background-image: url(../../assets/images/ios-app-store.png);
+    width: 100px;
+    cursor: pointer;
+    margin: auto;
 }
 
-.container-footer .app .qr img {
-  width: 150px;
-  cursor: pointer;
+.container-footer .app .qr  {
+	height: 150px;
+	object-fit: cover;
+	width: 150px;
+	cursor: pointer;
+	background-size: 150px 150px;
+	background-image: url(../../assets/images/ios.jpg);
 }
 
+.container-footer .app .store-btn.android  {
+  	background-size: 100px 34px;
+    height: 34px;
+    object-fit: cover;
+    background-image: url(../../assets/images/ch-play-store.png);
+    width: 100px;
+    cursor: pointer;
+    margin: auto;
+}
+
+.container-footer .app .qr.android  {
+	height: 150px;
+	object-fit: cover;
+	width: 150px;
+	cursor: pointer;
+	background-size: 150px 150px;
+	background-image: url(../../assets/images/android.jpg);
+}
 .container-footer .certificate {
   position: absolute;
   bottom: 10px;

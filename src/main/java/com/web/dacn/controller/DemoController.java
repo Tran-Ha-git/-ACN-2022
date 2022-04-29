@@ -31,15 +31,15 @@ public class DemoController {
 //		return "authPage";
 //	}
 
-	@GetMapping("/audio")
-	public String getAudio(Model model) {
-		return "audioPage";
-	}
-
-	@GetMapping("/list-audio")
-	public String getListAudio(Model model) {
-		return "listAudioPage";
-	}
+//	@GetMapping("/audio")
+//	public String getAudio(Model model) {
+//		return "audioPage";
+//	}
+//
+//	@GetMapping("/list-audio")
+//	public String getListAudio(Model model) {
+//		return "listAudioPage";
+//	}
 
 	@GetMapping("/admin/books")
 	public String getAdminListBook(Model model) {

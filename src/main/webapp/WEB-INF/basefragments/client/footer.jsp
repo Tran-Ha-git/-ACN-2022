@@ -39,18 +39,18 @@
 				<div class="downloads">
 					<div class="download">
 						<div class="qr">
-							<img src="assets/images/ios.jpg" alt="Not found" />
+<!-- 						<img src="assets/images/ios.jpg" alt="Not found" /> -->
 						</div>
 						<div class="store-btn">
-							<img src="assets/images/ios-app-store.png" alt="Not found" />
+<!--  							<img src="assets/images/ios-app-store.png" alt="Not found" /> -->
 						</div>
 					</div>
 					<div class="download">
-						<div class="qr">
-							<img src="assets/images/android.jpg" alt="Not found" />
+						<div class="qr android">
+<!--  							<img src="assets/images/android.jpg" alt="Not found" /> -->
 						</div>
-						<div class="store-btn">
-							<img src="assets/images/ch-play-store.png" alt="Not found" />
+						<div class="store-btn android">
+<!--  							<img src="assets/images/ch-play-store.png" alt="Not found" /> -->
 						</div>
 					</div>
 				</div>
