@@ -10,27 +10,36 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.web.dacn.dto.quote.QuoteCategoryDto;
 import com.web.dacn.dto.user.UserLoginDto;
 import com.web.dacn.entity.quote.CommentQuote;
 import com.web.dacn.entity.quote.Quote;
 import com.web.dacn.entity.quote.ReviewQuote;
 import com.web.dacn.entity.user.User;
+import com.web.dacn.service.quote.CommentQuoteService;
 import com.web.dacn.service.quote.QuoteCategoryService;
 import com.web.dacn.service.quote.QuoteService;
 import com.web.dacn.service.quote.ReviewQuoteService;
@@ -49,6 +58,9 @@ public class QuoteController {
 	
 	@Autowired
 	private ReviewQuoteService reviewQuoteService;
+	
+	@Autowired
+	private CommentQuoteService commentQuoteService;
 	
 	@ModelAttribute("categories")
 	public List<QuoteCategoryDto> getQuoteCategories() {
@@ -92,6 +104,7 @@ public class QuoteController {
 	}
 	
 	
+	
 	@PostMapping("review")
 	public ModelAndView review(
 			@RequestHeader(value = "referer", required = false) String referer,
@@ -128,6 +141,34 @@ public class QuoteController {
 		}
 		reviewQuote.setModTime(new Date());
 		reviewQuoteService.save(reviewQuote);
+		if(referer!=null) {
+			return new ModelAndView("redirect:" + referer);
+		}
+		return new ModelAndView("redirect:/quotes");
+	}
+	
+	@PostMapping("comment")
+	public ModelAndView comment(@RequestHeader(value = "referer", required = false) String referer,
+			@RequestParam("quote") Optional<Long> quoteId,
+			@RequestParam("content") Optional<String> comment,
+			@RequestParam("parent") Optional<Long> parentId) {
+		User user = (User) session.getAttribute("user");
+		if(user==null) {
+			return new ModelAndView("redirect:/auth/login");
+		}
+		CommentQuote commentQuote = new CommentQuote();
+		if(quoteId.isPresent()) {
+			Quote quote = quoteService.getById(quoteId.get());
+			commentQuote.setQuote(quote);
+		}
+		if(parentId.isPresent()) {
+			CommentQuote parent = commentQuoteService.getById(parentId.get());
+			commentQuote.setCommentQuote(parent);
+		}
+		commentQuote.setContent(comment.orElse(""));
+		commentQuote.setModTime(new Date());
+		commentQuote.setUser(user);
+		commentQuoteService.save(commentQuote);
 		if(referer!=null) {
 			return new ModelAndView("redirect:" + referer);
 		}

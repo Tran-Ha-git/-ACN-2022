@@ -24,6 +24,7 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.ColumnDefault;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.web.dacn.entity.user.Author;
 import com.web.dacn.entity.user.User;
 

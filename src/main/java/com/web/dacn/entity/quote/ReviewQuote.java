@@ -14,6 +14,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.web.dacn.entity.user.User;
 
 import lombok.AllArgsConstructor;
@@ -48,5 +49,6 @@ public class ReviewQuote implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name="quote_id")
+	@JsonIgnore
 	private Quote quote; 
 }

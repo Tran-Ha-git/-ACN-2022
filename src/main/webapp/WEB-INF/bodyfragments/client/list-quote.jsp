@@ -103,7 +103,8 @@
 								<p class="font-normal text-center text-gray-700">
 									Keyword:
 									<c:forEach items="${quote.quoteCategories}" var="category">
-										<span class="text-blue-500">${category.name}</span><span>, </span>
+										<span class="text-blue-500">${category.name}</span>
+										<span>, </span>
 									</c:forEach>
 								</p>
 							</div>
@@ -111,21 +112,17 @@
 								<c:set value="${quote.getMyReview(sessionScope.user.id)}"
 									var="reviewQuote"></c:set>
 								<button
-									class="m-2 inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+									class="m-2 inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300"
 									onclick="openRating({
 											id: ${quote.id},
 											star: ${reviewQuote!=null ? reviewQuote.star: '0'},
 											content: `${reviewQuote!=null ? reviewQuote.content: ''}`,
 										})">Rate</button>
 								<button
-									class="mx-2 inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+									class="mx-2 inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300"
 									onclick="openQuote({
 											id: ${quote.id},
-											content: `${quote.content}`,
-											author: `${quote.author.fullname}`,
-											keywords: [<c:forEach items="${quote.quoteCategories}" var="category">`${category.name }`,</c:forEach>],
-										})"
-									>View</button>
+										})">View</button>
 							</div>
 						</div>
 					</c:forEach>
@@ -245,7 +242,7 @@
 						<div class="flex mt-10">
 							<button data-modal-toggle="popup-modal-rate" type="submit"
 								class="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
-								Yes, I'm sure</button>
+								Feedback</button>
 							<button data-modal-toggle="popup-modal-rate" type="button"
 								class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10">No,
 								cancel</button>
@@ -258,7 +255,7 @@
 
 
 	<button
-		class="hidden text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+		class="hidden text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
 		type="button" data-modal-toggle="quote-modal" id="button-modal-quote">
 		Toggle modal</button>
 
@@ -267,9 +264,10 @@
 		class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
 		<div class="relative p-4 w-full max-w-4xl h-full md:h-auto">
 			<!-- Modal content -->
-			<div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+			<div
+				class="relative bg-white rounded-lg shadow overflow-y-auto max-h-[80vh]">
 				<button type="button"
-					class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+					class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
 					data-modal-toggle="quote-modal">
 					<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
 						xmlns="http://www.w3.org/2000/svg">
@@ -278,7 +276,8 @@
 							clip-rule="evenodd"></path></svg>
 				</button>
 				<div class="py-6 px-6 lg:px-8">
-					<h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">View quote</h3>
+					<h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">View
+						quote</h3>
 					<div class=mt-3>
 						<div class="px-3 py-3 bg-gray-50 rounded-md">
 							<p class="mb-3 font-medium text-center">
@@ -294,6 +293,22 @@
 							</div>
 						</div>
 					</div>
+					<div class="mt-5">
+						<form method="post" action="/quotes/comment">
+							<input type="hidden" name="quote" id="comment-quote" /> <label
+								for="comment"
+								class="block mb-2 text-sm font-medium text-gray-900">Your
+								comment</label>
+							<textarea required id="comment-content" rows="4" name="content"
+								class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+								placeholder="Your comment..."></textarea>
+							<div class="flex justify-end mt-2">
+								<button type="submit"
+									class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2.5 mb-2 mt-2">Send</button>
+							</div>
+						</form>
+					</div>
+					<div class="flex flex-col mt-2" id="list-comment"></div>
 				</div>
 			</div>
 		</div>
@@ -346,10 +361,90 @@
         	
         	
         	function openQuote(quote){
-        		$("#quote-content").text(quote?.content);
-        		$("#quote-author").text(quote?.author);
-        		$("#quote-keyword").text(quote?.keywords.join(", "));
-        		$("#button-modal-quote").click();
+        		let quote_data;
+        		$.ajax({
+        			 method: "GET",
+        			 url: "/api/v1/quotes/"+quote?.id,
+        		}).done(function (data){
+        			quote_data=data;
+        			console.log(quote_data);
+        			$("#comment-quote").val(quote_data?.id);
+        			$("#quote-content").text(quote_data?.content);
+        			$("#quote-author").text(quote_data?.author?.fullname);
+            		$("#quote-keyword").text(quote_data?.quoteCategories.map(item => item.name).join(", "));
+            		$("#comment-content").val("");
+            		var commentHtml = ``;
+            		quote_data.commentQuotes?.reverse()?.forEach(function(item) {
+            			commentHtml+=` <div class="mb-3">
+    						<div class="flex items-start">
+    						<div>
+    							<div class="relative">
+    								<img
+    									class="min-w-[60px] min-h-[60px] max-w-[60px] max-h-[60px] rounded-full"
+    									src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+    									alt=""><span
+    									class="bottom-0 left-7 absolute  w-3.5 h-3.5 bg-green-400 border-2 border-white rounded-full"></span>
+    							</div>
+    						</div>
+    						<div class="ml-5 p-2 px-4 rounded-[30px] bg-gray-100">
+    							<p class="font-bold">`+(item.user.username+" - "+item.user.fullname)+`</p>
+    							<p>`+item.content+`<p>
+    							<p class="text-sm">
+    								<span class="text-blue-500 font-bold cursor-pointer mr-2" onclick=\"showSubComment(`+item.id+`)\">Send</span>
+    								- <span class="text-sm">`+new Date(item.modTime).toISOString().slice(0,10).replace(/-/g,"/")+`</span>
+    							</p>
+    						</div>
+    					</div> `;
+    					item?.commentQuotes?.forEach(function(child) {
+							commentHtml+=`<div class="flex items-start ml-10 mt-3">
+								<div>
+									<div class="relative">
+										<img
+											class="min-w-[40px] min-h-[40px] max-w-[40px] max-h-[40px] rounded-full"
+											src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+											alt=""><span
+											class="bottom-0 left-7 absolute  w-3.5 h-3.5 bg-green-400 border-2 border-white rounded-full"></span>
+									</div>
+								</div>
+								<div class="ml-5 p-2 px-4 rounded-[30px] bg-gray-100">
+									<p class="font-bold">`+(child.user.username+" - "+child.user.fullname)+`</p>
+									<p>`+child.content+`<p>
+									<p class="text-sm">
+										<span class="text-blue-500 font-bold cursor-pointer mr-2" onclick=\"showSubComment(`+item.id+`)\">Send</span>
+										- <span class="text-sm">`+new Date(child.modTime).toISOString().slice(0,10).replace(/-/g,"/")+`</span>
+									</p>
+								</div>
+							</div> `;
+						});
+							
+            				commentHtml+= `<div class="w-full mt-3 hidden" id=\"comment-item-`+item.id+`\">
+    										<form method="post" action="/quotes/comment">
+    											<input type="hidden" name="parent" value=\"`+item.id+`\"/>
+    											<textarea id="subcomment-content" rows="4"
+    												name="content"
+    												required
+    												class="block p-2.5 ml-auto w-[90%] text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+    												placeholder="Your comment..."></textarea>
+    										<div class="flex justify-end mt-2">
+    											<button type="submit"
+    												class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2.5 mb-2 mt-2">Send</button>
+    										</div>
+    									</form>
+    								</div>
+    							</div> `;
+            			
+            		})
+            		$("#list-comment").html(commentHtml);
+            		$("#button-modal-quote").click();
+        		})
+        	}
+        	
+        	function showSubComment(id){
+        		if($("#comment-item-"+id).hasClass("hidden")){
+        			$("#comment-item-"+id).removeClass("hidden")	
+        		}else{
+        			$("#comment-item-"+id).addClass("hidden")	
+        		}
         	}
         </script>
 </body>

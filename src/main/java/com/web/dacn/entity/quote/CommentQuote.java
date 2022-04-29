@@ -19,6 +19,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.web.dacn.entity.user.User;
 
 import lombok.AllArgsConstructor;
@@ -41,10 +42,12 @@ public class CommentQuote implements Serializable{
 	@Column(columnDefinition = "nvarchar(MAX)")
 	private String content;
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date mod_time; 
+	@Column(name="mod_time")
+	private Date modTime; 
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name="parent_id")
+	@JsonIgnore
 	private CommentQuote commentQuote;
 	
 	@ManyToOne
@@ -53,6 +56,7 @@ public class CommentQuote implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name="quote_id")
+	@JsonIgnore
 	private Quote quote; 
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "commentQuote", cascade = {CascadeType.PERSIST, CascadeType.MERGE})

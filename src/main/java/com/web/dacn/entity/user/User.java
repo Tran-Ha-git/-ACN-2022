@@ -70,12 +70,5 @@ public class User implements Serializable{
             )
 	private Set<Quote> favoriteQuotes = new HashSet<>();
 	
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	private Collection<ReviewQuote> reviewQuotes = new ArrayList<>();
-
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	private Collection<CommentQuote> commentQuotes = new ArrayList<>();
 	
 }

@@ -229,7 +229,7 @@ CREATE TABLE commentquote (
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	content TEXT NOT NULL,
 	parent_id INT,
-	quote_id INT NOT NULL,
+	quote_id INT,
 	`user_id` INT NOT NULL,
 	mod_time DATETIME DEFAULT CURRENT_TIMESTAMP,
 	FOREIGN KEY (`quote_id`) REFERENCES `quote`(`id`),
