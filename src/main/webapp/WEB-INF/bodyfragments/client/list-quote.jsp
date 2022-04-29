@@ -95,7 +95,7 @@
 									<span class="ml-2 font-medium">${quote.commentQuotes.size()}</span>
 								</div>
 							</div>
-							<div class="py-2 px-2 bg-gray-50 font-medium">
+							<div class="py-2 px-4 bg-gray-100 font-medium rounded-lg max-w-[250px]">
 								<p class="font-normal text-center text-gray-700">
 									Author:<span class="text-blue-500">
 										${quote.author.fullname}</span>
@@ -103,8 +103,7 @@
 								<p class="font-normal text-center text-gray-700">
 									Keyword:
 									<c:forEach items="${quote.quoteCategories}" var="category">
-										<span class="text-blue-500">${category.name}</span>
-										<span>, </span>
+										<span class="text-blue-500">${category.name}</span><span>, </span>
 									</c:forEach>
 								</p>
 							</div>
@@ -114,9 +113,8 @@
 								<button
 									class="m-2 inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300"
 									onclick="openRating({
-											id: ${quote.id},
-											star: ${reviewQuote!=null ? reviewQuote.star: '0'},
-											content: `${reviewQuote!=null ? reviewQuote.content: ''}`,
+											quoteId: ${quote.id},
+											userId: ${sessionScope.user.id }
 										})">Rate</button>
 								<button
 									class="mx-2 inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300"
@@ -128,38 +126,40 @@
 					</c:forEach>
 				</div>
 				<div class="mt-10 w-full flex justify-center">
-					<nav aria-label="Page navigation example">
-						<ul class="inline-flex -space-x-px">
-							<li><a href=""
-								data="${results.number > 0 ? results.number:1}"
-								class="pagination-link py-2 px-3 ml-0 leading-tight text-white bg-blue-700 rounded-l-lg border border-gray-300 hover:bg-blue-500">Previous</a>
-							</li>
-							<c:forEach items="${pages}" var="page">
-								<c:choose>
-									<c:when test="${page!=results.number+1}">
-										<li><a href="" data="${page}"
-											class="pagination-link py-2 px-3 leading-tight text-white bg-blue-700 border border-gray-300 hover:bg-blue-500">${page }</a>
-										</li>
-									</c:when>
-									<c:otherwise>
-										<li><a href="" data="${page }" aria-current="page"
-											class="pagination-link py-2 px-3 text-white bg-blue-500 border border-gray-300 hover:bg-blue-500">${page }</a>
-										</li>
-									</c:otherwise>
-								</c:choose>
-							</c:forEach>
-							<li><a href=""
-								data="${results.number+2>results.totalPages?results.totalPages:results.number+2}"
-								class="pagination-link py-2 px-3 leading-tight text-white bg-blue-700 rounded-r-lg border border-gray-300 hover:bg-blue-500">Next</a>
-							</li>
-						</ul>
-					</nav>
+					<c:if test="${results.totalPages>0 }">
+						<nav aria-label="Page navigation example">
+								<ul class="inline-flex -space-x-px">
+									<li><a href=""
+										data="${results.number > 0 ? results.number:1}"
+										class="pagination-link py-2 px-3 ml-0 leading-tight text-white bg-blue-700 rounded-l-lg border border-gray-300 hover:bg-blue-500">Previous</a>
+									</li>
+									<c:forEach items="${pages}" var="page">
+										<c:choose>
+											<c:when test="${page!=results.number+1}">
+												<li><a href="" data="${page}"
+													class="pagination-link py-2 px-3 leading-tight text-white bg-blue-700 border border-gray-300 hover:bg-blue-500">${page }</a>
+												</li>
+											</c:when>
+											<c:otherwise>
+												<li><a href="" data="${page }" aria-current="page"
+													class="pagination-link py-2 px-3 text-white bg-blue-500 border border-gray-300 hover:bg-blue-500">${page }</a>
+												</li>
+											</c:otherwise>
+										</c:choose>
+									</c:forEach>
+									<li><a href=""
+										data="${results.number+2>results.totalPages?results.totalPages:results.number+2}"
+										class="pagination-link py-2 px-3 leading-tight text-white bg-blue-700 rounded-r-lg border border-gray-300 hover:bg-blue-500">Next</a>
+									</li>
+								</ul>
+							</nav>
+					</c:if>
 				</div>
 			</div>
 			<div class="col-span-3">
 				<aside class="w-full" aria-label="Sidebar">
 					<div class="mb-4 w-full">
-						<form class="w-full" method="get">
+						<form class="w-full" method="get" id="form-search">
 							<div class="relative mt-1">
 								<div
 									class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -169,7 +169,8 @@
 											d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
 											clip-rule="evenodd"></path></svg>
 								</div>
-								<input type="text" id="table-search"
+								<input type="text" id="search"
+									name="q"
 									class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 "
 									placeholder="Search for items">
 							</div>
@@ -181,14 +182,22 @@
 								MUC</h3>
 						</div>
 						<ul class="space-y-2">
-							<c:forEach items="${categories}" var="category">
-								<li><a href="?category=${category.id }"
-									class="flex items-center text-blue-600 p-3 text-base font-normal border-b-2 border-blue-500 text-gray-900 rounded-lg hover:bg-blue-100">
+							<li><a href="/quotes"
+									class=" ${category==null ?'bg-blue-100':'hover:bg-blue-100' } nav-item flex items-center text-blue-600 p-3 text-base font-normal border-b-2 border-blue-500 text-gray-900 rounded-lg">
 										<svg class="w-5 h-5" fill="none" stroke="currentColor"
 											viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 											<path stroke-linecap="round" stroke-linejoin="round"
 												stroke-width="2" d="M9 5l7 7-7 7"></path></svg> <span
-										class="ml-5 text-gray-900 font-medium">${category.name}</span>
+										class="ml-5 text-gray-900 font-medium">Tat ca</span>
+								</a></li>
+							<c:forEach items="${categories}" var="item">
+								<li><a data="${item.id }" href="?category=${item.slug }"
+									class="${category==item.slug ?'bg-blue-100':'hover:bg-blue-100' } nav-item flex items-center text-blue-600 p-3 text-base font-normal border-b-2 border-blue-500 text-gray-900 rounded-lg">
+										<svg class="w-5 h-5" fill="none" stroke="currentColor"
+											viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+											<path stroke-linecap="round" stroke-linejoin="round"
+												stroke-width="2" d="M9 5l7 7-7 7"></path></svg> <span
+										class="ml-5 text-gray-900 font-medium">${item.name}</span>
 								</a></li>
 							</c:forEach>
 						</ul>
@@ -276,19 +285,18 @@
 							clip-rule="evenodd"></path></svg>
 				</button>
 				<div class="py-6 px-6 lg:px-8">
-					<h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">View
-						quote</h3>
+					<h3 class="mb-4 text-xl font-medium text-gray-900">View quote</h3>
 					<div class=mt-3>
-						<div class="px-3 py-3 bg-gray-50 rounded-md">
+						<div class="px-3 py-3 bg-blue-200 rounded-md">
 							<p class="mb-3 font-medium text-center">
 								&#34;<span id="quote-content"></span>&#34;
 							</p>
 							<div>
 								<p class="font-normal text-gray-700">
-									Author: <span class="text-blue-500" id="quote-author"></span>
+									Author: <span class="text-red-500" id="quote-author"></span>
 								</p>
 								<p class="font-normal text-gray-700">
-									Keyword: <span class="text-blue-500" id="quote-keyword"></span>
+									Keyword: <span class="text-red-500" id="quote-keyword"></span>
 								</p>
 							</div>
 						</div>
@@ -319,9 +327,10 @@
             const url = new URL(url_string);
             const search = url.searchParams.get("q");
             const paginationLinks = document.querySelectorAll(".pagination-link");
+            const navItems = document.querySelectorAll(".nav-item");
             if (paginationLinks) {
                 paginationLinks.forEach(item => {
-                    var search = location.search.substring(1);
+                	var search = location.search.substring(1);
                     const params = search ? JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"')
                             .replace(/&/g, '","').replace(/=/g, '":"') + '"}') : {};
                     const page = item.getAttribute("data");
@@ -338,13 +347,21 @@
         			$("#svg-star-"+(i+1)).removeClass("text-yellow-300");
         			$("#svg-star-"+(i+1)).addClass("text-gray-400");
         		}
-        		for(let i=0;i<quote?.star; i++){
-        			$("#svg-star-"+(i+1)).removeClass("text-gray-400");
-        			$("#svg-star-"+(i+1)).addClass("text-yellow-300");
-        		}
-        		$("#content").val(quote?.content);
-        		$("#star-quote").val(quote?.id);
-        		$("#button-modal-star").click();
+        		$("#star-quote").val(quote?.quoteId);
+        		$("#content").val("");
+        		$.ajax({
+	       			 method: "GET",
+	       			 url: "/api/v1/quotes/"+quote?.quoteId+"/reviews/"+quote?.userId,
+	       		}).done(function (data){
+	       			if(data){
+	            		for(let i=0;i<data?.star; i++){
+	            			$("#svg-star-"+(i+1)).removeClass("text-gray-400");
+	            			$("#svg-star-"+(i+1)).addClass("text-yellow-300");
+	            		}
+	            		$("#content").val(data?.content);
+	       			}
+	       		})
+	       		$("#button-modal-star").click();
         	}
         	
         	function selectStar(numberStar){
@@ -383,7 +400,7 @@
     									class="min-w-[60px] min-h-[60px] max-w-[60px] max-h-[60px] rounded-full"
     									src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
     									alt=""><span
-    									class="bottom-0 left-7 absolute  w-3.5 h-3.5 bg-green-400 border-2 border-white rounded-full"></span>
+    									class="bottom-0 left-11 absolute  w-3.5 h-3.5 bg-green-400 border-2 border-white rounded-full"></span>
     							</div>
     						</div>
     						<div class="ml-5 p-2 px-4 rounded-[30px] bg-gray-100">
@@ -446,6 +463,21 @@
         			$("#comment-item-"+id).addClass("hidden")	
         		}
         	}
+        	
+        	document.getElementById("form-search").addEventListener("submit", function(event){
+        		  	event.preventDefault();
+        		  	const url_string = window.location.href;
+		            const url = new URL(url_string);
+		            const content = document.getElementById("search").value;
+		            var search = location.search.substring(1);
+                    const params = search ? JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"')
+                            .replace(/&/g, '","').replace(/=/g, '":"') + '"}') : {};
+                    params.q = content;
+                    const {page,...newParams} = params;
+                    const href = decodeURIComponent(new URLSearchParams(newParams).toString());
+                    window.location.href="/quotes?"+href
+        	});
+        	
         </script>
 </body>
 </html>

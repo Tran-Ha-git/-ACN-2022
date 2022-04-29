@@ -22,6 +22,12 @@ public class QuoteServiceImpl implements QuoteService {
 	private QuoteRepository quoteRepository;
 
 	@Override
+	public Page<Quote> findAllByContentContainingAndQuoteCategories_slug(String content, String categorySlug,
+			Pageable pageable) {
+		return quoteRepository.findAllByContentContainingAndQuoteCategories_slug(content, categorySlug, pageable);
+	}
+
+	@Override
 	public Page<Quote> findByContentContaining(String content, Pageable pageable) {
 		return quoteRepository.findByContentContaining(content, pageable);
 	}

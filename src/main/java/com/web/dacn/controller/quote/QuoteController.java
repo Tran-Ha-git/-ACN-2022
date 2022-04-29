@@ -72,7 +72,9 @@ public class QuoteController {
 	}
 	
 	@GetMapping("")
-	public String get(@RequestParam(name = "q", required = false) String search, ModelMap model,
+	public String get(@RequestParam(name = "q", required = false) String search, 
+			@RequestParam(name = "category", required = false) String category,
+			ModelMap model,
 			@RequestParam(name= "page") Optional<Integer> page, 
 			@RequestParam(name= "size") Optional<Integer> size) {
 		int pageSize = size.orElse(9	);
@@ -80,10 +82,17 @@ public class QuoteController {
 		int currentPage = page.orElse(1);
 		Pageable pageable = PageRequest.of(currentPage-1, pageSize, Sort.by("id"));
 		Page<Quote> results = null;
-		if (StringUtils.hasText(search)) {
+		if (StringUtils.hasText(search) && StringUtils.hasText(category)) {
+			results = quoteService.findAllByContentContainingAndQuoteCategories_slug(search,category, pageable);
+			model.addAttribute("search", search);
+			model.addAttribute("category", category);
+		}else if (StringUtils.hasText(search)) {
 			results = quoteService.findByContentContaining(search, pageable);
 			model.addAttribute("search", search);
-		} else {
+		}else if (StringUtils.hasText(category)){
+			results = quoteService.findAllByContentContainingAndQuoteCategories_slug("",category, pageable);
+			model.addAttribute("category", category);
+		}  else {
 			results = quoteService.findAll(pageable);
 		}
 		int totalPages = results.getTotalPages();

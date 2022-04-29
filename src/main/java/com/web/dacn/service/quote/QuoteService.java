@@ -76,4 +76,6 @@ public interface QuoteService {
 
 	Page<Quote> findByContentContaining(String content, Pageable pageable);
 
+	Page<Quote> findAllByContentContainingAndQuoteCategories_slug(String content, String categorySlug, Pageable pageable);
+
 }

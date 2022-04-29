@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.web.dacn.entity.quote.CommentQuote;
 import com.web.dacn.entity.quote.Quote;
+import com.web.dacn.entity.quote.ReviewQuote;
 import com.web.dacn.service.quote.CommentQuoteService;
 import com.web.dacn.service.quote.QuoteService;
+import com.web.dacn.service.quote.ReviewQuoteService;
 
 @RestController
 @CrossOrigin(origins="/*")
@@ -28,6 +30,10 @@ public class QuoteApiController {
 	@Autowired
 	private CommentQuoteService commentQuoteService;
 	
+	@Autowired 
+	private ReviewQuoteService reviewQuoteService;
+	
+	
 	@GetMapping("/{id}")
 	public Quote detail(@PathVariable("id") Long quoteId) {
 		Optional<Quote> optional = quoteService.findById(quoteId);
@@ -38,6 +44,11 @@ public class QuoteApiController {
 	public List<CommentQuote> comments(@PathVariable("id") Long quoteId) {
 		List<CommentQuote>  commentQuotes= commentQuoteService.findByQuoteId(quoteId);
 		return commentQuotes;
+	}
+	
+	@GetMapping("/{id}/reviews/{userId}")
+	public ReviewQuote getMyReview(@PathVariable("id") Long quoteId, @PathVariable("userId") Long userId) {
+		return reviewQuoteService.findByUserIdAndQuoteId(userId, quoteId).orElse(null);
 	}
 	
 }
