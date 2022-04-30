@@ -95,7 +95,7 @@ public class QuoteController {
 			pageable = PageRequest.of(currentPage-1, pageSize, Sort.by("id").descending());
 		}
 		Page<Quote> results = null;
-		if (StringUtils.hasText(search) && StringUtils.hasText(category)) {
+		if (StringUtils.hasText(category) && StringUtils.hasText(search)) {
 			results = quoteService.findAllByContentContainingAndQuoteCategories_slug(search,category, pageable);
 			model.addAttribute("search", search);
 			model.addAttribute("category", category);
