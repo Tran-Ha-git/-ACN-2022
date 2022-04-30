@@ -11,5 +11,5 @@ import com.web.dacn.entity.quote.Quote;
 @Repository
 public interface QuoteRepository extends JpaRepository<Quote, Long>{
 	Page<Quote> findByContentContaining(String content, Pageable pageable);
-	Page<Quote> findAllByContentContainingAndQuoteCategories_slug(String content,@Param("slug")String categorySlug, Pageable pageable);
+	Page<Quote> findAllByContentContainingAndQuoteCategories_slug(String content,String categorySlug, Pageable pageable);
 }
