@@ -1,18 +1,10 @@
 package com.web.dacn.service;
 
-import java.text.ParseException;
-
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.web.dacn.dto.BookDTo;
-import com.web.dacn.dto.BooksDTO;
-
-import com.web.dacn.entity.AuthorEntity;
-import com.web.dacn.entity.BookCategoryEntity;
-import com.web.dacn.entity.BookEntity;
 
 @Service
 public interface BookService {
@@ -51,9 +43,6 @@ public interface BookService {
 //    AuthorEntity saveBooKAuthor();
 //    BookCategoryEntity saveBooKCategory();
     
-	// List<BookDTO> findAll();
-	List<BooksDTO> getBooks();
-
 	List<String> getAuthorsOfBook(int id);
 
 	List<String> getCategoriesOfBook(int id);
