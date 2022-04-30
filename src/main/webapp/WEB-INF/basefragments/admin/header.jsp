@@ -24,6 +24,8 @@
 						  </c:if>
 						 
 					<i class="fas fa-caret-down"></i>
+						class="account-image-circle" /> Thoai Anh <i
+						class="fas fa-caret-down"></i>
 				</button>
 			</div>
 
@@ -32,6 +34,8 @@
 				 <a href="#">Thông báo</a>
 				  <a href="#">Cài đặt</a>
 				  <a href="<c:url value="/logout" />" >Đăng xuất</a>
+				<a href="#">Trang cá nhân</a> <a href="#">Thông báo</a> <a href="#">Cài
+					đặt</a>
 			</div>
 		</div>
 
