@@ -37,7 +37,7 @@
 				<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
 					<c:forEach items="${results.content }" var="quote">
 						<div
-							class="max-w-md py-4 px-2 bg-white rounded-lg border border-gray-200 shadow-md flex flex-col items-center justify-between">
+							class="max-w-sm m-auto h-full py-4 px-2 bg-white rounded-lg border border-gray-200 shadow-md flex flex-col items-center justify-between">
 							<a href="#"> <img
 								class="mx-auto rounded-full h-[150px] w-[150px] mt-3"
 								src="${quote.thumbnail}" alt="" />
