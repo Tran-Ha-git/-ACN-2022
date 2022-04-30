@@ -98,16 +98,23 @@
 									<span
 										class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">${quote.getAverageStar() }</span>
 								</div>
-								<div class="flex items-center text-gray-600 ml-2">
-									<svg class="w-5 h-5" fill="none" stroke="currentColor"
+								<div class="flex items-center text-gray-600 ml-2  cursor-pointer hover:text-blue-500"
+									onclick="showFeedback({
+											id: ${quote.id},
+										})"
+								>
+									<svg class="w-5 h-5 hover:text-blue-500" fill="none" stroke="currentColor"
 										viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 										<path stroke-linecap="round" stroke-linejoin="round"
 											stroke-width="2"
 											d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
 									<span class="ml-2 font-medium">${quote.reviewQuotes.size()}</span>
 								</div>
-								<div class="flex items-center text-gray-600 ml-2">
-									<svg class="w-6 h-6 text-gray-500" fill="currentColor"
+								<div class="flex items-center text-gray-600 ml-2 cursor-pointer hover:text-blue-500" 
+									onclick="openQuote({
+											id: ${quote.id},
+										})">
+									<svg class="w-6 h-6 text-gray-500 hover:text-blue-500" fill="currentColor"
 										viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
 										<path fill-rule="evenodd"
 											d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z"
@@ -350,6 +357,37 @@
 	</div>
 	
 	
+	<button
+		class="hidden text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+		type="button" data-modal-toggle="feedback-view-modal" id="button-modal-feedback">
+		feeback modal</button>
+
+	<!-- Main modal -->
+	<div id="feedback-view-modal" tabindex="-1" aria-hidden="true"
+		class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+		<div class="relative p-4 w-full max-w-4xl h-full md:h-auto">
+			<!-- Modal content -->
+			<div
+				class="relative bg-white rounded-lg shadow overflow-y-auto max-h-[80vh]">
+				<button type="button"
+					class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+					data-modal-toggle="feedback-view-modal">
+					<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+						xmlns="http://www.w3.org/2000/svg">
+						<path fill-rule="evenodd"
+							d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+							clip-rule="evenodd"></path></svg>
+				</button>
+				<div class="py-6 px-6 lg:px-8">
+					<h3 class="mb-4 text-xl font-medium text-gray-900 flex">View feedback - <span style="display: -webkit-box; max-width: 70%; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;" class="ml-2" id="view-feedback-title"></span></h3>
+					<div class="flex flex-col mt-2" id="list-feedback">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
 	<button id="button-authentication-modal" class="hidden text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" 
 		type="button" data-modal-toggle="authentication-modal">
 	 Auth modal
@@ -392,6 +430,7 @@
 	        </div>
 	    </div>
 	</div> 
+	
 	<script src="https://unpkg.com/flowbite@1.4.3/dist/flowbite.js"></script>
 	<script>
             const url_string = window.location.href;
@@ -531,6 +570,74 @@
         		})
         	}
         	
+			function showFeedback(quote){
+				$.ajax({
+       			 	method: "GET",
+       			 	url: "/api/v1/quotes/"+quote?.id,
+       			}).done(function (quote_data){
+       				$("#view-feedback-title").text(quote_data?.content);
+       				var commentHtml = ``;
+       				if(quote_data.reviewQuotes.length<=0){
+       					commentHtml+=`
+       						<div class="flex justify-center items-center h-[200px]">
+       							<p class="text-xl">No one gives feedback</p>
+       						</div>
+       					`
+       				}
+            		quote_data.reviewQuotes?.reverse()?.forEach(function(item) {
+            			commentHtml+=` <div class="mb-3">
+			    						<div class="flex items-start">
+				    						<div>
+				    							<div class="relative">
+				    								<img
+				    									class="min-w-[60px] min-h-[60px] max-w-[60px] max-h-[60px] rounded-full"
+				    									src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+				    									alt=""><span
+				    									class="bottom-0 left-11 absolute  w-3.5 h-3.5 bg-green-400 border-2 border-white rounded-full"></span>
+				    							</div>
+				    						</div>
+				    						<div class="ml-5 p-2 px-4 rounded-[30px] bg-gray-100">
+				    							<div class="flex items-center">
+				    								<p class="font-bold">`+(item.user.username+" - "+item.user.fullname)+`</p>
+				    								<div class="flex items-center ml-3">`
+				    								
+				   	for(let i=0; i<item?.star; i++){
+				   		commentHtml += ` <span>
+											<svg id="svg-star-feedback-${index }"
+											class="w-5 h-5 text-yellow-400 star-item cursor-pointer"
+											fill="currentColor" viewBox="0 0 20 20"
+											xmlns="http://www.w3.org/2000/svg">
+											<path
+												d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+										</span> `
+				    }		
+            		for(let i=item?.star; i<5; i++){
+    				   		commentHtml += ` <span>
+    											<svg id="svg-star-feedback-${index }"
+    											class="w-5 h-5 text-gray-400 star-item cursor-pointer"
+    											fill="currentColor" viewBox="0 0 20 20"
+    											xmlns="http://www.w3.org/2000/svg">
+    											<path
+    												d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+    										</span> `
+    				 }	
+													
+					 commentHtml+=`					</div>
+				    							</div>
+				    							<p>`+item.content+`<p>
+				    							<p class="text-sm">
+				    								<span class="text-blue-500 font-bold cursor-pointer mr-2" onclick=\"showSubComment(`+item.id+`)\">Send</span>
+				    								- <span class="text-sm">`+new Date(item.modTime).toISOString().slice(0,10).replace(/-/g,"/")+`</span>
+				    							</p>
+				    						</div>
+				    					</div> 
+			    					</div>`;
+            		})
+            		$("#list-feedback").html(commentHtml);
+            		$("#button-modal-feedback").click();
+       			})
+        	}
+        	
         	function showSubComment(id){
         		if($("#comment-item-"+id).hasClass("hidden")){
         			$("#comment-item-"+id).removeClass("hidden")	
@@ -538,6 +645,8 @@
         			$("#comment-item-"+id).addClass("hidden")	
         		}
         	}
+        	
+        	
         	
         	document.getElementById("form-search").addEventListener("submit", function(event){
         		  	event.preventDefault();
