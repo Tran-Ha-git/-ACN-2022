@@ -23,6 +23,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Formula;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.web.dacn.entity.user.Author;
@@ -78,6 +79,9 @@ public class Quote implements Serializable{
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "quote", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private Collection<ReviewQuote> reviewQuotes = new ArrayList<>();
+	
+	@Formula("(select count(*) from reviewquote where reviewquote.quote_id=id)")
+	private long feedback;
 
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "quote", cascade = {CascadeType.PERSIST, CascadeType.MERGE})

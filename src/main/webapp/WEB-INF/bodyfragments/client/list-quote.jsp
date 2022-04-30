@@ -12,12 +12,32 @@
 </head>
 <body>
 	<div class="container py-4">
-		<div class="grid grid-cols-12 gap-4 mt-2">
-			<div class="col-span-9">
-				<div class="grid grid-cols-3 gap-4">
+		<div class="grid md:grid-cols-12 gap-4 mt-2">
+			<div class="md:col-span-9">
+				<form method="GET" id="form-sort">
+					<div class="flex justify-end mb-3">
+							<select name="sort" id="sort"
+						class="max-w-[200px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+								<option value="">Sort</option>
+								<option value="view_desc" ${sort=='view_desc'? "selected":"" }>
+									<span class="mr-2">View &#8595;</span>
+								</option>
+								<option value="view_asc" ${sort=='view_asc'? "selected":"" }>
+									<span class="mr-2">View &#8593;</span>
+								</option>
+								<option value="feedback_desc" ${sort=='feedback_desc'? "selected":"" }>
+									<span class="mr-2">High feedback &#8595;</span>
+								</option>
+								<option value="feedback_asc" ${sort=='feedback_asc'? "selected":"" }>
+									<span class="mr-2">High feedback &#8593;</span>
+								</option>
+							</select>
+					</div>
+				</form>
+				<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
 					<c:forEach items="${results.content }" var="quote">
 						<div
-							class="py-4 px-2 bg-white rounded-lg border border-gray-200 shadow-md flex flex-col items-center justify-between">
+							class="max-w-md py-4 px-2 bg-white rounded-lg border border-gray-200 shadow-md flex flex-col items-center justify-between">
 							<a href="#"> <img
 								class="mx-auto rounded-full h-[150px] w-[150px] mt-3"
 								src="${quote.thumbnail}" alt="" />
@@ -26,7 +46,7 @@
 								<p
 									style="display: -webkit-box; max-width: 100%; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">${quote.content }</p>
 							</div>
-							<div class="flex justify-center items-center mb-2">
+							<div class="flex justify-center items-center mb-2  flex-wrap">
 								<div class="flex items-center text-grey-500 mr-3">
 									<span class="mr-2 font-medium">${quote.view}</span>
 									<svg class="w-5 h-5" fill="none" stroke="currentColor"
@@ -95,7 +115,8 @@
 									<span class="ml-2 font-medium">${quote.commentQuotes.size()}</span>
 								</div>
 							</div>
-							<div class="py-2 px-4 bg-gray-100 font-medium rounded-lg max-w-[250px]">
+							<div
+								class="py-2 px-4 bg-gray-100 font-medium rounded-lg max-w-[250px]">
 								<p class="font-normal text-center text-gray-700">
 									Author:<span class="text-blue-500">
 										${quote.author.fullname}</span>
@@ -103,7 +124,8 @@
 								<p class="font-normal text-center text-gray-700">
 									Keyword:
 									<c:forEach items="${quote.quoteCategories}" var="category">
-										<span class="text-blue-500">${category.name}</span><span>, </span>
+										<span class="text-blue-500">${category.name}</span>
+										<span>, </span>
 									</c:forEach>
 								</p>
 							</div>
@@ -114,13 +136,19 @@
 									class="m-2 inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300"
 									onclick="openRating({
 											quoteId: ${quote.id},
-											userId: ${sessionScope.user.id }
-										})">Rate</button>
+											userId: ${sessionScope.user!=null ? sessionScope.user.id: 'null' }
+										})">
+									<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+									<span class="ml-2">Rate</span>		
+								</button>
 								<button
 									class="mx-2 inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300"
 									onclick="openQuote({
 											id: ${quote.id},
-										})">View</button>
+										})">
+										<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+										<span class="ml-2">View</span>
+								</button>
 							</div>
 						</div>
 					</c:forEach>
@@ -128,35 +156,35 @@
 				<div class="mt-10 w-full flex justify-center">
 					<c:if test="${results.totalPages>0 }">
 						<nav aria-label="Page navigation example">
-								<ul class="inline-flex -space-x-px">
-									<li><a href=""
-										data="${results.number > 0 ? results.number:1}"
-										class="pagination-link py-2 px-3 ml-0 leading-tight text-white bg-blue-700 rounded-l-lg border border-gray-300 hover:bg-blue-500">Previous</a>
-									</li>
-									<c:forEach items="${pages}" var="page">
-										<c:choose>
-											<c:when test="${page!=results.number+1}">
-												<li><a href="" data="${page}"
-													class="pagination-link py-2 px-3 leading-tight text-white bg-blue-700 border border-gray-300 hover:bg-blue-500">${page }</a>
-												</li>
-											</c:when>
-											<c:otherwise>
-												<li><a href="" data="${page }" aria-current="page"
-													class="pagination-link py-2 px-3 text-white bg-blue-500 border border-gray-300 hover:bg-blue-500">${page }</a>
-												</li>
-											</c:otherwise>
-										</c:choose>
-									</c:forEach>
-									<li><a href=""
-										data="${results.number+2>results.totalPages?results.totalPages:results.number+2}"
-										class="pagination-link py-2 px-3 leading-tight text-white bg-blue-700 rounded-r-lg border border-gray-300 hover:bg-blue-500">Next</a>
-									</li>
-								</ul>
-							</nav>
+							<ul class="inline-flex -space-x-px">
+								<li><a href=""
+									data="${results.number > 0 ? results.number:1}"
+									class="pagination-link py-2 px-3 ml-0 leading-tight text-white bg-blue-700 rounded-l-lg border border-gray-300 hover:bg-blue-500">Previous</a>
+								</li>
+								<c:forEach items="${pages}" var="page">
+									<c:choose>
+										<c:when test="${page!=results.number+1}">
+											<li><a href="" data="${page}"
+												class="pagination-link py-2 px-3 leading-tight text-white bg-blue-700 border border-gray-300 hover:bg-blue-500">${page }</a>
+											</li>
+										</c:when>
+										<c:otherwise>
+											<li><a href="" data="${page }" aria-current="page"
+												class="pagination-link py-2 px-3 text-white bg-blue-500 border border-gray-300 hover:bg-blue-500">${page }</a>
+											</li>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+								<li><a href=""
+									data="${results.number+2>results.totalPages?results.totalPages:results.number+2}"
+									class="pagination-link py-2 px-3 leading-tight text-white bg-blue-700 rounded-r-lg border border-gray-300 hover:bg-blue-500">Next</a>
+								</li>
+							</ul>
+						</nav>
 					</c:if>
 				</div>
 			</div>
-			<div class="col-span-3">
+			<div class="md:col-span-3">
 				<aside class="w-full" aria-label="Sidebar">
 					<div class="mb-4 w-full">
 						<form class="w-full" method="get" id="form-search">
@@ -169,8 +197,7 @@
 											d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
 											clip-rule="evenodd"></path></svg>
 								</div>
-								<input type="text" id="search"
-									name="q"
+								<input type="text" id="search" name="q"
 									class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 "
 									placeholder="Search for items">
 							</div>
@@ -183,13 +210,13 @@
 						</div>
 						<ul class="space-y-2">
 							<li><a href="/quotes"
-									class=" ${category==null ?'bg-blue-100':'hover:bg-blue-100' } nav-item flex items-center text-blue-600 p-3 text-base font-normal border-b-2 border-blue-500 text-gray-900 rounded-lg">
-										<svg class="w-5 h-5" fill="none" stroke="currentColor"
-											viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+								class=" ${category==null ?'bg-blue-100':'hover:bg-blue-100' } nav-item flex items-center text-blue-600 p-3 text-base font-normal border-b-2 border-blue-500 text-gray-900 rounded-lg">
+									<svg class="w-5 h-5" fill="none" stroke="currentColor"
+										viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 											<path stroke-linecap="round" stroke-linejoin="round"
-												stroke-width="2" d="M9 5l7 7-7 7"></path></svg> <span
-										class="ml-5 text-gray-900 font-medium">Tat ca</span>
-								</a></li>
+											stroke-width="2" d="M9 5l7 7-7 7"></path></svg> <span
+									class="ml-5 text-gray-900 font-medium">Tat ca</span>
+							</a></li>
 							<c:forEach items="${categories}" var="item">
 								<li><a data="${item.id }" href="?category=${item.slug }"
 									class="${category==item.slug ?'bg-blue-100':'hover:bg-blue-100' } nav-item flex items-center text-blue-600 p-3 text-base font-normal border-b-2 border-blue-500 text-gray-900 rounded-lg">
@@ -209,7 +236,7 @@
 	<button
 		class="hidden text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
 		type="button" data-modal-toggle="popup-modal-rate"
-		id="button-modal-star">Toggle modal</button>
+		id="button-modal-star">Rating modal</button>
 
 	<div id="popup-modal-rate" tabindex="-1"
 		class="fixed top-0 left-0 right-0 z-50 hidden overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
@@ -266,7 +293,7 @@
 	<button
 		class="hidden text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
 		type="button" data-modal-toggle="quote-modal" id="button-modal-quote">
-		Toggle modal</button>
+		View modal</button>
 
 	<!-- Main modal -->
 	<div id="quote-modal" tabindex="-1" aria-hidden="true"
@@ -321,6 +348,50 @@
 			</div>
 		</div>
 	</div>
+	
+	
+	<button id="button-authentication-modal" class="hidden text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" 
+		type="button" data-modal-toggle="authentication-modal">
+	 Auth modal
+	</button>
+
+	<!-- Main modal -->
+	<div id="authentication-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+	    <div class="relative p-4 w-full max-w-md h-full md:h-auto">
+	        <!-- Modal content -->
+	        <div class="relative bg-white rounded-lg shadow">
+	            <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-toggle="authentication-modal">
+	                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
+	            </button>
+	            <div class="py-6 px-6 lg:px-8">
+	                <h3 class="mb-4 text-xl font-medium text-gray-900">Sign in to our platform</h3>
+	                <form class="space-y-6" action="/auth/login" method="post">
+	                    <div>
+	                        <label for="username" class="block mb-2 text-sm font-medium text-gray-900">Your username</label>
+	                        <input type="text" name="username" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="abc" required>
+	                    </div>
+	                    <div>
+	                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Your password</label>
+	                        <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+	                    </div>
+	                    <div class="flex justify-between">
+	                        <div class="flex items-start">
+	                            <div class="flex items-center h-5">
+	                                <input id="remember" type="checkbox" value="" class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300" required>
+	                            </div>
+	                            <label for="remember" class="ml-2 text-sm font-medium text-gray-900">Remember me</label>
+	                        </div>
+	                        <a href="#" class="text-sm text-blue-700 hover:underline">Lost Password?</a>
+	                    </div>
+	                    <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Login to your account</button>
+	                    <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
+	                        Not registered? <a href="/auth/login" class="text-blue-700 hover:underline">Create account</a>
+	                    </div>
+	                </form>
+	            </div>
+	        </div>
+	    </div>
+	</div> 
 	<script src="https://unpkg.com/flowbite@1.4.3/dist/flowbite.js"></script>
 	<script>
             const url_string = window.location.href;
@@ -343,25 +414,29 @@
 	<script type="text/javascript">
         	var quote_id;
         	function openRating(quote){
-        		for(let i=0;i<5; i++){
-        			$("#svg-star-"+(i+1)).removeClass("text-yellow-300");
-        			$("#svg-star-"+(i+1)).addClass("text-gray-400");
+        		if(quote.userId==null){
+        			$("#button-authentication-modal").click();
+        		}else{
+        			for(let i=0;i<5; i++){
+            			$("#svg-star-"+(i+1)).removeClass("text-yellow-300");
+            			$("#svg-star-"+(i+1)).addClass("text-gray-400");
+            		}
+            		$("#star-quote").val(quote?.quoteId);
+            		$("#content").val("");
+            		$.ajax({
+    	       			 method: "GET",
+    	       			 url: "/api/v1/quotes/"+quote?.quoteId+"/reviews/"+quote?.userId,
+    	       		}).done(function (data){
+    	       			if(data){
+    	            		for(let i=0;i<data?.star; i++){
+    	            			$("#svg-star-"+(i+1)).removeClass("text-gray-400");
+    	            			$("#svg-star-"+(i+1)).addClass("text-yellow-300");
+    	            		}
+    	            		$("#content").val(data?.content);
+    	       			}
+    	       		})
+    	       		$("#button-modal-star").click();        			
         		}
-        		$("#star-quote").val(quote?.quoteId);
-        		$("#content").val("");
-        		$.ajax({
-	       			 method: "GET",
-	       			 url: "/api/v1/quotes/"+quote?.quoteId+"/reviews/"+quote?.userId,
-	       		}).done(function (data){
-	       			if(data){
-	            		for(let i=0;i<data?.star; i++){
-	            			$("#svg-star-"+(i+1)).removeClass("text-gray-400");
-	            			$("#svg-star-"+(i+1)).addClass("text-yellow-300");
-	            		}
-	            		$("#content").val(data?.content);
-	       			}
-	       		})
-	       		$("#button-modal-star").click();
         	}
         	
         	function selectStar(numberStar){
@@ -477,6 +552,21 @@
                     const href = decodeURIComponent(new URLSearchParams(newParams).toString());
                     window.location.href="/quotes?"+href
         	});
+        	
+        	
+        	document.getElementById("sort").addEventListener("change", function(event){
+    		  	event.preventDefault();
+    		  	const url_string = window.location.href;
+	            const url = new URL(url_string);
+	            const sort = document.getElementById("sort").value;
+	            var search = location.search.substring(1);
+                const params = search ? JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"')
+                        .replace(/&/g, '","').replace(/=/g, '":"') + '"}') : {};
+                params.sort = sort;
+                const {page,...newParams} = params;
+                const href = decodeURIComponent(new URLSearchParams(newParams).toString());
+                window.location.href="/quotes?"+href
+    	});
         	
         </script>
 </body>
