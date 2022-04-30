@@ -1,16 +1,8 @@
 package com.web.dacn.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import com.web.dacn.dto.UserDto;
-import com.web.dacn.entity.User;
-import com.web.dacn.service.IDemoService;
 
 @Controller
 public class DemoController {
@@ -34,10 +26,10 @@ public class DemoController {
 		return "onlineReadPage";
 	}
 
-//	@GetMapping("/auth")
-//	public String getAuthPage(Model model) {
-//		return "authPage";
-//	}
+	@GetMapping("/auth")
+	public String getAuthPage(Model model) {
+		return "authPage";
+	}
 
 	@GetMapping("/audio")
 	public String getAudio(Model model) {

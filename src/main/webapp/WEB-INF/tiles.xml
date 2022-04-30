@@ -80,7 +80,15 @@
 			value="css/client/list-audio.css" />
 	</definition>
 	
-
+	
+	<!-- List Quote Page -->
+	<definition name="listQuotePage"
+		extends="client.base.definition">
+		<put-attribute name="title" value="List Quote Page" />
+		<put-attribute name="body"
+			value="/WEB-INF/bodyfragments/client/list-quote.jsp" />
+	</definition>
+	
 	<!-- Auth -->
 	
 		

@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.web.dacn.dto.UserRegisterDto;
-import com.web.dacn.service.impl.UserService;
+import com.web.dacn.service.user.UserService;
+
 
 @Controller
 @RequestMapping(path = "/user")
@@ -18,7 +19,7 @@ public class UserController {
 
 	@PostMapping("/registration")
 	public String registration(@ModelAttribute("userForm") UserRegisterDto userForm) {
-		userService.register(userForm);
+		// lam lai register 
 		return "authPage";
 	}
 }

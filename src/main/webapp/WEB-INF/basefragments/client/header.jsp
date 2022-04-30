@@ -6,6 +6,7 @@
 			<span><i class="fa-solid fa-bars"></i></span>
 			<ul>
 				<li><a href="/home">Trang chủ</a></li>
+				<li><a href="#">Trang chủ</a></li>
 				<li><a href="#">Sách nói</a></li>
 				<li><a href="#">Ebook</a></li>
 				<li><a href="#">Truyện</a></li>
@@ -20,6 +21,7 @@
 			<nav class="d-none d-lg-block">
 				<ul>
 					<li><a href="/home">Trang chủ</a></li>
+					<li><a href="#">Trang chủ</a></li>
 					<li><a href="#">Sách nói</a></li>
 					<li><a href="#">Ebook</a></li>
 					<li><a href="#">Truyện</a></li>
@@ -48,20 +50,23 @@
 		</div>
 	</div>
 </header>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script>
-$(document).ready(function(){
-	$.ajax({       
-	       type : "GET",
-	       data : "username="+ $("#username").val(),
-	       url : "/api/auth/get-id",       
-	       success : function(result){
-	    	   console.log(result);
-	    	   $("#custId").val(result);
-	       },
-	       error : function(result){
-	    	   console.log(result)
-	       }
-	    });
-});
-</script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<script>
+		$(document).ready(function(){
+			$.ajax({       
+			       type : "GET",
+			       data : "username="+ $("#username").val(),
+			       url : "/api/auth/get-id",       
+			       success : function(result){
+			    	   console.log(result);
+			    	   $("#custId").val(result);
+			       },
+			       error : function(result){
+			    	   console.log(result)
+			       }
+			    });
+		});
+		</script>
+		</div>
+	</div>
+</header>
