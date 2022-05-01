@@ -18,7 +18,7 @@ import com.web.dacn.repository.AudioRepository;
 import com.web.dacn.repository.BookRepository;
 import com.web.dacn.repository.OnlineRepository;
 import com.web.dacn.repository.PdfRepository;
-import com.web.dacn.servive.book.IBookService;
+import com.web.dacn.service.book.IBookService;
 import com.web.dacn.utils.Converter;
 
 @Service
