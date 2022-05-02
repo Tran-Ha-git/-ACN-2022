@@ -2,6 +2,7 @@ package com.web.dacn.entity.quote;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -51,4 +52,22 @@ public class ReviewQuote implements Serializable {
 	@JoinColumn(name="quote_id")
 	@JsonIgnore
 	private Quote quote; 
+	
+	
+	@Override
+    public int hashCode() {
+		 return Objects.hash(getId());
+    }
+ 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof ReviewQuote)) {
+            return false;
+        }
+        ReviewQuote that = (ReviewQuote) obj;
+        return  Objects.equals(getId(),that.getId());
+    }
 }
