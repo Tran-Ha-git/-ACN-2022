@@ -45,4 +45,5 @@ public class QuoteCategory implements Serializable{
 	@JoinColumn(name="parent_id")
 	@ColumnDefault(value = "1")
 	private QuoteCategory quoteCategory;
+	
 }
