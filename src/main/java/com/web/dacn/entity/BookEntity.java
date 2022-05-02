@@ -1,7 +1,7 @@
 package com.web.dacn.entity;
 
 import java.sql.Date;
-
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -16,15 +16,24 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.web.dacn.entity.quote.Quote;
+import com.web.dacn.entity.user.Role;
+import com.web.dacn.entity.user.User;
+
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Data
 @EqualsAndHashCode(exclude = "authors,categories")
-
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "book")
 public class BookEntity {
@@ -63,7 +72,7 @@ public class BookEntity {
 	private int status;
 
 	@Column(name = "mod_time")
-	private Date mod_time;
+	private Date modTime;
 
 	@Column(name = "mod_user_id")
 	private int mod_user_id;
@@ -81,9 +90,6 @@ public class BookEntity {
 
 	private Set<BookCategoryEntity> categories;
 
-	public BookEntity() {
-	}
-
 	public BookEntity(String name, String thumbnail, float price, boolean vip, String description, String slug,
 			String metaTitle, String metaDescription, int status, Date mod_time, int mod_user_id, AuthorEntity authors,
 			BookCategoryEntity categories) {
@@ -99,7 +105,7 @@ public class BookEntity {
 		this.metaTitle = metaTitle;
 		this.metaDescription = metaDescription;
 		this.status = status;
-		this.mod_time = mod_time;
+		this.modTime = mod_time;
 		this.mod_user_id = mod_user_id;
 		this.authors = Stream.of(authors).collect(Collectors.toSet());
 		this.authors.forEach(x -> x.getBooks().add(this));
@@ -107,128 +113,6 @@ public class BookEntity {
 		this.categories.forEach(x -> x.getBooks().add(this));
 	}
 
-	public Set<BookCategoryEntity> getCategories() {
-		return categories;
-	}
-
-	public void setCategories(Set<BookCategoryEntity> categories) {
-		this.categories = categories;
-	}
-
-	public String getMetaTitle() {
-		return metaTitle;
-	}
-
-	public void setMetaTitle(String metaTitle) {
-		this.metaTitle = metaTitle;
-	}
-
-	public String getMetaDescription() {
-		return metaDescription;
-	}
-
-	public void setMetaDescription(String metaDescription) {
-		this.metaDescription = metaDescription;
-	}
-
-	public boolean isVip() {
-		return vip;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public Set<AuthorEntity> getAuthors() {
-		return authors;
-	}
-
-	public void setAuthors(Set<AuthorEntity> authors) {
-		this.authors = authors;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getThumbnail() {
-		return thumbnail;
-	}
-
-	public void setThumbnail(String thumbnail) {
-		this.thumbnail = thumbnail;
-	}
-
-	public int getView() {
-		return view;
-	}
-
-	public void setView(int view) {
-		this.view = view;
-	}
-
-	public float getPrice() {
-		return price;
-	}
-
-	public void setPrice(float price) {
-		this.price = price;
-	}
-
-	public boolean Vip() {
-		return vip;
-	}
-
-	public void setVip(boolean vip) {
-		this.vip = vip;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getSlug() {
-		return slug;
-	}
-
-	public void setSlug(String slug) {
-		this.slug = slug;
-	}
-
-	public int getStatus() {
-		return status;
-	}
-
-	public void setStatus(int status) {
-		this.status = status;
-	}
-
-	public Date getMod_time() {
-		return mod_time;
-	}
-
-	public void setMod_time(Date mod_time) {
-		this.mod_time = mod_time;
-	}
-
-	public int getMod_user_id() {
-		return mod_user_id;
-	}
-
-	public void setMod_user_id(int mod_user_id) {
-		this.mod_user_id = mod_user_id;
-	}
+	
 
 }
