@@ -7,10 +7,7 @@ import org.springframework.stereotype.Repository;
 import com.web.dacn.entity.AuthorEntity;
 
 @Repository
-public interface AuthorRepository extends JpaRepository<AuthorEntity, Integer> {
+public interface AuthorRepository extends JpaRepository<AuthorEntity, Long> {
 	AuthorEntity findById(int id);
-
-	
-
 	AuthorEntity findByFullName(String name);
 }

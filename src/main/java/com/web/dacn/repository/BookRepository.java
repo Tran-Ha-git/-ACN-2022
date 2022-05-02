@@ -16,7 +16,7 @@ import com.web.dacn.entity.BookEntity;
 
 
 @Repository
-public interface BookRepository extends JpaRepository<BookEntity, Integer> {
+public interface BookRepository extends JpaRepository<BookEntity, Long> {
 	BookEntity save(BookEntity bookEntity);
 
 	BookEntity deleteById(int id);
