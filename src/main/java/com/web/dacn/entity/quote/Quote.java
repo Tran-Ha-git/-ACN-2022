@@ -60,7 +60,7 @@ public class Quote implements Serializable{
 	@Column(name="meta_description")
 	private String metaDescription;
 	@ColumnDefault(value="1")
-	private Boolean status;
+	private int status;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date mod_time;
 	@ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)

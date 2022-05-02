@@ -8,7 +8,7 @@ import com.web.dacn.entity.PdfEntity;
 
  @Repository
 
-public interface PdfRepository extends JpaRepository<PdfEntity, Integer> {
+public interface PdfRepository extends JpaRepository<PdfEntity, Long> {
 	 PdfRepository save(PdfRepository pdfEntity);
 	 PdfEntity findById(int id);
 }

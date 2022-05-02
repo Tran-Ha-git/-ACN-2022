@@ -2,6 +2,7 @@ package com.web.dacn.entity.user;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -17,8 +18,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.web.dacn.entity.BookMark;
+import com.web.dacn.entity.book.Book;
 import com.web.dacn.entity.quote.Quote;
 
 import lombok.AllArgsConstructor;
@@ -67,9 +71,20 @@ public class User implements Serializable{
             )
 	private Set<Quote> favoriteQuotes = new HashSet<>();
 	
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "favoritebook",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id")
+            )
+	private Set<Book> favoriteBooks = new HashSet<>();
+	
 	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id", nullable = false), inverseJoinColumns = @JoinColumn(name = "role_id", nullable = false))
-	private List<Role> roles = new ArrayList<>();
+	@JoinTable(	name = "user_role", 
+				joinColumns = @JoinColumn(name = "user_id", nullable = false), 
+				inverseJoinColumns = @JoinColumn(name = "role_id", nullable = false))
+	private Set<Role> roles = new HashSet<>();
 	
-	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "book")
+	private Set<BookMark> bookmarks;
 }
