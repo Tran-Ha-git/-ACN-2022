@@ -1,22 +1,48 @@
 package com.web.dacn.repository;
 
-import java.util.Date;
 import java.util.List;
 
-import javax.transaction.Transactional;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
-
 
 import com.web.dacn.entity.BookEntity;
 
-
 @Repository
 public interface BookRepository extends JpaRepository<BookEntity, Long> {
+
+	@Query(value="select * from book where status <> 0 order by mod_time desc",nativeQuery = true)
+	Page<BookEntity> findAll(Pageable paeable);
+
+	//Get book's author (1 book has many authors)
+	@Query(value = "select a.fullname "
+			+ "from book b "
+			+ "join book_author ba on b.`id`=ba.`book_id`"
+			+ "join `author` a on a.id = ba.`author_id` where b.id=?1 ",nativeQuery = true)
+   List<String> getAuthorsOfBook(int id);
+
+	
+	//Get book's category 
+	@Query(value = "select c.name from book b "
+			+ "join book_bookcategory bc on b.id = bc.book_id" + 
+			" join bookcategory c on c.id=bc.`category_id`"
+			+ "where b.id=?1",nativeQuery = true)
+	List<String> getCategoriesOfBook(int id);
+	
+	
+	@Query(value = "select * from book b"
+			+ " join book_author ba on b.`id`=ba.`book_id` "
+			+ " join `author` a on a.id = ba.`author_id` "
+			+ " where b.name like ?1% and a.fullname like ?2%  group by b.id "
+			, nativeQuery = true)
+	Page<BookEntity> search(String bookName, String authorName, Pageable pageable);
+
+	/*Trang*/
 	BookEntity save(BookEntity bookEntity);
 
 	BookEntity deleteById(int id);
@@ -81,15 +107,7 @@ public interface BookRepository extends JpaRepository<BookEntity, Long> {
 //			         + "from book",nativeQuery = true)
 //		List<BookEntity> getBooks();
 
-	// Get book's author (1 book has many authors)
-	@Query(value = "select a.fullname " + "from book b " + "join book_author ba on b.`id`=ba.`book_id`"
-			+ "join `author` a on a.id = ba.`author_id` where b.id=?1 ", nativeQuery = true)
-	List<String> getAuthorsOfBook(int id);
 
-	// Get book's category (1 book has many category)
-	@Query(value = "select c.name from book b " + "join book_bookcategory bc on b.id = bc.book_id"
-			+ " join bookcategory c on c.id=bc.`category_id`" + "where b.id=?1", nativeQuery = true)
-	List<String> getCategoriesOfBook(int id);
 
 	// get list url pdf on idbook
 	@Query(value = "select p.`url` " + "from book b " + " join pdf p on b.`id`=p.`book_id` "
@@ -114,7 +132,5 @@ public interface BookRepository extends JpaRepository<BookEntity, Long> {
 //			@Param("vip") boolean vip,@Param("description")String description,@Param("slug")String slug,@Param("meta_title")String meta_description,
 //			@Param("status") int status);
 //	
-
-
 
 }

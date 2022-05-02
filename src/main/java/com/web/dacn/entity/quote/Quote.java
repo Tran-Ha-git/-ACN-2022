@@ -37,7 +37,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Quote implements Serializable{
+public class Quote implements Serializable {
 	/**
 	 * 
 	 */
@@ -45,7 +45,7 @@ public class Quote implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(columnDefinition = "nvarchar(2000) NOT NULL", unique=true)
+	@Column(columnDefinition = "nvarchar(2000) NOT NULL", unique = true)
 	private String slug;
 	@Column(columnDefinition = "nvarchar(1000)")
 	private String thumbnail;
@@ -53,57 +53,50 @@ public class Quote implements Serializable{
 	private String content;
 	private int view;
 	@ManyToOne(targetEntity = Author.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name="author_id")
+	@JoinColumn(name = "author_id")
 	private Author author;
-	@Column(name="meta_title")
+	@Column(name = "meta_title")
 	private String metaTitle;
-	@Column(name="meta_description")
+	@Column(name = "meta_description")
 	private String metaDescription;
 	@ColumnDefault(value="1")
 	private int status;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date mod_time;
 	@ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name="mod_user_id")
+	@JoinColumn(name = "mod_user_id")
 	private User user;
-	
-	
-	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "quote_quotecategory",
-            joinColumns = @JoinColumn(name = "quote_id"), 
-            inverseJoinColumns = @JoinColumn(name = "category_id")
-            )
+
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)
+	@JoinTable(name = "quote_quotecategory", joinColumns = @JoinColumn(name = "quote_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
 	private Set<QuoteCategory> quoteCategories = new HashSet<>();
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "quote", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	private Set<ReviewQuote> reviewQuotes = new HashSet<>();
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "quote", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	private Collection<ReviewQuote> reviewQuotes = new ArrayList<>();
-	
 	@Formula("(select count(*) from reviewquote where reviewquote.quote_id=id)")
 	private long feedback;
 
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "quote", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	private Collection<CommentQuote> commentQuotes = new ArrayList<>();
-	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "quote", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	private Set<CommentQuote> commentQuotes = new HashSet<>();
+
+
 	public double getAverageStar() {
-		double sum=0;
-		if(reviewQuotes!=null && reviewQuotes.size()>0) {
+		double sum = 0;
+		if (reviewQuotes != null && reviewQuotes.size() > 0) {
 			for (ReviewQuote reviewQuote : reviewQuotes) {
-				sum+=reviewQuote.getStar();
+				sum += reviewQuote.getStar();
 			}
-			return (double)Math.ceil((sum/reviewQuotes.size())* 2)/2;
+			return (double) Math.ceil((sum / reviewQuotes.size()) * 2) / 2;
 		}
 		return 0;
 	}
-	
-	
+
 	public ReviewQuote getMyReview(Long userId) {
-		double sum=0;
-		if(reviewQuotes!=null && reviewQuotes.size()>0) {
+		double sum = 0;
+		if (reviewQuotes != null && reviewQuotes.size() > 0) {
 			for (ReviewQuote reviewQuote : reviewQuotes) {
-				if(reviewQuote.getUser().getId().equals(userId)) {
+				if (reviewQuote.getUser().getId().equals(userId)) {
 					return reviewQuote;
 				}
 			}
