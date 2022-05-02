@@ -74,10 +74,10 @@ public class CommentQuote implements Serializable{
         if (this == obj) {
             return true;
         }
-        if (!(obj instanceof ReviewQuote)) {
+        if (!(obj instanceof CommentQuote)) {
             return false;
         }
-        ReviewQuote that = (ReviewQuote) obj;
+        CommentQuote that = (CommentQuote) obj;
         return  Objects.equals(getId(),that.getId());
     }
 }
