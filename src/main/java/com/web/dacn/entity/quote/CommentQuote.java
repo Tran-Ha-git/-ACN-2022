@@ -63,21 +63,22 @@ public class CommentQuote implements Serializable{
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "commentQuote", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private Collection<CommentQuote> commentQuotes = new ArrayList<>();
 	
+
+	@Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof CommentQuote)) {
+            return false;
+        }
+        CommentQuote that = (CommentQuote) obj;
+        return  Objects.equals(getId(),that.getId());
+    }
 	
 	@Override
     public int hashCode() {
 		 return Objects.hash(getId());
     }
  
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (!(obj instanceof ReviewQuote)) {
-            return false;
-        }
-        ReviewQuote that = (ReviewQuote) obj;
-        return  Objects.equals(getId(),that.getId());
-    }
 }
