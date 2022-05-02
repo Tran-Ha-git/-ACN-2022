@@ -63,13 +63,8 @@ public class CommentQuote implements Serializable{
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "commentQuote", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private Collection<CommentQuote> commentQuotes = new ArrayList<>();
 	
-	
+
 	@Override
-    public int hashCode() {
-		 return Objects.hash(getId());
-    }
- 
-    @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
@@ -80,4 +75,10 @@ public class CommentQuote implements Serializable{
         CommentQuote that = (CommentQuote) obj;
         return  Objects.equals(getId(),that.getId());
     }
+	
+	@Override
+    public int hashCode() {
+		 return Objects.hash(getId());
+    }
+ 
 }
