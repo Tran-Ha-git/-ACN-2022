@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.web.dacn.dto.BookDTo;
+import com.web.dacn.dto.BookDTO;
+
+
 
 @Service
 public interface BookService {
@@ -32,7 +34,7 @@ public interface BookService {
 //
 //	void addBook_Author(int book_id, int author_id);
 
-	List<BookDTo> findAll();
+	List<BookDTO> findAll();
 //	boolean findById(int id);
 
 //	String findByName(String name);
@@ -52,7 +54,7 @@ public interface BookService {
 	
 // chuyển đổi trạng thái từ string về int
 	int convertStatus(String status);
-	BookDTo findById(int id);
+	BookDTO findById(int id);
 	
 	
 

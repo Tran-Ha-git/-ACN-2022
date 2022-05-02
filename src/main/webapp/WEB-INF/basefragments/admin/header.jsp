@@ -22,9 +22,8 @@
 						 <input type="hidden" id="username" name="username" value="${pageContext.request.userPrincipal.name}">
 						 <input type="hidden" id="userId" name="custId" value="">
 						  </c:if>
-						 
-					<i class="fas fa-caret-down"></i>
-						class="account-image-circle" /> Thoai Anh <i
+				
+						 Thoai Anh <i
 						class="fas fa-caret-down"></i>
 				</button>
 			</div>
