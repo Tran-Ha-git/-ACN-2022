@@ -9,8 +9,5 @@ import com.web.dacn.entity.AuthorEntity;
 @Repository
 public interface AuthorRepository extends JpaRepository<AuthorEntity, Integer> {
 	AuthorEntity findById(int id);
-
-	
-
 	AuthorEntity findByFullName(String name);
 }

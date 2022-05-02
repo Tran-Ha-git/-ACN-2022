@@ -10,6 +10,9 @@
     --light-grey-color:#E8E8E8;
     --btn-blue-color: #0000FF;
 }
+.title .title-content{
+	text-decoration: none;
+}
 .logo{
     padding:5px 20px;   
     height: var(--header-manage-list-height);
@@ -112,7 +115,11 @@
 }
 .search .search-by-bookname, .search-by-authorname{
     display: inline;
-    margin: 10px 20px;
+    margin: 10px 0px;
+    
+}
+.search .search-by-bookname{
+  margin-right: 20px;	
 }
 .search .search-btn{
     text-decoration: none;
@@ -169,7 +176,14 @@
     border-bottom:1px solid #000;
     padding-top:10px;
     padding-bottom:10px;
+   
+  
 }
+/*Tang do rong 2 column tac gia va category*/
+.tr-width-12{
+	width:12%;
+}
+
 .data-row .book-data .book-image{
   width:36px;
   height: 36px;
