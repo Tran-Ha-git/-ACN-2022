@@ -5,18 +5,21 @@
 <div class="main-content item">
 	<div class="title">
 		<h2 class="title-content">
-		  <a class="title-content" href="/admin/books">Danh s·ch qu?n l˝</a>
+
+		  <a class="title-content" href="/admin/books">Danh s√°ch qu·∫£n l√Ω</a>
+
 		</h2>
 	</div>
 
 	<!-- Start Search -->
 	<div class="search">
 
-		<label class="search-title"><b>TÏm ki?m:</b></label>
+
+		<label class="search-title"><b>T√¨m ki·∫øm:</b></label>
       <form method="POST" action="/admin/search"> 
 		<div class="search-by-bookname">
-			<label class="search-bookname-label" for="search-bookname-input">TÍn
-				s·ch</label>
+			<label class="search-bookname-label" for="search-bookname-input">T√™n
+				s√°ch</label>
 				<input type="text" class="search-bookname-input"
 				id="search-bookname-input" 
 				name="bookname"
@@ -24,14 +27,18 @@
 		</div>
 
 		<div class="search-by-authorname">
-			<label class="search-authorname-label" for="search-authorname-input">TÍn
-				t·c gi?</label> 
+
+			<label class="search-authorname-label" for="search-authorname-input">T√™n
+				t√°c gi·∫£</label> 
+
 				<input type="text" class="search-authorname-input"
 				id="search-authorname-input" 
 				name="authorname"/>
 		</div>
 
-		<button  class="search-btn" type="submit"> <i class="fas fa-search"></i>TÏm
+
+		<button  class="search-btn" type="submit"> <i class="fas fa-search"></i>T√¨m
+
 		</button> 
 		</form>
 
@@ -42,13 +49,15 @@
 	<!-- Manage book button -->
 	<div class="manage-book">
 		<div class="manage-book-btn">
-			<a href="#" class="add-book-btn"><i class="fas fa-plus-circle"></i>ThÍm
-				s·ch</a> <a href="#" class="delete-book-btn"><i
-				class="far fa-times-circle"></i>XÛa</a>
+			<a href="#" class="add-book-btn"><i class="fas fa-plus-circle"></i>Th√™m
+				s√°ch</a> <a href="#" class="delete-book-btn"><i
+				class="far fa-times-circle"></i>X√≥a</a>
 		</div>
 
 		<div class="books-total">
-			<p class="books-amount">T?ng s? s·ch l‡ ${total} quy?n</p>
+
+			<p class="books-amount">T·ªïng s·ªë s√°ch l√† ${total} quy·ªÉn</p>
+
 		</div>
 	</div>
 	<!-- Manage book button-->
@@ -62,14 +71,14 @@
 			<tr class="header-row">
 				<th class="header-row-content"><input type="checkbox" name="checkbox-delete-btn" /></th>
 				<th class="header-row-content">ID</th>
-				<th class="header-row-content">HÏnh ?nh</th>
-				<th class="header-row-content">TÍn s·ch</th>
-				<th class="header-row-content">T·c gi?</th>
-				<th class="header-row-content">Th? lo?i</th>
-				<th class="header-row-content">Tr?ng th·i</th>
-				<th class="header-row-content">Ng‡y ??ng</th>
-				<th class="header-row-content">??nh d?ng ??c</th>
-				<th class="header-row-content">T˘y ch?nh</th>
+				<th class="header-row-content">H√¨nh ·∫£nh</th>
+				<th class="header-row-content">T√™n s√°ch</th>
+				<th class="header-row-content">T√°c gi·∫£</th>
+				<th class="header-row-content">Th·ªÉ lo·∫°i</th>
+				<th class="header-row-content">Tr·∫°ng th√°i</th>
+				<th class="header-row-content">Ng√†y ƒëƒÉng</th>
+				<th class="header-row-content">ƒê·ªãnh d·∫°ng ƒë·ªçc</th>
+				<th class="header-row-content">T√πy ch·ªânh</th>
 			</tr>
 			<!--End table header -->
             <c:forEach items="${books}" var="book">
@@ -100,8 +109,10 @@
 				</td>
 				<td class="book-data ">
 					<div class="custom-btn">
-						<a href="#" class="edit-custom-btn">S?a</a> <a href="#"
-							class="delete-custom-btn">XÛa</a>
+
+						<a href="#" class="edit-custom-btn">S·ª≠a</a> <a href="#"
+							class="delete-custom-btn">X√≥a</a>
+
 					</div>
 				</td>
 			</tr>
