@@ -14,9 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.web.dacn.dto.BookDTO;
+import com.web.dacn.dto.book.BookDTO;
 import com.web.dacn.service.book.IBookService;
-
 
 @Controller
 @RequestMapping("/admin")
@@ -39,7 +38,8 @@ public class BookManagementController {
 		// Số phần tử trên 1 trang là 20
 		Page<BookDTO> booksInPage = bookService.getBooksByPage(currentpage);
 		List<BookDTO> books = booksInPage.getContent();
-		bookService.setBookCategoriesAndAuthors(books);
+		
+		
 
 		List<Integer> totalPages = new ArrayList<Integer>();
 		for (int i = 0; i < booksInPage.getTotalPages(); i++) {
@@ -85,11 +85,11 @@ public class BookManagementController {
 
 		booksInPage = bookService.search(bookName, authorName, currentpage);
 		results = booksInPage.getContent();
-		if (results.size() > 0) {
-			bookService.setBookCategoriesAndAuthors(results);
-		}
+//		if (results.size() > 0) {
+//		//	bookService.setBookCategoriesAndAuthors(results);
+//		}
 
-		else {
+		if (results.size() <= 0) {
 			message = "No result";
 			model.addAttribute("message", message);
 		}

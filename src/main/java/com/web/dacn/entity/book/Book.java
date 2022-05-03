@@ -1,7 +1,6 @@
 package com.web.dacn.entity.book;
 
 import java.sql.Date;
-import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
 
@@ -18,8 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.web.dacn.entity.AuthorEntity;
-import com.web.dacn.entity.BookCategoryEntity;
+import com.web.dacn.entity.user.Author;
 import com.web.dacn.entity.user.User;
 
 import lombok.AllArgsConstructor;
@@ -79,7 +77,7 @@ public class Book {
 	private int status;
 
 	@Column(name = "mod_time", nullable = false)
-	private Date mod_time;
+	private Date modTime;
 
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="mod_user_id")
@@ -89,14 +87,14 @@ public class Book {
 	@JoinTable(name = "book_author", joinColumns = {
 			@JoinColumn(name = "book_id", referencedColumnName = "id", nullable = false, updatable = false) }, inverseJoinColumns = {
 					@JoinColumn(name = "author_id", referencedColumnName = "id", nullable = false, updatable = false) })
-	private Set<AuthorEntity> authors;
+	private Set<Author> authors;
 
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "book_bookcategory", joinColumns = {
 			@JoinColumn(name = "`book_id`", referencedColumnName = "id", nullable = false, updatable = false) }, inverseJoinColumns = {
 					@JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false, updatable = false) })
 
-	private Set<BookCategoryEntity> categories;
+	private Set<BookCategory> categories;
 	
 	@OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
 	private Set<Audio> audios;

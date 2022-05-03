@@ -1,13 +1,11 @@
 package com.web.dacn.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
-import com.web.dacn.entity.AuthorEntity;
+import com.web.dacn.entity.user.Author;
 
 @Repository
-public interface AuthorRepository extends JpaRepository<AuthorEntity, Long> {
-	AuthorEntity findById(int id);
-	AuthorEntity findByFullName(String name);
+public interface AuthorRepository extends JpaRepository<Author, Long> {
+	Author findById(long id);
+	
 }

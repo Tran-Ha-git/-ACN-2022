@@ -6,10 +6,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.web.dacn.entity.PdfEntity;
+import com.web.dacn.entity.book.Pdf;
+
+
 
  @Repository
 
-public interface PdfRepository extends JpaRepository<PdfEntity, Long> {
+public interface PdfRepository extends JpaRepository<Pdf, Long> {
 	 PdfRepository save(PdfRepository pdfEntity);
-	 List<PdfEntity> findByBookId(int id);
+	 List<Pdf> findByBookId(long id);
 }
