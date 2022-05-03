@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.web.dacn.entity.BookEntity;
 
 @Repository
-public interface BookRepository extends PagingAndSortingRepository<BookEntity, Integer> {
+public interface BookRepository extends JpaRepository<BookEntity, Long> {
 
 	@Query(value="select * from book where status <> 0 order by mod_time desc",nativeQuery = true)
 	Page<BookEntity> findAll(Pageable paeable);

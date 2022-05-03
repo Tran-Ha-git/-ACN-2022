@@ -1,4 +1,4 @@
-package com.web.dacn.entity.quote;
+package com.web.dacn.entity.book;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -16,6 +16,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.web.dacn.entity.quote.CommentQuote;
 import com.web.dacn.entity.user.User;
 
 import lombok.AllArgsConstructor;
@@ -26,8 +27,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="reviewquote")
-public class ReviewQuote implements Serializable {
+@Table(name="reviewBook")
+public class ReviewBook implements Serializable {
 	/**
 	 * 
 	 */
@@ -42,17 +43,16 @@ public class ReviewQuote implements Serializable {
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="mod_time")
-	private Date modTime;
+	private Date mod_time;
 	
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private User user; 
 	
 	@ManyToOne
-	@JoinColumn(name="quote_id")
+	@JoinColumn(name="book_id")
 	@JsonIgnore
-	private Quote quote; 
-	
+	private Book Book; 
 	
 	@Override
     public int hashCode() {
@@ -64,10 +64,10 @@ public class ReviewQuote implements Serializable {
         if (this == obj) {
             return true;
         }
-        if (!(obj instanceof ReviewQuote)) {
+        if (!(obj instanceof ReviewBook)) {
             return false;
         }
-        ReviewQuote that = (ReviewQuote) obj;
+        ReviewBook that = (ReviewBook) obj;
         return  Objects.equals(getId(),that.getId());
     }
 }

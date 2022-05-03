@@ -1,9 +1,8 @@
-package com.web.dacn.entity.quote;
+package com.web.dacn.entity.book;
 
-import java.io.Serializable;
-import java.util.Date;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,48 +11,42 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.web.dacn.entity.user.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Entity
+@Table(name = "pdf")
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name="reviewquote")
-public class ReviewQuote implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
+public class Pdf {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private Long id;
-	@Column(columnDefinition = "nvarchar(MAX)")
-	private String content;
-	private int star;
 	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="mod_time")
-	private Date modTime;
+	@Column(name = "name", 
+			nullable = false,
+			columnDefinition = "NVARCHAR(100)")
+	private String name;
+	
+	@Column(name = "url", 
+			nullable = false, 
+			columnDefinition = "VARCHAR(2000)")
+	private String url;
+	
+	@Column(name = "priority", nullable = false)
+	private int priority;
 	
 	@ManyToOne
-	@JoinColumn(name="user_id")
-	private User user; 
-	
-	@ManyToOne
-	@JoinColumn(name="quote_id")
+	@JoinColumn(name = "book_id", nullable = false)
 	@JsonIgnore
-	private Quote quote; 
-	
-	
+	private Book book;
+
 	@Override
     public int hashCode() {
 		 return Objects.hash(getId());
@@ -64,10 +57,11 @@ public class ReviewQuote implements Serializable {
         if (this == obj) {
             return true;
         }
-        if (!(obj instanceof ReviewQuote)) {
+        if (!(obj instanceof Pdf)) {
             return false;
         }
-        ReviewQuote that = (ReviewQuote) obj;
+        Pdf that = (Pdf) obj;
         return  Objects.equals(getId(),that.getId());
     }
+
 }

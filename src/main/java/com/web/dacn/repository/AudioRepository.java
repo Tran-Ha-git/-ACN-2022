@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.web.dacn.entity.AudioEntity;
 
-public interface AudioRepository extends JpaRepository<AudioEntity, Integer> {
+public interface AudioRepository extends JpaRepository<AudioEntity, Long> {
 	@Query(value="select * from audio where book_id=?1",nativeQuery = true)
 	List<AudioEntity> findByBookId(int bookId);
 

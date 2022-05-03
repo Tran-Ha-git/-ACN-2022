@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -61,4 +62,23 @@ public class CommentQuote implements Serializable{
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "commentQuote", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private Collection<CommentQuote> commentQuotes = new ArrayList<>();
+	
+
+	@Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof CommentQuote)) {
+            return false;
+        }
+        CommentQuote that = (CommentQuote) obj;
+        return  Objects.equals(getId(),that.getId());
+    }
+	
+	@Override
+    public int hashCode() {
+		 return Objects.hash(getId());
+    }
+ 
 }
