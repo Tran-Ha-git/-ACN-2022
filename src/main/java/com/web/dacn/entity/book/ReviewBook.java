@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -45,11 +46,11 @@ public class ReviewBook implements Serializable {
 	@Column(name="mod_time")
 	private Date mod_time;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL, targetEntity = User.class)
 	@JoinColumn(name="user_id")
 	private User user; 
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL, targetEntity = Book.class)
 	@JoinColumn(name="book_id")
 	@JsonIgnore
 	private Book Book; 

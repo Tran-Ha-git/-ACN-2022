@@ -81,7 +81,7 @@ public class Book {
 	@Column(name = "mod_time", nullable = false)
 	private Date mod_time;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL, targetEntity = User.class)
 	@JoinColumn(name="mod_user_id")
 	private User user;
 

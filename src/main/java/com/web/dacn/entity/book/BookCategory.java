@@ -35,7 +35,7 @@ public class BookCategory {
 			columnDefinition = "NVARCHAR(100)")
 	private String name;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, targetEntity = BookCategory.class)
 	@JoinColumn(name = "parent_id")
 	private BookCategory parentBookCategory;
 	
