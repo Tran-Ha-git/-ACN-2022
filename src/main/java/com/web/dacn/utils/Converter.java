@@ -26,46 +26,34 @@ public class Converter {
 		BookCategoryDTO category = new BookCategoryDTO();
 		category.setId(entity.getId());
 		category.setName(entity.getName());
- 
-		
+
 		return category;
 	}
 
 	public BookDTO toDTO(Book entity) {
-	
-		
-		BookDTO book = new BookDTO(entity.getId(), entity.getName(),entity.getStatus(), entity.getThumbnail(), entity.getModTime());
-		Set<BookCategoryDTO> categories= new HashSet<BookCategoryDTO>();
-        for(BookCategory category: entity.getCategories()) {
-        	BookCategoryDTO dto = toDTO(category);
-        	categories.add(dto);    	
-        	
-        }
-		
-        
-        Set<AuthorDTO> authors= new HashSet<AuthorDTO>();
-        for(Author author: entity.getAuthors()) {
-        	AuthorDTO dto = toDTO(author);
-        	authors.add(dto);    	
-        	
-        }
-		 book.setCategories(categories);
-		 book.setAuthors(authors);
-		
-		// Convert status form int to String to display in UI
-		switch (entity.getStatus()) {
-		case 0:
-			book.setStatusConvert("Đã xóa");
-			break;
-		case 1:
-			book.setStatusConvert("Hoàn thành");
-			break;
-		case 2:
-			book.setStatusConvert("Đang update");
-			break;
-		default:
-			book.setStatusConvert("");
+
+		BookDTO book = new BookDTO();
+		book.setId(entity.getId());
+		book.setName(entity.getName());
+		book.setStatus(entity.getStatus());
+		book.setThumbnail(entity.getThumbnail());
+		book.setModTime(entity.getModTime());
+
+		Set<BookCategoryDTO> categories = new HashSet<BookCategoryDTO>();
+		for (BookCategory category : entity.getCategories()) {
+			BookCategoryDTO dto = toDTO(category);
+			categories.add(dto);
+
 		}
+
+		Set<AuthorDTO> authors = new HashSet<AuthorDTO>();
+		for (Author author : entity.getAuthors()) {
+			AuthorDTO dto = toDTO(author);
+			authors.add(dto);
+
+		}
+		book.setCategories(categories);
+		book.setAuthors(authors);
 
 		return book;
 	}

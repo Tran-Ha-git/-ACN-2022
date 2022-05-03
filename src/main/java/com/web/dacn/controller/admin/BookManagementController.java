@@ -1,6 +1,7 @@
 package com.web.dacn.controller.admin;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,10 +36,15 @@ public class BookManagementController {
 	public String getBooksByPage(Model model, HttpSession session, @PathVariable("page") int currentpage,
 			HttpServletRequest req) {
 
+		HashMap<Long, List<String>> readFormats= new HashMap<Long,List<String>>();
+		
 		// Số phần tử trên 1 trang là 20
 		Page<BookDTO> booksInPage = bookService.getBooksByPage(currentpage);
 		List<BookDTO> books = booksInPage.getContent();
 		
+		for(BookDTO book: books) {
+			readFormats.put(book.getId(), bookService.getReadFromat(book.getId()));
+		}
 		
 
 		List<Integer> totalPages = new ArrayList<Integer>();
@@ -49,6 +55,7 @@ public class BookManagementController {
 		model.addAttribute("totalPages", totalPages);
 		model.addAttribute("total", booksInPage.getTotalElements());
 		model.addAttribute("books", books);
+		model.addAttribute("readFormats", readFormats);
 		model.addAttribute("currentpage", currentpage);
 		session.setAttribute("books", books);
 
@@ -67,6 +74,7 @@ public class BookManagementController {
 		Page<BookDTO> booksInPage;
 		List<BookDTO> results = new ArrayList<BookDTO>();
 		List<Integer> totalPages = new ArrayList<Integer>();
+		HashMap<Long, List<String>> readFormats= new HashMap<Long,List<String>>();
 
 		if ((currentpage > 0) || (currentpage == 0 && !req.getMethod().equalsIgnoreCase("POST"))) {
 
@@ -85,10 +93,11 @@ public class BookManagementController {
 
 		booksInPage = bookService.search(bookName, authorName, currentpage);
 		results = booksInPage.getContent();
-//		if (results.size() > 0) {
-//		//	bookService.setBookCategoriesAndAuthors(results);
-//		}
-
+		
+		for(BookDTO book: results) {
+			readFormats.put(book.getId(), bookService.getReadFromat(book.getId()));
+		}
+		
 		if (results.size() <= 0) {
 			message = "No result";
 			model.addAttribute("message", message);
@@ -98,6 +107,7 @@ public class BookManagementController {
 		}
 
 		model.addAttribute("searchPages", totalPages);
+		model.addAttribute("readFormats", readFormats);
 		model.addAttribute("total", booksInPage.getTotalElements());
 		model.addAttribute("books", results);
 		session.setAttribute("books", results);

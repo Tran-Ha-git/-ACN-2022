@@ -1,6 +1,7 @@
 package com.web.dacn.service.book.impl;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import com.web.dacn.entity.book.Online;
 import com.web.dacn.entity.book.Pdf;
 import com.web.dacn.repository.AudioRepository;
 import com.web.dacn.repository.AuthorRepository;
-import com.web.dacn.repository.BookCategoryRepository;
+
 import com.web.dacn.repository.BookRepository;
 import com.web.dacn.repository.OnlineRepository;
 import com.web.dacn.repository.PdfRepository;
@@ -34,11 +35,12 @@ public class BookService implements IBookService {
 	private AudioRepository audioRepository;
 	@Autowired
 	private OnlineRepository onlineRepository;
-	
+
 	@Autowired
 	private Converter bookConverter;
 
 	// Get read format of book
+	@Override
 	public List<String> getReadFromat(long bookId) {
 		List<String> readFormat = new ArrayList<String>();
 		List<Pdf> pdfs = pdfRepository.findByBookId(bookId);
@@ -69,11 +71,10 @@ public class BookService implements IBookService {
 	// Get books + paging
 	public Page<BookDTO> getBooksByPage(int page) {
 		Page<Book> entities = bookRepository.findAll(getBookEntitesByPage(page));
-        
+
 		Page<BookDTO> books = entities.map(entity -> {
 			BookDTO dto = bookConverter.toDTO(entity);
-		    
-		
+
 			return dto;
 		});
 
@@ -81,10 +82,9 @@ public class BookService implements IBookService {
 
 	}
 
-
 	@Override
 	public Page<BookDTO> search(String bookName, String authorName, int page) {
-		
+
 		Pageable pageable = PageRequest.of(page, size);
 
 		Page<Book> entities = bookRepository.search(bookName, authorName, pageable);
@@ -92,8 +92,6 @@ public class BookService implements IBookService {
 		Page<BookDTO> books = entities.map(entity -> {
 			BookDTO dto = bookConverter.toDTO(entity);
 
-			// set read format
-			dto.setReadFormat(getReadFromat(entity.getId()));
 			return dto;
 		});
 

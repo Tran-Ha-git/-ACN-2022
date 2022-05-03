@@ -1,14 +1,11 @@
 package com.web.dacn.dto.book;
 
 import java.sql.Date;
-import java.util.Collection;
-import java.util.List;
+
 import java.util.Set;
 
 import com.web.dacn.dto.user.AuthorDTO;
 import com.web.dacn.dto.user.UserDto;
-import com.web.dacn.entity.AuthorEntity;
-import com.web.dacn.entity.BookCategoryEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -37,21 +34,5 @@ public class BookDTO {
 	private Set<AudioDTO> audios;
 	private Set<OnlineDTO> onlines;
 	private Set<PdfDTO> pdfs;
-
-	private List<String> readFormat;
-	private String statusConvert;
-
-	public BookDTO(Long id, String name, int status, String thumbnail, Date mod_time) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.status=status;
-		this.thumbnail = thumbnail;
-		this.modTime = mod_time;
-	
-
-	}
-
-	
 
 }
