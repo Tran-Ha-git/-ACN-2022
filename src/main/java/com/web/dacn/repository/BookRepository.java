@@ -20,21 +20,6 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 	@Query(value="select * from book where status <> 0 order by mod_time desc",nativeQuery = true)
 	Page<Book> findAll(Pageable paeable);
 
-	//Get book's author (1 book has many authors)
-	@Query(value = "select a.fullname "
-			+ "from book b "
-			+ "join book_author ba on b.`id`=ba.`book_id`"
-			+ "join `author` a on a.id = ba.`author_id` where b.id=?1 ",nativeQuery = true)
-   List<String> getAuthorsOfBook(long id);
-
-	
-	//Get book's category 
-	@Query(value = "select c.name from book b "
-			+ "join book_bookcategory bc on b.id = bcbook_id" + 
-			" join bookcategory c on c.id=bc.`category_id`"
-			+ "where b.id=?1",nativeQuery = true)
-	List<String> getCategoriesOfBook(long id);
-	
 	
 	@Query(value = "select * from book b"
 			+ " join book_author ba on b.`id`=ba.`book_id` "

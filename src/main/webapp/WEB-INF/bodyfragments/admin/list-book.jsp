@@ -114,7 +114,9 @@
 				
 			              <c:forEach items="${readFormats}" var="readFormat">
 				               <c:if test="${readFormat.key==book.id }">
-			                      ${readFormat.value}
+				                 <c:forEach items="${readFormat.value}" var="format">
+			                          ${format} <br/>
+			                      </c:forEach>
 			                   </c:if>
 						  </c:forEach>
 			              

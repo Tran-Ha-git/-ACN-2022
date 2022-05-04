@@ -25,20 +25,20 @@ public class BookManagementController {
 	@Autowired
 	IBookService bookService;
 
-	// [GET] show list books
+
 	@RequestMapping("/books")
 	public String getBooks(Model model, HttpSession session, HttpServletRequest req) {
 		return getBooksByPage(model, session, 0, req);
 	}
 
-	// [GET] get books by page
+
 	@RequestMapping("/books/{page}")
 	public String getBooksByPage(Model model, HttpSession session, @PathVariable("page") int currentpage,
 			HttpServletRequest req) {
 
 		HashMap<Long, List<String>> readFormats= new HashMap<Long,List<String>>();
 		
-		// Số phần tử trên 1 trang là 20
+		
 		Page<BookDTO> booksInPage = bookService.getBooksByPage(currentpage);
 		List<BookDTO> books = booksInPage.getContent();
 		
@@ -57,8 +57,7 @@ public class BookManagementController {
 		model.addAttribute("books", books);
 		model.addAttribute("readFormats", readFormats);
 		model.addAttribute("currentpage", currentpage);
-		session.setAttribute("books", books);
-
+		
 		return "adminListBook";
 	}
 
@@ -110,7 +109,8 @@ public class BookManagementController {
 		model.addAttribute("readFormats", readFormats);
 		model.addAttribute("total", booksInPage.getTotalElements());
 		model.addAttribute("books", results);
-		session.setAttribute("books", results);
+		
+	
 
 		return "adminListBook";
 	}
