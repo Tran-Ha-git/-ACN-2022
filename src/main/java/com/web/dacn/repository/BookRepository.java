@@ -4,20 +4,18 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
-import com.web.dacn.entity.BookEntity;
+import com.web.dacn.entity.book.Book;
 
 @Repository
-public interface BookRepository extends JpaRepository<BookEntity, Long> {
+public interface BookRepository extends JpaRepository<Book, Long> {
 
 	@Query(value="select * from book where status <> 0 order by mod_time desc",nativeQuery = true)
-	Page<BookEntity> findAll(Pageable paeable);
+	Page<Book> findAll(Pageable paeable);
 
 	//Get book's author (1 book has many authors)
 	@Query(value = "select a.fullname "
@@ -40,12 +38,12 @@ public interface BookRepository extends JpaRepository<BookEntity, Long> {
 			+ " join `author` a on a.id = ba.`author_id` "
 			+ " where b.name like ?1% and a.fullname like ?2%  group by b.id "
 			, nativeQuery = true)
-	Page<BookEntity> search(String bookName, String authorName, Pageable pageable);
+	Page<Book> search(String bookName, String authorName, Pageable pageable);
 
 	/*Trang*/
-	BookEntity save(BookEntity bookEntity);
+	Book save(Book Book);
 
-	BookEntity deleteById(int id);
+	Book deleteById(int id);
 
 //delete book
 	@Modifying
@@ -97,15 +95,15 @@ public interface BookRepository extends JpaRepository<BookEntity, Long> {
 //	@Query("SELECT fullname FROM author  WHERE fullname =?1")
 //	String findByNameAuthor( String nameAuthor);
 	// Get books
-	List<BookEntity> findAll();
+	List<Book> findAll();
 
 	@Query(value = "select * from book where id=?1", nativeQuery = true)
-	BookEntity findById(int id);
+	Book findById(int id);
 
 	// Get some attributes in Book id, hình, tên sách, status, mod_time
 //		@Query(value = "select `id`, name, thumbnail, status, mod_time"
 //			         + "from book",nativeQuery = true)
-//		List<BookEntity> getBooks();
+//		List<Book> getBooks();
 
 
 

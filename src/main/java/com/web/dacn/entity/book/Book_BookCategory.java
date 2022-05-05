@@ -2,8 +2,6 @@ package com.web.dacn.entity.book;
 
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,39 +10,27 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @Entity
-@Table(name = "pdf")
+@Table(name = "book_bookcategory")
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Pdf {
+public class Book_BookCategory {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
 	private Long id;
 	
-	@Column(name = "name", 
-			nullable = false,
-			columnDefinition = "NVARCHAR(100)")
-	private String name;
-	
-	@Column(name = "url", 
-			nullable = false, 
-			columnDefinition = "VARCHAR(2000)")
-	private String url;
-	
-	@Column(name = "priority", nullable = false)
-	private Integer priority;
-	
-	@ManyToOne(cascade = CascadeType.ALL, targetEntity = Book.class)
-	@JoinColumn(name = "book_id", nullable = false)
+	@ManyToOne(targetEntity = Book.class)
+	@JoinColumn(name = "book_id")
 	private Book book;
+
+	@ManyToOne(targetEntity = BookCategory.class)
+	@JoinColumn(name = "category_id")
+	private BookCategory category;
 
 	@Override
     public int hashCode() {
@@ -56,11 +42,10 @@ public class Pdf {
         if (this == obj) {
             return true;
         }
-        if (!(obj instanceof Pdf)) {
+        if (!(obj instanceof Book_BookCategory)) {
             return false;
         }
-        Pdf that = (Pdf) obj;
+        Book_BookCategory that = (Book_BookCategory) obj;
         return  Objects.equals(getId(),that.getId());
-    }
-
+    }	
 }

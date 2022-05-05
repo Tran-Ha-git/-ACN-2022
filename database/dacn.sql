@@ -1,4 +1,4 @@
-drop DATABASE dacn2022;
+DROP DATABASE IF EXISTS dacn2022;
 
 CREATE DATABASE dacn2022;
 USE dacn2022;
@@ -35,7 +35,7 @@ CREATE TABLE bookcategory (
 	`name` VARCHAR(50) NOT NULL,
 	parent_id INT DEFAULT 1,
 	`view` INT DEFAULT 0,
-	slug VARCHAR(50),
+	slug VARCHAR(2000) NOT NULL,
 	meta_title VARCHAR(50),
 	meta_description TEXT,
 	`status` INT DEFAULT 1,
@@ -45,12 +45,12 @@ CREATE TABLE bookcategory (
 CREATE TABLE book (
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	`name` VARCHAR(100) NOT NULL,
-	thumbnail TEXT,
+	thumbnail VARCHAR(2000),
 	`view` INT DEFAULT 0,
 	price FLOAT,
 	vip BIT,
 	`description` TEXT NOT NULL,
-	slug VARCHAR(50) NOT NULL,
+	slug VARCHAR(2000) NOT NULL,
 	meta_title VARCHAR(50),
 	meta_description TEXT,
 	`status` INT DEFAULT 1,
@@ -73,7 +73,7 @@ CREATE TABLE quote (
 	thumbnail TEXT,
 	`view` INT DEFAULT 0,
 	author_id INT,
-	slug VARCHAR(50),
+	slug VARCHAR(2000) NOT NULL,
 	meta_title VARCHAR(50),
 	meta_description TEXT,
 	`status` INT DEFAULT 1,
@@ -132,7 +132,7 @@ CREATE TABLE author (
 	`address` TEXT,
 	phone CHAR(15),
 	`description` TEXT NOT NULL,
-	slug VARCHAR(50) NOT NULL,
+	slug VARCHAR(2000) NOT NULL,
 	meta_title VARCHAR(50),
 	meta_description TEXT,
 	`status` INT DEFAULT 1,
@@ -154,7 +154,7 @@ CREATE TABLE quotecategory (
 	`name` VARCHAR(50) NOT NULL,
 	parent_id INT DEFAULT 1,
 	`view` INT DEFAULT 0,
-	slug VARCHAR(50) ,
+	slug VARCHAR(2000) NOT NULL,
 	meta_title VARCHAR(50),
 	meta_description TEXT,
 	`status` INT DEFAULT 1,
@@ -933,16 +933,16 @@ insert into book_bookcategory (id, book_id, category_id) values (200, 92, 9);
 
 
 
-insert into quotecategory (id, name, parent_id, view, status) values (1, 'Ronstring', NULL, 38, 1);
-insert into quotecategory (id, name, parent_id, view, status) values (2, 'Wrapsafe', NULL, 100, 0);
-insert into quotecategory (id, name, parent_id, view, status) values (3, 'Sub-Ex', NULL, 18, 1);
-insert into quotecategory (id, name, parent_id, view, status) values (4, 'Transcof', NULL, 54, 1);
-insert into quotecategory (id, name, parent_id, view, status) values (5, 'Bitchip', NULL, 6, 0);
-insert into quotecategory (id, name, parent_id, view, status) values (6, 'Namfix', NULL, 68, 0);
-insert into quotecategory (id, name, parent_id, view, status) values (7, 'Quo Lux', NULL, 39, 0);
-insert into quotecategory (id, name, parent_id, view, status) values (8, 'Mat Lam Tam', NULL, 19, 0);
-insert into quotecategory (id, name, parent_id, view, status) values (9, 'Opela', NULL, 66, 1);
-insert into quotecategory (id, name, parent_id, view, status) values (10, 'Otcom', NULL, 2, 1);
+insert into quotecategory (id, name, slug, view, status) values (1, 'Ronstring', 'ron-string', 38, 1);
+insert into quotecategory (id, name, slug, view, status) values (2, 'Wrapsafe', 'wrap-safe', 100, 0);
+insert into quotecategory (id, name, slug, view, status) values (3, 'Sub-Ex', 'sub-ex', 18, 1);
+insert into quotecategory (id, name, slug, view, status) values (4, 'Transcof', 'trans-cof', 54, 1);
+insert into quotecategory (id, name, slug, view, status) values (5, 'Bitchip', 'bit-chip', 6, 0);
+insert into quotecategory (id, name, slug, view, status) values (6, 'Namfix', 'namfix', 68, 0);
+insert into quotecategory (id, name, slug, view, status) values (7, 'Quo Lux', 'quo-lux', 39, 0);
+insert into quotecategory (id, name, slug, view, status) values (8, 'Mat Lam Tam', 'mat-lam-tam', 19, 0);
+insert into quotecategory (id, name, slug, view, status) values (9, 'Opela', 'opela', 66, 1);
+insert into quotecategory (id, name, slug, view, status) values (10, 'Otcom', 'otcom', 2, 1);
 
 
 insert into quote (id, content, view, thumbnail, author_id, status, mod_time, mod_user_id) values (1, 'Integer ac neque. Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus.', 5, 'http://dummyimage.com/419x399.png/ff4444/ffffff', 38, 0, '2022-01-14', 3);

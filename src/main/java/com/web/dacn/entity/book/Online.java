@@ -40,11 +40,10 @@ public class Online {
 	private String content;
 	
 	@Column(name = "priority", nullable = false)
-	private int priority;
+	private Integer priority;
 	
 	@ManyToOne(cascade = CascadeType.ALL, targetEntity = Book.class)
 	@JoinColumn(name = "book_id", nullable = false)
-	@JsonIgnore
 	private Book book;
 	
 	@Override

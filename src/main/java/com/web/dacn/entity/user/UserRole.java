@@ -1,9 +1,8 @@
-package com.web.dacn.entity.book;
+package com.web.dacn.entity.user;
 
+import java.util.Date;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,39 +11,30 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.web.dacn.entity.book.Book_BookCategory;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @Entity
-@Table(name = "pdf")
+@Table(name = "user_role")
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Pdf {
+public class UserRole {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
 	private Long id;
 	
-	@Column(name = "name", 
-			nullable = false,
-			columnDefinition = "NVARCHAR(100)")
-	private String name;
+	@ManyToOne(targetEntity = User.class)
+	@JoinColumn(name = "user_id")
+	private User user;
+
+	@ManyToOne(targetEntity = Role.class)
+	@JoinColumn(name = "role_id")
+	private Role role;
 	
-	@Column(name = "url", 
-			nullable = false, 
-			columnDefinition = "VARCHAR(2000)")
-	private String url;
-	
-	@Column(name = "priority", nullable = false)
-	private Integer priority;
-	
-	@ManyToOne(cascade = CascadeType.ALL, targetEntity = Book.class)
-	@JoinColumn(name = "book_id", nullable = false)
-	private Book book;
 
 	@Override
     public int hashCode() {
@@ -56,11 +46,10 @@ public class Pdf {
         if (this == obj) {
             return true;
         }
-        if (!(obj instanceof Pdf)) {
+        if (!(obj instanceof UserRole)) {
             return false;
         }
-        Pdf that = (Pdf) obj;
+        UserRole that = (UserRole) obj;
         return  Objects.equals(getId(),that.getId());
-    }
-
+    }	
 }

@@ -42,7 +42,7 @@ public class BookCategory {
 	@Column(name = "view", 
 			nullable = false, 
 			columnDefinition = "INTEGER DEFAULT 1")
-	private int view;
+	private Integer view;
 	
 	@Column(name = "slug", 
 			nullable = false,
@@ -59,10 +59,9 @@ public class BookCategory {
 	@Column(name = "status", 
 			nullable = false, 
 			columnDefinition = "INTEGER DEFAULT 1")
-	private int status;
+	private Integer status;
 
 	@ManyToMany(mappedBy = "categories", cascade = CascadeType.ALL)
-	@JsonIgnore
     private Set<Book> books;
 
 	@Override

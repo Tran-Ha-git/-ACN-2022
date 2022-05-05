@@ -1,9 +1,7 @@
 package com.web.dacn.entity.quote;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,50 +10,37 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.ColumnDefault;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Entity
+@Table(name = "quote_quotecategory")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name="quotecategory")
-public class QuoteCategory implements Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class Quote_QuoteCategory {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(columnDefinition = "nvarchar(2000) NOT NULL", unique=true, nullable = false)
-	private String slug;
-	private String name;
-	@ColumnDefault(value = "0")
-	private int view;
-	@Column(name="meta_title") 
-	private String metaTitle;
-	@Column(name="meta_description")
-	private String metaDescription;
-	@ColumnDefault(value="1")
-	private Integer status;
+	
+	@ManyToOne(targetEntity = Quote.class)
+	@JoinColumn(name = "quote_id")
+	private Quote quote;
+
 	@ManyToOne(targetEntity = QuoteCategory.class)
-	@JoinColumn(name="parent_id")
-	@ColumnDefault(value = "1")
-	private QuoteCategory quoteCategory;
+	@JoinColumn(name = "category_id")
+	private QuoteCategory category;
 	
 	@Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
         }
-        if (!(obj instanceof QuoteCategory)) {
+        if (!(obj instanceof Quote_QuoteCategory)) {
             return false;
         }
-        QuoteCategory that = (QuoteCategory) obj;
+        Quote_QuoteCategory that = (Quote_QuoteCategory) obj;
         return  Objects.equals(getId(),that.getId());
     }
 	
@@ -64,5 +49,4 @@ public class QuoteCategory implements Serializable{
 		 return Objects.hash(getId());
     }
 
-	
 }

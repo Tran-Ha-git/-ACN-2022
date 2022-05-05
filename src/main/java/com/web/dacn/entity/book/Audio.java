@@ -18,15 +18,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @Entity
 @Table(name = "audio")
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Audio {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
 	private Long id;
 	
 	@Column(name = "name", 
@@ -40,11 +39,10 @@ public class Audio {
 	private String url;
 	
 	@Column(name = "priority", nullable = false)
-	private int priority;
+	private Integer priority;
 	
-	@ManyToOne(cascade = CascadeType.ALL, targetEntity = Book.class)
+	@ManyToOne(targetEntity = Book.class)
 	@JoinColumn(name = "book_id", nullable = false)
-	@JsonIgnore
 	private Book book;
 	
 	@Override

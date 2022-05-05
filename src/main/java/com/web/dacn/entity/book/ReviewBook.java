@@ -28,7 +28,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="reviewBook")
+@Table(name="reviewbook")
 public class ReviewBook implements Serializable {
 	/**
 	 * 
@@ -40,7 +40,7 @@ public class ReviewBook implements Serializable {
 	private Long id;
 	@Column(columnDefinition = "nvarchar(MAX)")
 	private String content;
-	private int star;
+	private Integer star;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="mod_time")
@@ -52,8 +52,7 @@ public class ReviewBook implements Serializable {
 	
 	@ManyToOne(cascade = CascadeType.ALL, targetEntity = Book.class)
 	@JoinColumn(name="book_id")
-	@JsonIgnore
-	private Book Book; 
+	private Book Book;
 	
 	@Override
     public int hashCode() {

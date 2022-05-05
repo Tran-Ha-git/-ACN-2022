@@ -48,7 +48,6 @@ public class CommentBook implements Serializable{
 	
 	@ManyToOne(cascade = CascadeType.ALL, targetEntity = CommentBook.class)
 	@JoinColumn(name="parent_id")
-	@JsonIgnore
 	private CommentBook commentBook;
 	
 	@ManyToOne(cascade = CascadeType.ALL, targetEntity = User.class)
@@ -57,8 +56,7 @@ public class CommentBook implements Serializable{
 	
 	@ManyToOne(cascade = CascadeType.ALL, targetEntity = Book.class)
 	@JoinColumn(name="book_id")
-	@JsonIgnore
-	private Book book; 
+	private Book book;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "commentBook", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private Set<CommentBook> commentBooks;

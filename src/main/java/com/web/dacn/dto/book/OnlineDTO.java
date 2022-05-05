@@ -11,7 +11,7 @@ public class OnlineDTO {
 	private Long id;
 	private String name;
 	private String content;
-	private int priority;
+	private Integer priority;
 	private BookDTO book;
 
 }

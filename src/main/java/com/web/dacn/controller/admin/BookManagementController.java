@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.web.dacn.dto.BookDTO;
+import com.web.dacn.dto.book.BookDTO;
 import com.web.dacn.service.book.IBookService;
 
 

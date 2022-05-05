@@ -2,8 +2,6 @@ package com.web.dacn.entity.book;
 
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,54 +11,45 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.web.dacn.entity.quote.FavoriteQuote;
+import com.web.dacn.entity.user.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @Entity
-@Table(name = "pdf")
+@Table(name = "favoritebook")
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Pdf {
+public class FavoriteBook {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
 	private Long id;
-	
-	@Column(name = "name", 
-			nullable = false,
-			columnDefinition = "NVARCHAR(100)")
-	private String name;
-	
-	@Column(name = "url", 
-			nullable = false, 
-			columnDefinition = "VARCHAR(2000)")
-	private String url;
-	
-	@Column(name = "priority", nullable = false)
-	private Integer priority;
-	
-	@ManyToOne(cascade = CascadeType.ALL, targetEntity = Book.class)
-	@JoinColumn(name = "book_id", nullable = false)
-	private Book book;
 
+	@ManyToOne(targetEntity = User.class)
+	@JoinColumn(name = "user_id")
+	private User user;
+
+	@ManyToOne(targetEntity = Book.class)
+	@JoinColumn(name = "book_id")
+	private Book book;
+	
 	@Override
-    public int hashCode() {
-		 return Objects.hash(getId());
-    }
- 
-    @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
         }
-        if (!(obj instanceof Pdf)) {
+        if (!(obj instanceof FavoriteBook)) {
             return false;
         }
-        Pdf that = (Pdf) obj;
+        FavoriteBook that = (FavoriteBook) obj;
         return  Objects.equals(getId(),that.getId());
     }
-
+	
+	@Override
+    public int hashCode() {
+		 return Objects.hash(getId());
+    }	
 }
