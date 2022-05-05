@@ -32,10 +32,8 @@ public class BookService implements IBookService {
 	private AudioRepository audioRepository;
 	@Autowired
 	private OnlineRepository onlineRepository;
-
 	@Autowired
 	private Converter bookConverter;
-
 
 	// Get read format of book
 	@Override
@@ -67,16 +65,13 @@ public class BookService implements IBookService {
 	@Override
 	// Get books + paging
 	public Page<BookDTO> getBooksByPage(int page) {
-
 		Page<Book> entities = bookRepository.findAll(getBookEntitesByPage(page));
-
 		Page<BookDTO> books = entities.map(entity -> {
 			BookDTO dto = bookConverter.toDTO(entity);
 			return dto;
 		});
-        return books;
+		return books;
 	}
-
 
 	@Override
 	public Page<BookDTO> search(String bookName, String authorName, int page) {
@@ -84,7 +79,6 @@ public class BookService implements IBookService {
 		Pageable pageable = PageRequest.of(page, size);
 
 		Page<Book> entities = bookRepository.search(bookName, authorName, pageable);
-
 
 		Page<BookDTO> books = entities.map(entity -> {
 			BookDTO dto = bookConverter.toDTO(entity);

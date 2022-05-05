@@ -136,7 +136,7 @@
 			<!-- End table data -->
 		</table>
 		<!-- Start paging -->
-
+	
 		<div class="paging">
 			<ul class="list-paging-numbers">
 
@@ -161,6 +161,7 @@
 				</c:if>
 			</ul>
 		</div>
+	
 
 		<!-- End paging -->
 	</div>
