@@ -1,4 +1,4 @@
-package com.web.dacn.service.book.impl;
+package com.web.dacn.service.admin.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ import com.web.dacn.repository.AudioRepository;
 import com.web.dacn.repository.BookRepository;
 import com.web.dacn.repository.OnlineRepository;
 import com.web.dacn.repository.PdfRepository;
-import com.web.dacn.service.book.IBookService;
+import com.web.dacn.service.admin.IBookService;
 
 @Service
 public class BookService implements IBookService {

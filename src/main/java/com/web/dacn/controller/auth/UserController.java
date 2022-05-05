@@ -1,4 +1,4 @@
-package com.web.dacn.controller;
+package com.web.dacn.controller.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.web.dacn.dto.UserRegisterDto;
-import com.web.dacn.service.user.UserService;
+import com.web.dacn.service.auth.UserService;
 
 
 @Controller

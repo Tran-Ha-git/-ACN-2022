@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.web.dacn.dto.user.UserLoginDto;
 import com.web.dacn.entity.user.User;
-import com.web.dacn.service.user.UserService;
+import com.web.dacn.service.auth.UserService;
 
 
 

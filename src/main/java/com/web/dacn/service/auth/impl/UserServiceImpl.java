@@ -1,7 +1,6 @@
-package com.web.dacn.service.user.impl;
+package com.web.dacn.service.auth.impl;
 
 import java.util.List;
-
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -16,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.web.dacn.entity.user.User;
 import com.web.dacn.repository.UserRepository;
-import com.web.dacn.service.user.UserService;
+import com.web.dacn.service.auth.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {

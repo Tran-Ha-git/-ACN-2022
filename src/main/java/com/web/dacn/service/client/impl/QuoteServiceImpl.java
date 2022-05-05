@@ -1,4 +1,4 @@
-package com.web.dacn.service.quote.impl;
+package com.web.dacn.service.client.impl;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.web.dacn.entity.quote.Quote;
 import com.web.dacn.repository.QuoteRepository;
-import com.web.dacn.service.quote.QuoteService;
+import com.web.dacn.service.client.QuoteService;
 
 @Service
 public class QuoteServiceImpl implements QuoteService {
