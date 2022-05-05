@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.web.dacn.dto.book.BookDTO;
-import com.web.dacn.service.book.IBookService;
+import com.web.dacn.service.admin.IBookService;
 
 @Controller
 @RequestMapping("/admin")

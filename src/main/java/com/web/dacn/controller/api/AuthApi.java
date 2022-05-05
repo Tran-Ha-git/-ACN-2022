@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.web.dacn.entity.user.User;
-import com.web.dacn.service.user.UserService;
+import com.web.dacn.service.auth.UserService;
 
 @RestController
 @RequestMapping(value = "/api/auth")

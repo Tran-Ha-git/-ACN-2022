@@ -1,4 +1,4 @@
-package com.web.dacn.service.book;
+package com.web.dacn.service.admin;
 
 import java.util.List;
 
@@ -16,7 +16,6 @@ public interface IBookService {
 	Pageable getBookEntitesByPage(int page);
 	
 	List<String> getReadFromat(long bookId);
-
 
 	Page<BookDTO> search(String bookName, String authorName, int page);
 

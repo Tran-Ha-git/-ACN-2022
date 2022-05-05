@@ -1,4 +1,4 @@
-package com.web.dacn.controller.quote;
+package com.web.dacn.controller.client.quote;
 
 import java.util.Date;
 import java.util.List;
@@ -10,39 +10,30 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.web.dacn.dto.quote.QuoteCategoryDto;
-import com.web.dacn.dto.user.UserLoginDto;
 import com.web.dacn.entity.quote.CommentQuote;
 import com.web.dacn.entity.quote.Quote;
 import com.web.dacn.entity.quote.ReviewQuote;
 import com.web.dacn.entity.user.User;
-import com.web.dacn.service.quote.CommentQuoteService;
-import com.web.dacn.service.quote.QuoteCategoryService;
-import com.web.dacn.service.quote.QuoteService;
-import com.web.dacn.service.quote.ReviewQuoteService;
+import com.web.dacn.service.client.CommentQuoteService;
+import com.web.dacn.service.client.QuoteCategoryService;
+import com.web.dacn.service.client.QuoteService;
+import com.web.dacn.service.client.ReviewQuoteService;
 
 @Controller
 @RequestMapping("quotes")

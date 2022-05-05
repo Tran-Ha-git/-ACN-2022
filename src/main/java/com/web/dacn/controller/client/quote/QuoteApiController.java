@@ -1,4 +1,4 @@
-package com.web.dacn.controller.quote;
+package com.web.dacn.controller.client.quote;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.web.dacn.entity.quote.CommentQuote;
 import com.web.dacn.entity.quote.Quote;
 import com.web.dacn.entity.quote.ReviewQuote;
-import com.web.dacn.service.quote.CommentQuoteService;
-import com.web.dacn.service.quote.QuoteService;
-import com.web.dacn.service.quote.ReviewQuoteService;
+import com.web.dacn.service.client.CommentQuoteService;
+import com.web.dacn.service.client.QuoteService;
+import com.web.dacn.service.client.ReviewQuoteService;
 
 @RestController
 @CrossOrigin(origins="/*")
