@@ -1,4 +1,4 @@
-package com.web.dacn.dto;
+package com.web.dacn.dto.user;
 
 
 public class UserRegisterDto {

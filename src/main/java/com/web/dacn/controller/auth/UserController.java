@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.web.dacn.dto.UserRegisterDto;
+import com.web.dacn.dto.user.UserRegisterDto;
 import com.web.dacn.service.auth.UserService;
 
 
