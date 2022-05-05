@@ -12,10 +12,10 @@ public class BookCategoryDTO {
 	private Long id;
 	private String name;
 	private BookCategoryDTO parentBookCategory;
-	private int view;
+	private Integer view;
 	private String slug;
 	private String metaTitle;
 	private String metaDescription;
-	private int status;
+	private Integer status;
     private Set<BookDTO> books;
 }

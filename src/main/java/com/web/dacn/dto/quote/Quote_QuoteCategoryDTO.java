@@ -1,4 +1,4 @@
-package com.web.dacn.dto.book;
+package com.web.dacn.dto.quote;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,10 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PdfDTO {
+public class Quote_QuoteCategoryDTO {
 	private Long id;
-	private String name;
-	private String url;
-	private Integer priority;
-	private BookDTO book;
+	private QuoteDto quote;
+	private QuoteCategoryDto category;
 }

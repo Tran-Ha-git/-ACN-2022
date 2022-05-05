@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,7 +28,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="reviewBook")
+@Table(name="reviewbook")
 public class ReviewBook implements Serializable {
 	/**
 	 * 
@@ -39,20 +40,19 @@ public class ReviewBook implements Serializable {
 	private Long id;
 	@Column(columnDefinition = "nvarchar(MAX)")
 	private String content;
-	private int star;
+	private Integer star;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="mod_time")
 	private Date mod_time;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL, targetEntity = User.class)
 	@JoinColumn(name="user_id")
 	private User user; 
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL, targetEntity = Book.class)
 	@JoinColumn(name="book_id")
-	@JsonIgnore
-	private Book Book; 
+	private Book Book;
 	
 	@Override
     public int hashCode() {

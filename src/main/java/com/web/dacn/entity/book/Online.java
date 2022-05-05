@@ -2,6 +2,7 @@ package com.web.dacn.entity.book;
 
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,11 +40,10 @@ public class Online {
 	private String content;
 	
 	@Column(name = "priority", nullable = false)
-	private int priority;
+	private Integer priority;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL, targetEntity = Book.class)
 	@JoinColumn(name = "book_id", nullable = false)
-	@JsonIgnore
 	private Book book;
 	
 	@Override

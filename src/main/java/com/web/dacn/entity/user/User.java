@@ -3,8 +3,13 @@ package com.web.dacn.entity.user;
 
 
 import java.io.Serializable;
+
 import java.util.Date;
 import java.util.HashSet;
+
+import java.util.List;
+import java.util.Objects;
+
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -20,8 +25,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.web.dacn.entity.BookMark;
 import com.web.dacn.entity.book.Book;
+import com.web.dacn.entity.book.BookMark;
+import com.web.dacn.entity.book.Book_BookCategory;
 import com.web.dacn.entity.quote.Quote;
 
 import lombok.AllArgsConstructor;
@@ -86,4 +92,22 @@ public class User implements Serializable{
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "book")
 	private Set<BookMark> bookmarks;
+	
+
+	@Override
+    public int hashCode() {
+		 return Objects.hash(getId());
+    }
+ 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof User)) {
+            return false;
+        }
+        User that = (User) obj;
+        return  Objects.equals(getId(),that.getId());
+    }
 }

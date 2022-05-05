@@ -22,7 +22,7 @@ public class QuoteCategoryDto implements Serializable{
 	private int view;
 	private String metaTitle;
 	private String metaDescription;
-	private Boolean status;
+	private Integer status;
 	private Long parent_id;
 	private QuoteCategory quoteCategory;
 }

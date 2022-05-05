@@ -1,4 +1,4 @@
-package com.web.dacn.entity;
+package com.web.dacn.entity.book;
 
 import java.util.Objects;
 
@@ -10,10 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.web.dacn.entity.book.Audio;
-import com.web.dacn.entity.book.Book;
-import com.web.dacn.entity.book.Online;
-import com.web.dacn.entity.book.Pdf;
 import com.web.dacn.entity.user.User;
 
 import lombok.AllArgsConstructor;
@@ -22,7 +18,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name = "audio")
+@Table(name = "bookmark")
 @AllArgsConstructor
 @NoArgsConstructor
 public class BookMark {
@@ -47,7 +43,7 @@ public class BookMark {
 	private Online online;
 
 	@ManyToOne
-	@JoinColumn(name = "pdf")
+	@JoinColumn(name = "pdf_id")
 	private Pdf pdf;
 
 	@Override

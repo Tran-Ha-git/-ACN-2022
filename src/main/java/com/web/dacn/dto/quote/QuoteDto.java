@@ -31,7 +31,7 @@ public class QuoteDto implements Serializable{
 	private Author author;
 	private String metaTitle;
 	private String metaDescription;
-	private Boolean status;
+	private Integer status;
 	private Date mod_time;
 	private User user;
 	private Set<QuoteCategory> quoteCategories = new HashSet<>();

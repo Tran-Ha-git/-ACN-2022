@@ -4,6 +4,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.web.dacn.dto.user.AuthorDTO;
+import com.web.dacn.entity.user.Author;
+
 @Controller
 public class DemoController {
 	@GetMapping("/home")

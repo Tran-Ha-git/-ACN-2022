@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class ReviewBookDTO implements Serializable {
 	private Long id;
 	private String content;
-	private int star;
+	private Integer star;
 	private Date mod_time;
 	private UserDto user; 
 	private BookDTO Book; 

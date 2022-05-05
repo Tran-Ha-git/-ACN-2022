@@ -1,10 +1,9 @@
 package com.web.dacn.entity.quote;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -25,7 +24,6 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Formula;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.web.dacn.entity.user.Author;
 import com.web.dacn.entity.user.User;
 
@@ -60,7 +58,7 @@ public class Quote implements Serializable {
 	@Column(name = "meta_description")
 	private String metaDescription;
 	@ColumnDefault(value="1")
-	private int status;
+	private Integer status;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date mod_time;
 	@ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -103,4 +101,22 @@ public class Quote implements Serializable {
 		}
 		return null;
 	}
+
+	@Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Quote)) {
+            return false;
+        }
+        Quote that = (Quote) obj;
+        return  Objects.equals(getId(),that.getId());
+    }
+	
+	@Override
+    public int hashCode() {
+		 return Objects.hash(getId());
+    }
+
 }

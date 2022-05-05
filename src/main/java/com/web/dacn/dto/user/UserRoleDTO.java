@@ -1,7 +1,7 @@
-package com.web.dacn.dto.book;
+package com.web.dacn.dto.user;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,10 +17,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AudioDTO {
+public class UserRoleDTO {
 	private Long id;
-	private String name;
-	private String url;
-	private Integer priority;
-	private BookDTO book;
+	private UserDto user;
+	private RoleDTO role;
 }

@@ -46,13 +46,13 @@ public class Book {
 	@Column(name = "view", 
 			columnDefinition = "INTEGER DEFAULT 1",
 			nullable = false)
-	private int view;
+	private Integer view;
 
 	@Column(name = "price")
-	private double price;
+	private Double price;
 
 	@Column(name = "vip")
-	private boolean vip;
+	private Boolean vip;
 
 	@Column(name = "description", 
 			columnDefinition = "TEXT",
@@ -74,25 +74,26 @@ public class Book {
 	@Column(name = "status", 
 			nullable = false, 
 			columnDefinition = "INTEGER DEFAULT 1")
-	private int status;
+	private Integer status;
 
 	@Column(name = "mod_time", nullable = false)
 	private Date modTime;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL, targetEntity = User.class)
 	@JoinColumn(name="mod_user_id")
 	private User user;
 
+	
 	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "book_author", joinColumns = {
-			@JoinColumn(name = "book_id", referencedColumnName = "id", nullable = false, updatable = false) }, inverseJoinColumns = {
-					@JoinColumn(name = "author_id", referencedColumnName = "id", nullable = false, updatable = false) })
+	@JoinTable(name = "book_author", 
+		joinColumns = @JoinColumn(name = "book_id", nullable = false), 
+		inverseJoinColumns = @JoinColumn(name = "author_id", nullable = false))
 	private Set<Author> authors;
-
+	
 	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "book_bookcategory", joinColumns = {
-			@JoinColumn(name = "`book_id`", referencedColumnName = "id", nullable = false, updatable = false) }, inverseJoinColumns = {
-					@JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false, updatable = false) })
+	@JoinTable(name = "book_bookcategory", 
+		joinColumns = @JoinColumn(name = "book_id", nullable = false), 
+		inverseJoinColumns = @JoinColumn(name = "category_id", nullable = false))
 
 	private Set<BookCategory> categories;
 	

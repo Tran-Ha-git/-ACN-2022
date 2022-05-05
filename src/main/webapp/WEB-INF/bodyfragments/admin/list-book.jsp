@@ -109,7 +109,7 @@
 						</c:otherwise>
 					</c:choose>
 
-					<td class="book-data">${book.modTime }</td>
+					<td class="book-data">${book.mod_time }</td>
 					<td class="book-data tr-width-12">
 				
 			              <c:forEach items="${readFormats}" var="readFormat">

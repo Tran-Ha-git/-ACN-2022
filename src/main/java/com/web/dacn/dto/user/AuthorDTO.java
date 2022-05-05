@@ -18,7 +18,7 @@ public class AuthorDTO implements Serializable{
 	private String address;
 	private String phone;
 	private String description;
-	private Boolean status;
+	private Integer status;
 	private Date mod_time;
 	private UserDto user;
 }

@@ -37,7 +37,7 @@ public class Converter {
 		book.setName(entity.getName());
 		book.setStatus(entity.getStatus());
 		book.setThumbnail(entity.getThumbnail());
-		book.setModTime(entity.getModTime());
+		book.setMod_time(entity.getModTime());
 
 		Set<BookCategoryDTO> categories = new HashSet<BookCategoryDTO>();
 		for (BookCategory category : entity.getCategories()) {

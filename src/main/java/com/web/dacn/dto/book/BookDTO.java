@@ -18,15 +18,17 @@ public class BookDTO {
 	private Long id;
 	private String name;
 	private String thumbnail;
-	private int view;
-	private double price;
-	private boolean vip;
+	private Integer view;
+	private Double price;
+	private Boolean vip;
 	private String description;
 	private String slug;
 	private String metaTitle;
 	private String metaDescription;
-	private int status;
-	private Date modTime;
+
+	private Integer status;
+	private Date mod_time;
+
 	private UserDto user;
 
 	private Set<AuthorDTO> authors;

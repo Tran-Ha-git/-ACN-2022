@@ -8,9 +8,11 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.web.dacn.entity.book.Audio;
 
+
 public interface AudioRepository extends JpaRepository<Audio, Long> {
 
 	List<Audio> findByBookId(long bookId);
+
 
 }
 

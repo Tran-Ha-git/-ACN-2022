@@ -7,10 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PdfDTO {
+public class Book_BookCategoryDTO {
 	private Long id;
-	private String name;
-	private String url;
-	private Integer priority;
 	private BookDTO book;
+	private BookCategoryDTO category;
 }

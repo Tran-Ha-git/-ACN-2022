@@ -2,6 +2,8 @@ package com.web.dacn.entity.user;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,9 +13,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.web.dacn.entity.book.Book;
+import com.web.dacn.entity.book.Book_BookCategory;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,6 +30,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "author")
 public class Author implements Serializable{
 	/**
 	 * 
@@ -35,18 +43,47 @@ public class Author implements Serializable{
 	
 	@Column(columnDefinition = "nvarchar(2000) NOT NULL", unique=true)
 	private String slug;
+	
 	private String fullname;
+	
 	private Date birthday;
+	
 	@Column(columnDefinition = "nvarchar(1000)")
 	private String address;
+	
 	@Column(columnDefinition = "nvarchar(20)")
 	private String phone;
+	
 	@Column(columnDefinition = "nvarchar(MAX)")
 	private String description;
-	private Boolean status;
+	
+	private Integer status;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date mod_time;
+	
 	@ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name="mod_user_id")
 	private User user;
+	
+	@ManyToMany(mappedBy = "authors")
+	private Set<Book> books;
+	
+
+	@Override
+    public int hashCode() {
+		 return Objects.hash(getId());
+    }
+ 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Author)) {
+            return false;
+        }
+        Author that = (Author) obj;
+        return  Objects.equals(getId(),that.getId());
+    }	
 }
