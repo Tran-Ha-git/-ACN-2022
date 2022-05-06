@@ -13,11 +13,9 @@ public interface IBookService {
 
 	Page<BookDTO> getBooksByPage(int page);
 
-	Pageable getBookEntitesByPage(int page);
-	
 	List<String> getReadFromat(long bookId);
 
 	Page<BookDTO> search(String bookName, String authorName, int page);
-
-
+  
+	
 }

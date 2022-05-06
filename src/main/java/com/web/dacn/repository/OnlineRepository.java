@@ -11,5 +11,5 @@ import com.web.dacn.entity.book.Online;
 @Repository
 public interface OnlineRepository extends JpaRepository<Online, Long> {
 	List<Online> findByBookId(long bookId);
-
+	
 }

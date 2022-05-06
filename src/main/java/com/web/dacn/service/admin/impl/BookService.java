@@ -1,7 +1,9 @@
-package com.web.dacn.service.admin.impl;
+﻿package com.web.dacn.service.admin.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,7 +22,6 @@ import com.web.dacn.repository.OnlineRepository;
 import com.web.dacn.repository.PdfRepository;
 import com.web.dacn.service.admin.IBookService;
 import com.web.dacn.utils.Converter;
-
 
 @Service
 public class BookService implements IBookService {
@@ -57,7 +58,7 @@ public class BookService implements IBookService {
 
 	}
 
-	@Override
+	
 	public Pageable getBookEntitesByPage(int page) {
 		Pageable pageable = PageRequest.of(page, size);
 		return pageable;
@@ -88,5 +89,6 @@ public class BookService implements IBookService {
 		return books;
 
 	}
+
 
 }

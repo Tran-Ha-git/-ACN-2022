@@ -7,5 +7,6 @@ import com.web.dacn.entity.book.BookAuthor;
 
 @Repository
 public interface BookAuthorRepository extends JpaRepository<BookAuthor, Long>{
-
+	
+	
 }

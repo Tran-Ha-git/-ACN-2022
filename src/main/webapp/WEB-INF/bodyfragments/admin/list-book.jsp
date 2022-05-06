@@ -124,8 +124,9 @@
 	              
 					<td class="book-data ">
 						<div class="custom-btn">
-
-							<a href="#" class="edit-custom-btn">Sửa</a> <a href="#"
+                         
+							<a href="#" class="edit-custom-btn">Sửa</a> 
+							<a href="#"
 								class="delete-custom-btn">Xóa</a>
 
 						</div>

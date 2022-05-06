@@ -33,11 +33,12 @@ public class Converter {
 	public BookDTO toDTO(Book entity) {
 
 		BookDTO book = new BookDTO();
+		
 		book.setId(entity.getId());
 		book.setName(entity.getName());
 		book.setStatus(entity.getStatus());
 		book.setThumbnail(entity.getThumbnail());
-		book.setMod_time(entity.getModTime());
+		book.setMod_time(entity.getMod_time());
 
 		Set<BookCategoryDTO> categories = new HashSet<BookCategoryDTO>();
 		for (BookCategory category : entity.getCategories()) {

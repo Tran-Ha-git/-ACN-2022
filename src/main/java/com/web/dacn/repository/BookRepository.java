@@ -2,7 +2,7 @@ package com.web.dacn.repository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import com.web.dacn.entity.book.Book;
@@ -18,4 +18,5 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 			+ " where b.name like ?1% and a.fullname like ?2%  group by b.id ", nativeQuery = true)
 	Page<Book> search(String bookName, String authorName, Pageable pageable);
 
+	
 }

@@ -77,7 +77,7 @@ public class Book {
 	private Integer status;
 
 	@Column(name = "mod_time", nullable = false)
-	private Date modTime;
+	private Date mod_time;
 
 	@ManyToOne(cascade = CascadeType.ALL, targetEntity = User.class)
 	@JoinColumn(name="mod_user_id")
@@ -94,7 +94,6 @@ public class Book {
 	@JoinTable(name = "book_bookcategory", 
 		joinColumns = @JoinColumn(name = "book_id", nullable = false), 
 		inverseJoinColumns = @JoinColumn(name = "category_id", nullable = false))
-
 	private Set<BookCategory> categories;
 	
 	@OneToMany(mappedBy = "book", cascade = CascadeType.ALL)

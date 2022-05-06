@@ -10,6 +10,7 @@ import com.web.dacn.entity.book.BookCategory;
 public interface BookCategoryRepository extends JpaRepository<BookCategory, Long>{
 	BookCategory findById(int id);
 	BookCategory findByName(String name);
+	
 
 }
 

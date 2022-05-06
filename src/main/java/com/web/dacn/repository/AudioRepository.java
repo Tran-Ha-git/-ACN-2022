@@ -10,9 +10,6 @@ import com.web.dacn.entity.book.Audio;
 
 
 public interface AudioRepository extends JpaRepository<Audio, Long> {
-
 	List<Audio> findByBookId(long bookId);
-
-
 }
 
