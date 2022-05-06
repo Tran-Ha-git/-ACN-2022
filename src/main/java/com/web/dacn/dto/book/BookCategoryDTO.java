@@ -1,6 +1,7 @@
 package com.web.dacn.dto.book;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,5 +18,5 @@ public class BookCategoryDTO {
 	private String metaTitle;
 	private String metaDescription;
 	private Integer status;
-    private Set<BookDTO> books;
+    private List<BookDTO> books = new ArrayList<>();
 }

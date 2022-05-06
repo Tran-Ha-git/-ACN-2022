@@ -30,10 +30,12 @@ public class FavoriteBook {
 
 	@ManyToOne(targetEntity = User.class)
 	@JoinColumn(name = "user_id")
+	@JsonIgnore
 	private User user;
 
 	@ManyToOne(targetEntity = Book.class)
 	@JoinColumn(name = "book_id")
+	@JsonIgnore
 	private Book book;
 	
 	@Override

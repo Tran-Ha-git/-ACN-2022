@@ -56,7 +56,7 @@ public class BookService implements IBookService {
 	@Override
 	public Pageable getBookEntitesByPage(int page) {
 		Pageable pageable = PageRequest.of(page, size);
-		return pageable;
+		return null;
 	}
 
 	@Override
@@ -79,14 +79,14 @@ public class BookService implements IBookService {
 	// Get authors of book by book's id
 	@Override
 	public List<String> getAuthorsOfBook(int id) {
-		return bookRepository.getAuthorsOfBook(id);
+		return null;
 
 	}
 
 	// Get categories of book by book's id
 	@Override
 	public List<String> getCategoriesOfBook(int id) {
-		return bookRepository.getCategoriesOfBook(id);
+		return null;
 	}
 
 	@Override
@@ -104,9 +104,9 @@ public class BookService implements IBookService {
 	@Override
 	public Page<BookDTO> search(String bookName, String authorName, int page) {
 		
-		Pageable pageable = PageRequest.of(page, size);
-
-		Page<Book> entities = bookRepository.search(bookName, authorName, pageable);
+//		Pageable pageable = PageRequest.of(page, size);
+//
+//		Page<Book> entities = bookRepository.search(bookName, authorName, pageable);
 
 //		Page<BookDTO> books = entities.map(entity -> {
 //			BookDTO dto = bookConverter.toDTO(entity);

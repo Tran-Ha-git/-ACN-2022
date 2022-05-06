@@ -43,6 +43,7 @@ public class Audio {
 	
 	@ManyToOne(targetEntity = Book.class)
 	@JoinColumn(name = "book_id", nullable = false)
+	@JsonIgnore
 	private Book book;
 	
 	@Override

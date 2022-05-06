@@ -9,7 +9,7 @@ import com.web.dacn.entity.book.Audio;
 
 public interface AudioRepository extends JpaRepository<Audio, Long> {
 	@Query(value="select * from audio where book_id=?1",nativeQuery = true)
-	List<Audio> findByBookId(int bookId);
-
+	List<Audio> findByBookId(long bookId);
+	boolean existsByBookId(long bookId);
 }
 

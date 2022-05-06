@@ -11,5 +11,6 @@ import com.web.dacn.entity.book.Pdf;
 
 public interface PdfRepository extends JpaRepository<Pdf, Long> {
 	 PdfRepository save(PdfRepository pdfEntity);
-	 List<Pdf> findByBookId(int id);
-}
+	 List<Pdf> findByBookId(long id);
+	 boolean existsByBookId(long bookId);
+ }

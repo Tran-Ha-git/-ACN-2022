@@ -20,6 +20,11 @@
 			value="/WEB-INF/basefragments/client/footer.jsp" />
 	</definition>
 
+	<!-- 404 Page -->
+	<definition name="404" extends="client.base.definition" template="/WEB-INF/layouts/404.jsp">
+	</definition>
+
+
 	<!-- Home Page -->
 	<definition name="homePage" extends="client.base.definition">
 		<put-attribute name="title" value="Home Page" />
@@ -91,7 +96,6 @@
 	
 	<!-- Auth -->
 	
-		
 
 	<definition name="auth.base.definition"
 		template="/WEB-INF/layouts/auth.jsp">

@@ -270,7 +270,7 @@ header a:hover {
     justify-content: start;
 }
 
-.content-share .content-share-button button {
+.content-share .content-share-button a {
     border: none;
     display: flex;
     justify-content: center;
@@ -286,11 +286,11 @@ header a:hover {
 
 }
 
-.content-share .content-share-button button:nth-child(2) {
+.content-share .content-share-button a:nth-child(2) {
     background-color: #EF6F38;
 }
 
-.content-share .content-share-button button .content-share-button-icon {
+.content-share .content-share-button a .content-share-button-icon {
     margin-right: 7px;
 }
 
@@ -312,4 +312,13 @@ header a:hover {
 
 .content-container p {
     margin-bottom: 20px;
+}
+
+.author-link {
+	color: #00bfff;
+}
+
+.author-link:hover {
+	color: #00bfff;
+	text-decoration: underline!important;	
 }
