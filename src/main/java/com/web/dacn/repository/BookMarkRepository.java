@@ -5,6 +5,8 @@ import org.springframework.stereotype.Repository;
 
 import com.web.dacn.entity.book.BookMark;
 
+
+
 @Repository
 public interface BookMarkRepository extends JpaRepository<BookMark, Long>{
 	

@@ -1,12 +1,15 @@
 package com.web.dacn.entity.user;
 
+
+
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
+
 import java.util.List;
 import java.util.Objects;
+
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -30,9 +33,7 @@ import com.web.dacn.entity.quote.Quote;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Data
 @NoArgsConstructor

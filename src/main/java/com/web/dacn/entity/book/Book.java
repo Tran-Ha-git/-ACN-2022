@@ -86,6 +86,7 @@ public class Book {
 	@JsonIgnore
 	private User user;
 
+	
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "book_author", 
 		joinColumns = @JoinColumn(name = "book_id", nullable = false), 

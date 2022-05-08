@@ -12,8 +12,7 @@ import com.web.dacn.entity.book.Online;
 
 @Repository
 public interface OnlineRepository extends JpaRepository<Online, Long>{
-	@Query(value="select * from `online` where book_id=?1", nativeQuery = true)
-	List<Online> findByBookId(int bookId);
+	List<Online> findByBookId(long  bookId);
 	boolean existsByBookId(long bookId);	
 	List<Online> findByBookIdOrderByPriorityAsc(long bookId, Pageable pageable);
 }
