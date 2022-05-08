@@ -61,7 +61,7 @@ public class BookService implements IBookService {
 	
 	public Pageable getBookEntitesByPage(int page) {
 		Pageable pageable = PageRequest.of(page, size);
-		return null;
+		return pageable;
 	}
 
 	@Override
