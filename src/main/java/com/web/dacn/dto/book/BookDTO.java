@@ -1,8 +1,8 @@
 package com.web.dacn.dto.book;
 
-import java.sql.Date;
-
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import com.web.dacn.dto.user.AuthorDTO;
 import com.web.dacn.dto.user.UserDto;
@@ -25,16 +25,12 @@ public class BookDTO {
 	private String slug;
 	private String metaTitle;
 	private String metaDescription;
-
 	private Integer status;
 	private Date mod_time;
-
 	private UserDto user;
-
-	private Set<AuthorDTO> authors;
-	private Set<BookCategoryDTO> categories;
-	private Set<AudioDTO> audios;
-	private Set<OnlineDTO> onlines;
-	private Set<PdfDTO> pdfs;
-
+	private List<AuthorDTO> authors = new ArrayList<AuthorDTO>();
+	private List<BookCategoryDTO> categories = new ArrayList<>();
+	private List<AudioDTO> audios = new ArrayList<>();
+	private List<OnlineDTO> onlines = new ArrayList<>();
+	private List<PdfDTO> pdfs = new ArrayList<>();
 }

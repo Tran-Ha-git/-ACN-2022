@@ -54,4 +54,9 @@ public class DemoController {
 		return "adminNewBook";
 	}
 	
+	@GetMapping("/404")
+	public String get404(Model model) {
+		return "404";
+	}
+	
 }

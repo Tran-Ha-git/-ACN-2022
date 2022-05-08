@@ -40,21 +40,16 @@ public class Converter {
 		book.setThumbnail(entity.getThumbnail());
 		book.setMod_time(entity.getMod_time());
 
-		Set<BookCategoryDTO> categories = new HashSet<BookCategoryDTO>();
 		for (BookCategory category : entity.getCategories()) {
 			BookCategoryDTO dto = toDTO(category);
-			categories.add(dto);
-
+			book.getCategories().add(dto);
 		}
 
-		Set<AuthorDTO> authors = new HashSet<AuthorDTO>();
 		for (Author author : entity.getAuthors()) {
 			AuthorDTO dto = toDTO(author);
-			authors.add(dto);
+			book.getAuthors().add(dto);
 
 		}
-		book.setCategories(categories);
-		book.setAuthors(authors);
 
 		return book;
 	}

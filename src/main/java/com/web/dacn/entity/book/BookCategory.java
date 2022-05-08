@@ -1,7 +1,8 @@
 package com.web.dacn.entity.book;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -37,6 +38,7 @@ public class BookCategory {
 	
 	@OneToOne(cascade = CascadeType.ALL, targetEntity = BookCategory.class)
 	@JoinColumn(name = "parent_id")
+	@JsonIgnore
 	private BookCategory parentBookCategory;
 	
 	@Column(name = "view", 
@@ -62,7 +64,8 @@ public class BookCategory {
 	private Integer status;
 
 	@ManyToMany(mappedBy = "categories", cascade = CascadeType.ALL)
-    private Set<Book> books;
+	@JsonIgnore
+    private List<Book> books = new ArrayList<>();
 
 	@Override
     public int hashCode() {

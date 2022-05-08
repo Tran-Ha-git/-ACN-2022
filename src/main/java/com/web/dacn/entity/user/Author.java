@@ -1,9 +1,10 @@
 package com.web.dacn.entity.user;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,8 +20,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.web.dacn.entity.book.Book;
-import com.web.dacn.entity.book.Book_BookCategory;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -67,7 +68,8 @@ public class Author implements Serializable{
 	private User user;
 	
 	@ManyToMany(mappedBy = "authors")
-	private Set<Book> books;
+	@JsonIgnore
+	private List<Book> books = new ArrayList<>();
 	
 
 	@Override

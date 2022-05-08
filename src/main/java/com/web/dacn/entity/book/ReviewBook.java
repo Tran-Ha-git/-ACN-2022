@@ -48,10 +48,12 @@ public class ReviewBook implements Serializable {
 	
 	@ManyToOne(cascade = CascadeType.ALL, targetEntity = User.class)
 	@JoinColumn(name="user_id")
+	@JsonIgnore
 	private User user; 
 	
 	@ManyToOne(cascade = CascadeType.ALL, targetEntity = Book.class)
 	@JoinColumn(name="book_id")
+	@JsonIgnore
 	private Book Book;
 	
 	@Override

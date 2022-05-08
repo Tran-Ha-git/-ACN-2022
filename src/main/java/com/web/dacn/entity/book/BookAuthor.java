@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.web.dacn.entity.user.Author;
 
 import lombok.AllArgsConstructor;
@@ -28,10 +29,12 @@ public class BookAuthor {
 
 	@ManyToOne(targetEntity = Book.class)
 	@JoinColumn(name = "book_id")
+	@JsonIgnore
 	private Book book;
 
 	@ManyToOne(targetEntity = Author.class)
 	@JoinColumn(name = "author_id")
+	@JsonIgnore
 	private Author author;
 	
 	@Override

@@ -1,9 +1,9 @@
 package com.web.dacn.dto.quote;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import com.web.dacn.entity.quote.CommentQuote;
 import com.web.dacn.entity.quote.Quote;
@@ -27,5 +27,5 @@ public class CommentQuoteDto implements Serializable{
 	private CommentQuote commentQuote;
 	private User user;
 	private Quote quote;
-	private Set<CommentQuote> commentQuotes = new HashSet<>();
+	private List<CommentQuote> commentQuotes = new ArrayList<>();
 }

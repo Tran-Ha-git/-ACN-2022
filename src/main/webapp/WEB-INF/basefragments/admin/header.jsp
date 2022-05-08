@@ -33,8 +33,6 @@
 				 <a href="#">Thông báo</a>
 				  <a href="#">Cài đặt</a>
 				  <a href="<c:url value="/logout" />" >Đăng xuất</a>
-				<a href="#">Trang cá nhân</a> <a href="#">Thông báo</a> <a href="#">Cài
-					đặt</a>
 			</div>
 		</div>
 

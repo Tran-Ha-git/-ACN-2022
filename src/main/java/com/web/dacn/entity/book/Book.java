@@ -1,8 +1,9 @@
 package com.web.dacn.entity.book;
 
-import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.web.dacn.entity.user.Author;
 import com.web.dacn.entity.user.User;
 
@@ -81,6 +83,7 @@ public class Book {
 
 	@ManyToOne(cascade = CascadeType.ALL, targetEntity = User.class)
 	@JoinColumn(name="mod_user_id")
+	@JsonIgnore
 	private User user;
 
 	
@@ -88,22 +91,27 @@ public class Book {
 	@JoinTable(name = "book_author", 
 		joinColumns = @JoinColumn(name = "book_id", nullable = false), 
 		inverseJoinColumns = @JoinColumn(name = "author_id", nullable = false))
-	private Set<Author> authors;
-	
+	@JsonIgnore
+	private List<Author> authors = new ArrayList<>();
+
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "book_bookcategory", 
 		joinColumns = @JoinColumn(name = "book_id", nullable = false), 
 		inverseJoinColumns = @JoinColumn(name = "category_id", nullable = false))
-	private Set<BookCategory> categories;
+	@JsonIgnore
+	private List<BookCategory> categories = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
-	private Set<Audio> audios;
+	@JsonIgnore
+	private List<Audio> audios = new ArrayList<>();
 
 	@OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
-	private Set<Online> onlines;
+	@JsonIgnore
+	private List<Online> onlines = new ArrayList<>();
 
 	@OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
-	private Set<Pdf> pdfs;
+	@JsonIgnore
+	private List<Pdf> pdfs = new ArrayList<>();
 
 	@Override
     public int hashCode() {

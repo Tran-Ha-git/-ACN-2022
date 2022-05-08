@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.web.dacn.entity.user.User;
 
 import lombok.AllArgsConstructor;
@@ -28,22 +29,27 @@ public class BookMark {
 	
 	@ManyToOne
 	@JoinColumn(name = "book_id", nullable = false)
+	@JsonIgnore
 	private Book book;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
+	@JsonIgnore
 	private User user;
 	
 	@ManyToOne
 	@JoinColumn(name = "audio_id")
+	@JsonIgnore
 	private Audio audio;
 
 	@ManyToOne
 	@JoinColumn(name = "online_id")
+	@JsonIgnore
 	private Online online;
 
 	@ManyToOne
 	@JoinColumn(name = "pdf_id")
+	@JsonIgnore
 	private Pdf pdf;
 
 	@Override

@@ -3,7 +3,7 @@ package com.web.dacn.entity.user;
 
 
 import java.io.Serializable;
-
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 
@@ -25,6 +25,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.web.dacn.entity.book.Book;
 import com.web.dacn.entity.book.BookMark;
 import com.web.dacn.entity.book.Book_BookCategory;
@@ -74,7 +75,8 @@ public class User implements Serializable{
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "quote_id")
             )
-	private Set<Quote> favoriteQuotes = new HashSet<>();
+	@JsonIgnore
+	private Set<Quote> favoriteQuotes;
 	
 	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinTable(
@@ -82,32 +84,16 @@ public class User implements Serializable{
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id")
             )
-	private Set<Book> favoriteBooks = new HashSet<>();
+	@JsonIgnore
+	private Set<Book> favoriteBooks;
 	
 	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(	name = "user_role", 
 				joinColumns = @JoinColumn(name = "user_id", nullable = false), 
 				inverseJoinColumns = @JoinColumn(name = "role_id", nullable = false))
-	private Set<Role> roles = new HashSet<>();
+	private List<Role> roles = new ArrayList<>();
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "book")
-	private Set<BookMark> bookmarks;
-	
-
-	@Override
-    public int hashCode() {
-		 return Objects.hash(getId());
-    }
- 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (!(obj instanceof User)) {
-            return false;
-        }
-        User that = (User) obj;
-        return  Objects.equals(getId(),that.getId());
-    }
+	@JsonIgnore
+	private List<BookMark> bookmarks = new ArrayList<>();
 }

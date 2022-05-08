@@ -1,10 +1,10 @@
 package com.web.dacn.entity.book;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -37,29 +37,36 @@ public class CommentBook implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	@Column(columnDefinition = "nvarchar(MAX)")
 	private String content;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="mod_time")
 	private Date mod_time;
 	
 	@ManyToOne(cascade = CascadeType.ALL, targetEntity = CommentBook.class)
 	@JoinColumn(name="parent_id")
+	@JsonIgnore
 	private CommentBook commentBook;
 	
 	@ManyToOne(cascade = CascadeType.ALL, targetEntity = User.class)
 	@JoinColumn(name="user_id")
+	@JsonIgnore
 	private User user; 
 	
 	@ManyToOne(cascade = CascadeType.ALL, targetEntity = Book.class)
 	@JoinColumn(name="book_id")
+	@JsonIgnore
 	private Book book;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "commentBook", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	private Set<CommentBook> commentBooks;
+	@JsonIgnore
+	private List<CommentBook> commentBooks = new ArrayList<>();
 
 	@Override
     public int hashCode() {

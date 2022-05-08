@@ -1,8 +1,9 @@
 package com.web.dacn.dto.book;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 import com.web.dacn.dto.user.UserDto;
 
@@ -20,5 +21,5 @@ public class CommentBookDTO implements Serializable{
 	private CommentBookDTO commentBook;
 	private UserDto user; 
 	private BookDTO book; 
-	private Set<CommentBookDTO> commentBooks;
+	private List<CommentBookDTO> commentBooks = new ArrayList<CommentBookDTO>();
 }

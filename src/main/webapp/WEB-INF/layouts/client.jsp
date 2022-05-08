@@ -15,14 +15,14 @@
 	<link rel="stylesheet" type="text/css" href="/vendor/swiperjs/swiper-bundle.min.css">
     <link rel="stylesheet" type="text/css" href="/css/client/header-footer.css" />
     <link rel="stylesheet" type="text/css" href="/<tiles:insertAttribute name="style" />">
-    <title>Trang chủ</title>
+	<link rel="icon" href="/assets/images/favicon.png">    
+	<title><tiles:getAsString name="title" /></title>
 </head>
 
 <body>
     <tiles:insertAttribute name="header" />
     <tiles:insertAttribute name="body" />
     <tiles:insertAttribute name="footer" />
-
     <script src="/vendor/bootstrap-5.1.3-dist/js/bootstrap.min.js"></script>
     <script src="/vendor/fontawesome-free-6.1.1-web/js/all.min.js"></script>
     <script src="/vendor/jquery/jquery3.6.0.min.js"></script>
