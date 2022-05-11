@@ -31,9 +31,7 @@ public class ListBookServiceImpl implements ListBookService {
 	
 	@Autowired
 	private BookCategoryRepository bookCategoryRepository;
-	
-	private ModelMapper mapper = new ModelMapper();
-		
+			
 	@Override
 	public Page<BookDTO> getPageBook(String type, String search, String sortStr, int page, Long categoryId) {
 		PageRequest pageRequest = PageRequest.of(page, 16);
