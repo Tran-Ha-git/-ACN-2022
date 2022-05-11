@@ -12,13 +12,8 @@ public class DemoController {
 	@GetMapping("/home")
 	public String getHomePage(Model model) {		
 		return "homePage";
-	}
+	}	
 	
-	@GetMapping("/books")
-	public String getDetailBookPage(Model model) {
-		return "detailBookPage";
-	}
-
 	@GetMapping("/pdf-read")
 	public String getPdfRead(Model model) {
 		return "pdfReadPage";

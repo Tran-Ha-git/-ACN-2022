@@ -1,12 +1,14 @@
 package com.web.dacn.repository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
+import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
 import com.web.dacn.entity.book.Book;
 
 @Repository
@@ -21,4 +23,55 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 	Page<Book> search(String bookName, String authorName, Pageable pageable);
 
 	Optional<Book> findOneBySlug(String slug);
+	
+	@Query(value = "SELECT * FROM book b WHERE EXISTS(SELECT * FROM online WHERE book_id = b.id) ORDER BY view DESC LIMIT 10", nativeQuery = true)
+	List<Book> findTop10OnlineBook();
+
+	@Query(value = "SELECT * FROM book b WHERE EXISTS(SELECT * FROM audio WHERE book_id = b.id) ORDER BY view DESC LIMIT 10", nativeQuery = true)
+	List<Book> findTop10AudioBook();
+
+	@Query(value = "SELECT * FROM book b WHERE name LIKE %:search%", nativeQuery = true)
+	Page<Book> findBookContainingSearchOrderBySort(String search, Pageable pageable);
+	
+	Page<Book> findByNameContaining(String search, Pageable pageable);
+
+	// exist audio, online, pdf
+
+	@Query(value = "SELECT * FROM book b WHERE EXISTS(SELECT * FROM audio WHERE book_id = b.id) AND name LIKE %:search%", nativeQuery = true)
+	Page<Book> findAudioBookContainingSearchOrderBySort(String search, Pageable pageable);
+
+	@Query(value = "SELECT * FROM book b WHERE EXISTS(SELECT * FROM online WHERE book_id = b.id) AND name LIKE %:search%", nativeQuery = true)
+	Page<Book> findOnlineBookContainingSearchOrderBySort(String search, Pageable pageable);
+
+	@Query(value = "SELECT * FROM book b WHERE EXISTS(SELECT * FROM pdf WHERE book_id = b.id) AND name LIKE %:search%", nativeQuery = true)
+	Page<Book> findPdfBookContainingSearchOrderBySort(String search, Pageable pageable);
+	
+	// Filter by category id
+	
+	@Query(value = "SELECT * FROM book b WHERE EXISTS("
+			+ "SELECT * FROM book_bookcategory WHERE book_id = b.id AND category_id = :categoryId) AND name LIKE %:search%", nativeQuery = true)
+	Page<Book> findByNameContainingAndCategoryId(String search, Pageable pageable, Long categoryId);
+
+	
+	@Query(value = "SELECT * FROM book b WHERE EXISTS("
+			+ "SELECT * FROM book_bookcategory WHERE book_id = b.id AND category_id = :categoryId) AND name LIKE %:search%", nativeQuery = true)
+	Page<Book> findBookByCategoryIdAndContainingSearchOrderBySort(String search, Pageable pageable, Long categoryId);
+	
+	@Query(value = "SELECT * FROM book b WHERE EXISTS("
+			+ "SELECT * FROM audio WHERE book_id = b.id) AND EXISTS("
+			+ "SELECT * FROM book_bookcategory WHERE book_id = b.id AND category_id = :categoryId) AND "
+			+ "name LIKE %:search%", nativeQuery = true)
+	Page<Book> findAudioBookByCategoryIdAndContainingSearchOrderBySort(String search, Pageable pageable, Long categoryId);
+
+	@Query(value = "SELECT * FROM book b WHERE EXISTS("
+			+ "SELECT * FROM online WHERE book_id = b.id) AND EXISTS("
+			+ "SELECT * FROM book_bookcategory WHERE book_id = b.id AND category_id = :categoryId) AND "
+			+ "name LIKE %:search%", nativeQuery = true)
+	Page<Book> findOnlineBookByCategoryIdAndContainingSearchOrderBySort(String search, Pageable pageable, Long categoryId);
+
+	@Query(value = "SELECT * FROM book b WHERE EXISTS("
+			+ "SELECT * FROM pdf WHERE book_id = b.id) AND EXISTS("
+			+ "SELECT * FROM book_bookcategory WHERE book_id = b.id AND category_id = :categoryId) AND name LIKE %:search%", nativeQuery = true)
+	Page<Book> findPdfBookByCategoryIdAndContainingSearchOrderBySort(String search, Pageable pageable, Long categoryId);
+	
 }
