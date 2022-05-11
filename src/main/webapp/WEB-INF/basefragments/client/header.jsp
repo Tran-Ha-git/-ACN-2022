@@ -6,12 +6,11 @@
 			<span><i class="fa-solid fa-bars"></i></span>
 			<ul>
 				<li><a href="/home">Trang chủ</a></li>
-				<li><a href="#">Trang chủ</a></li>
-				<li><a href="#">Sách nói</a></li>
-				<li><a href="#">Ebook</a></li>
-				<li><a href="#">Truyện</a></li>
+				<li><a href="/books?type=audio">Sách nói</a></li>
+				<li><a href="/books?type=ebook">Ebook</a></li>
+				<li><a href="/books?type=pdf">Truyện</a></li>
 				<li><a href="#">VIP</a></li>
-				<li><a href="#">Danh ngôn</a></li>
+				<li><a href="/quotes">Danh ngôn</a></li>
 			</ul>
 		</div>
 		<div class="logo">
@@ -20,13 +19,12 @@
 		<div class="menu">
 			<nav class="d-none d-lg-block">
 				<ul>
-					<li><a href="/home">Trang chủ</a></li>
-					<li><a href="#">Trang chủ</a></li>
-					<li><a href="#">Sách nói</a></li>
-					<li><a href="#">Ebook</a></li>
-					<li><a href="#">Truyện</a></li>
-					<li><a href="#">VIP</a></li>
-					<li><a href="#">Danh ngôn</a></li>
+				<li><a href="/home">Trang chủ</a></li>
+				<li><a href="/books?type=audio">Sách nói</a></li>
+				<li><a href="/books?type=ebook">Ebook</a></li>
+				<li><a href="/books?type=pdf">Truyện</a></li>
+				<li><a href="#">VIP</a></li>
+				<li><a href="/quotes">Danh ngôn</a></li>
 				</ul>
 			</nav>
 			<c:if test="${pageContext.request.userPrincipal.name != null}">
