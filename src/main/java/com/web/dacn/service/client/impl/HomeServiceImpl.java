@@ -41,7 +41,7 @@ public class HomeServiceImpl implements HomeService{
 	}
 
 	@Override
-	public List<BookDTO> getMangoBookByTopView() {
+	public List<BookDTO> getMangaBookByTopView() {
 		return bookRepository.findBookByCategoryIdAndContainingSearchOrderBySort("", PageRequest.of(0, 16, Sort.by(new Order(Direction.DESC, "view"))), 1L).stream().map(book -> {
 			BookDTO dto = new BookDTO();
 			BeanUtils.copyProperties(book, dto);

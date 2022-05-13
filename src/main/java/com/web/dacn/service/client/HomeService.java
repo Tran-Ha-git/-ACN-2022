@@ -7,7 +7,7 @@ import com.web.dacn.dto.quote.QuoteDto;
 
 public interface HomeService {
 	List<BookDTO> getNewBooks();
-	List<BookDTO> getMangoBookByTopView();
+	List<BookDTO> getMangaBookByTopView();
 	List<BookDTO> getAudioBookByTopView();
 	List<BookDTO> getEbookBookByTopView();
 	List<QuoteDto> getQuoteByTopView();

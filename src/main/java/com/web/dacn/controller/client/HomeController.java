@@ -42,7 +42,7 @@ public class HomeController {
 	
 	@ModelAttribute("top_mangas")
 	private List<BookDTO> getMangaBook() {
-		return homeService.getMangoBookByTopView();
+		return homeService.getMangaBookByTopView();
 	}
 	
 	@ModelAttribute("top_quotes")
