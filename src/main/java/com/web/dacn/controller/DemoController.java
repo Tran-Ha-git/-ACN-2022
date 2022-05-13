@@ -9,10 +9,6 @@ import com.web.dacn.entity.user.Author;
 
 @Controller
 public class DemoController {
-	@GetMapping("/home")
-	public String getHomePage(Model model) {		
-		return "homePage";
-	}	
 	
 	@GetMapping("/pdf-read")
 	public String getPdfRead(Model model) {
@@ -34,11 +30,11 @@ public class DemoController {
 		return "audioPage";
 	}
 
-	@GetMapping("/list-audio")
-	public String getListAudio(Model model) {
-		return "listAudioPage";
+	@GetMapping("/detail")
+	public String getDetail(Model model) {
+		return "detailBookPage";
 	}
-
+	
 //	@GetMapping("/admin/books")
 //	public String getAdminListBook(Model model) {
 //		return "adminListBook";

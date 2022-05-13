@@ -1,4 +1,5 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <div class="container-fluid p-0">
 	<div class="pages-content">
@@ -11,9 +12,9 @@
 							Chào mừng bạn đến với BookIT.vn, <br> kho sách chất lượng
 							hàng đầu Việt Nam
 						</h2>
-						<form action="#">
+						<form action="/books" method="GET">
 							<input type="text" class="search-input input-field form-control"
-								placeholder="Bạn thích sách gì nhỉ?">
+								placeholder="Bạn thích sách gì nhỉ?" name="search">
 							<button class="btn search-btn input-field">
 								<i class="fa-solid fa-magnifying-glass"></i>
 							</button>
@@ -28,326 +29,102 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-9">
-			<div class="list-product-container ">
-
-				<div class="header-list">
-					<div class="title-list">Đề xuất cho bạn</div>
-					<div class="owl-nav " id="owl-nav-1"></div>
+			<div class="list-product-container">
+				<div class="d-flex justify-content-between align-items-center">
+					<h3>Đề xuất sách</h3>
+					<div class="controls">
+						<span class="suggest-button-prev"><i
+							class="fa-solid fa-angle-left"></i></span> <span
+							class="suggest-button-next"><i
+							class="fa-solid fa-angle-right"></i></span>
+					</div>
 				</div>
-				<div class="list-product  owl-carousel owl-theme " id="list-suggest">
-					<div class="item">
-						<div class="item-product" id="item-product-first">
-							<a href="/product01" class="item-product-link"> <img
-								src="./assets/images/Sach-noi-Ba-oi-minh-di-dau-Tinh-yeu-cao-thuong-cua-cha.jpg"
-								alt="" class="item-image">
-								<div class="item-title">
-									<p class="category">Sách nói cho trẻ</p>
-									<p class="name">Sách nói Ba ơi mình đi đâu - Tình yêu cao
-										thượng của cha</p>
+				<hr />
+				<div class="books">
+					<div class="swiper suggest-book">
+						<div class="swiper-wrapper">
+							<c:forEach items="${suggest_books}" var="book">
+								<div class="swiper-slide">
+									<a href="/books/${book.slug}" class="book"><img
+										src="${book.thumbnail}" alt="Not found" />
+										<div class="category">
+											<c:forEach items="${book.categories}" var="category"
+												varStatus="loop">
+												${category.name}<c:if
+													test="${book.categories.size() - 1 != loop.index}">, </c:if>
+											</c:forEach>
+										</div>
+										<div class="title">${book.name}</div> </a>
 								</div>
-							</a>
-						</div>
-						<div class="item-product" id="item-product-first">
-							<a href="/product01" class="item-product-link"> <img
-								src="./assets/images/cho-toi-xin-mot-ve-di-tuoi-tho.png" alt=""
-								class="item-image">
-								<div class="item-title">
-									<p class="category">Sách nói cho trẻ</p>
-									<p class="name">Sách nói Cho tôi xin một vé đi tuổi thơ có
-										thực sự đưa bạn trở về tuổi thơ?</p>
-								</div>
-							</a>
+							</c:forEach>
 						</div>
 					</div>
-
-					<div class="item">
-						<div class="item-product" id="item-product-first">
-							<a href="/product01" class="item-product-link"> <img
-								src="./assets/images/Sach-noi-Den-khong-hat-bong-va-nhung-cau-chuyen-sau-lang-nhat-tai-noi-ranh-gioi-benh-vien.png"
-								alt="" class="item-image">
-								<div class="item-title">
-									<p class="category">Sách nói hay về tình yêu</p>
-									<p class="name">Sách nói Đèn không hắt bóng và những câu
-										chuyện sâu lắng nhất</p>
+				</div>
+			</div>
+			<div class="list-product-container">
+				<div class="d-flex justify-content-between align-items-center">
+					<h3>Sách mới nhất</h3>
+					<div class="controls">
+						<span class="new-button-prev"><i
+							class="fa-solid fa-angle-left"></i></span> <span class="new-button-next"><i
+							class="fa-solid fa-angle-right"></i></span>
+					</div>
+				</div>
+				<hr />
+				<div class="books">
+					<div class="swiper new-book">
+						<div class="swiper-wrapper">
+							<c:forEach items="${top_newbooks}" var="book">
+								<div class="swiper-slide">
+									<a href="/books/${book.slug}" class="book"><img
+										src="${book.thumbnail}" alt="Not found" />
+										<div class="category">
+											<c:forEach items="${book.categories}" var="category"
+												varStatus="loop">
+												${category.name}<c:if
+													test="${book.categories.size() - 1 != loop.index}">, </c:if>
+											</c:forEach>
+										</div>
+										<div class="title">${book.name}</div> </a>
 								</div>
-							</a>
-						</div>
-						<div class="item-product" id="item-product-first">
-							<a href="/product01" class="item-product-link"> <img
-								src="./assets/images/Chu-de-vat-ly-ly-thuyet-that-moi-me-trong-sach-noi-Vu-tru-trong-vo-hat-de.png"
-								alt="" class="item-image">
-								<div class="item-title">
-									<p class="category">Sách nói cho trẻ</p>
-									<p class="name">Chủ đề vật lý lý thuyết thật mới mẻ trong
-										sách nói Vũ trụ trong vỏ hạt dẻ</p>
-								</div>
-							</a>
+							</c:forEach>
 						</div>
 					</div>
-					<div class="item">
-						<div class="item-product" id="item-product-first">
-							<a href="/product01" class="item-product-link"> <img
-								src="./assets/images/Mot-hien-tuong-tam-ly-trinh-tham-khong-nen-bo-qua-Sach-noi-Co-gai-tren-tau.png"
-								alt="" class="item-image">
-								<div class="item-title">
-									<p class="category">Sách nói tiểu thuyết</p>
-									<p class="name">Một hiện tượng tâm lý trinh thám: Sách nói
-										Cô gái trên tàu</p>
-								</div>
-							</a>
-						</div>
-						<div class="item-product" id="item-product-first">
-							<a href="/product01" class="item-product-link"> <img
-								src="./assets/images/Sach-noi-Ba-oi-minh-di-dau-Tinh-yeu-cao-thuong-cua-cha.jpg"
-								alt="" class="item-image">
-								<div class="item-title">
-									<p class="category">Sách nói cho trẻ5</p>
-									<p class="name">Sách nói Ba ơi mình đi đâu - Tình yêu cao
-										thượng của cha</p>
-								</div>
-							</a>
-						</div>
+				</div>
+			</div>
+			<div class="list-product-container">
+				<div class="d-flex justify-content-between align-items-center">
+					<h3>Truyện hay nhất</h3>
+					<div class="controls">
+						<span class="manga-button-prev"><i
+							class="fa-solid fa-angle-left"></i></span> <span
+							class="manga-button-next"><i
+							class="fa-solid fa-angle-right"></i></span>
 					</div>
-					<div class="item">
-						<div class="item-product" id="item-product-first">
-							<a href="/product01" class="item-product-link"> <img
-								src="./assets/images/Sach-noi-Ba-oi-minh-di-dau-Tinh-yeu-cao-thuong-cua-cha.jpg"
-								alt="" class="item-image">
-								<div class="item-title">
-									<p class="category">Sách nói cho trẻ5</p>
-									<p class="name">Sách nói Ba ơi mình đi đâu - Tình yêu cao
-										thượng của cha</p>
+				</div>
+				<hr />
+				<div class="books">
+					<div class="swiper manga-book">
+						<div class="swiper-wrapper">
+							<c:forEach items="${top_mangas}" var="book">
+								<div class="swiper-slide">
+									<a href="/books/${book.slug}" class="book"><img
+										src="${book.thumbnail}" alt="Not found" />
+										<div class="category">
+											<c:forEach items="${book.categories}" var="category"
+												varStatus="loop">
+												${category.name}<c:if
+													test="${book.categories.size() - 1 != loop.index}">, </c:if>
+											</c:forEach>
+										</div>
+										<div class="title">${book.name}</div> </a>
 								</div>
-							</a>
-						</div>
-						<div class="item-product" id="item-product-first">
-							<a href="/product01" class="item-product-link"> <img
-								src="./assets/images/Gia-tri-noi-dung-cua-sach-noi-Troi-sinh-vung-ve-hay-bu-dap-bang-su-kien-tri.png"
-								alt="" class="item-image">
-								<div class="item-title">
-									<p class="category">Sách nói hay về giao tiếp</p>
-									<p class="name">Giá trị của sách nói Trời sinh vụng về, hãy
-										bù đắp bằng sự kiên trì</p>
-								</div>
-							</a>
+							</c:forEach>
 						</div>
 					</div>
 				</div>
 			</div>
 
-			<div class="list-product-container ">
-
-				<div class="header-list">
-					<div class="title-list">Sách mới nhất</div>
-					<div class="owl-nav" id="owl-nav-2"></div>
-				</div>
-				<div class="list-product owl-carousel owl-theme " id="list-new">
-					<div class="item">
-						<div class="item-product" id="item-product-first">
-							<a href="/product01" class="item-product-link"> <img
-								src="./assets/images/Sach-noi-Ba-oi-minh-di-dau-Tinh-yeu-cao-thuong-cua-cha.jpg"
-								alt="" class="item-image">
-								<div class="item-title">
-									<p class="category">Sách nói cho trẻ</p>
-									<p class="name">Sách nói Ba ơi mình đi đâu - Tình yêu cao
-										thượng của cha</p>
-								</div>
-							</a>
-						</div>
-						<div class="item-product" id="item-product-first">
-							<a href="/product01" class="item-product-link"> <img
-								src="./assets/images/cho-toi-xin-mot-ve-di-tuoi-tho.png" alt=""
-								class="item-image">
-								<div class="item-title">
-									<p class="category">Sách nói cho trẻ</p>
-									<p class="name">Sách nói Cho tôi xin một vé đi tuổi thơ có
-										thực sự đưa bạn trở về tuổi thơ?</p>
-								</div>
-							</a>
-						</div>
-					</div>
-
-					<div class="item">
-						<div class="item-product" id="item-product-first">
-							<a href="/product01" class="item-product-link"> <img
-								src="./assets/images/Sach-noi-Den-khong-hat-bong-va-nhung-cau-chuyen-sau-lang-nhat-tai-noi-ranh-gioi-benh-vien.png"
-								alt="" class="item-image">
-								<div class="item-title">
-									<p class="category">Sách nói hay về tình yêu</p>
-									<p class="name">Sách nói Đèn không hắt bóng và những câu
-										chuyện sâu lắng nhất</p>
-								</div>
-							</a>
-						</div>
-						<div class="item-product" id="item-product-first">
-							<a href="/product01" class="item-product-link"> <img
-								src="./assets/images/Chu-de-vat-ly-ly-thuyet-that-moi-me-trong-sach-noi-Vu-tru-trong-vo-hat-de.png"
-								alt="" class="item-image">
-								<div class="item-title">
-									<p class="category">Sách nói cho trẻ</p>
-									<p class="name">Chủ đề vật lý lý thuyết thật mới mẻ trong
-										sách nói Vũ trụ trong vỏ hạt dẻ</p>
-								</div>
-							</a>
-						</div>
-					</div>
-					<div class="item">
-						<div class="item-product" id="item-product-first">
-							<a href="/product01" class="item-product-link"> <img
-								src="./assets/images/Mot-hien-tuong-tam-ly-trinh-tham-khong-nen-bo-qua-Sach-noi-Co-gai-tren-tau.png"
-								alt="" class="item-image">
-								<div class="item-title">
-									<p class="category">Sách nói tiểu thuyết</p>
-									<p class="name">Một hiện tượng tâm lý trinh thám: Sách nói
-										Cô gái trên tàu</p>
-								</div>
-							</a>
-						</div>
-						<div class="item-product" id="item-product-first">
-							<a href="/product01" class="item-product-link"> <img
-								src="./assets/images/Sach-noi-Ba-oi-minh-di-dau-Tinh-yeu-cao-thuong-cua-cha.jpg"
-								alt="" class="item-image">
-								<div class="item-title">
-									<p class="category">Sách nói cho trẻ5</p>
-									<p class="name">Sách nói Ba ơi mình đi đâu - Tình yêu cao
-										thượng của cha</p>
-								</div>
-							</a>
-						</div>
-					</div>
-					<div class="item">
-						<div class="item-product" id="item-product-first">
-							<a href="/product01" class="item-product-link"> <img
-								src="./assets/images/Sach-noi-Ba-oi-minh-di-dau-Tinh-yeu-cao-thuong-cua-cha.jpg"
-								alt="" class="item-image">
-								<div class="item-title">
-									<p class="category">Sách nói cho trẻ5</p>
-									<p class="name">Sách nói Ba ơi mình đi đâu - Tình yêu cao
-										thượng của cha</p>
-								</div>
-							</a>
-						</div>
-						<div class="item-product" id="item-product-first">
-							<a href="/product01" class="item-product-link"> <img
-								src="./assets/images/Gia-tri-noi-dung-cua-sach-noi-Troi-sinh-vung-ve-hay-bu-dap-bang-su-kien-tri.png"
-								alt="" class="item-image">
-								<div class="item-title">
-									<p class="category">Sách nói hay về giao tiếp</p>
-									<p class="name">Giá trị của sách nói Trời sinh vụng về, hãy
-										bù đắp bằng sự kiên trì</p>
-								</div>
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="list-product-container ">
-
-				<div class="header-list">
-					<div class="title-list">Truyện hay</div>
-					<div class="owl-nav" id="owl-nav-3"></div>
-				</div>
-				<div class="list-product owl-carousel owl-theme " id="list-story">
-					<div class="item">
-						<div class="item-product" id="item-product-first">
-							<a href="/product01" class="item-product-link"> <img
-								src="./assets/images/Sach-noi-Ba-oi-minh-di-dau-Tinh-yeu-cao-thuong-cua-cha.jpg"
-								alt="" class="item-image">
-								<div class="item-title">
-									<p class="category">Sách nói cho trẻ</p>
-									<p class="name">Sách nói Ba ơi mình đi đâu - Tình yêu cao
-										thượng của cha</p>
-								</div>
-							</a>
-						</div>
-						<div class="item-product" id="item-product-first">
-							<a href="/product01" class="item-product-link"> <img
-								src="./assets/images/cho-toi-xin-mot-ve-di-tuoi-tho.png" alt=""
-								class="item-image">
-								<div class="item-title">
-									<p class="category">Sách nói cho trẻ</p>
-									<p class="name">Sách nói Cho tôi xin một vé đi tuổi thơ có
-										thực sự đưa bạn trở về tuổi thơ?</p>
-								</div>
-							</a>
-						</div>
-					</div>
-
-					<div class="item">
-						<div class="item-product" id="item-product-first">
-							<a href="/product01" class="item-product-link"> <img
-								src="./assets/images/Sach-noi-Den-khong-hat-bong-va-nhung-cau-chuyen-sau-lang-nhat-tai-noi-ranh-gioi-benh-vien.png"
-								alt="" class="item-image">
-								<div class="item-title">
-									<p class="category">Sách nói hay về tình yêu</p>
-									<p class="name">Sách nói Đèn không hắt bóng và những câu
-										chuyện sâu lắng nhất</p>
-								</div>
-							</a>
-						</div>
-						<div class="item-product" id="item-product-first">
-							<a href="/product01" class="item-product-link"> <img
-								src="./assets/images/Chu-de-vat-ly-ly-thuyet-that-moi-me-trong-sach-noi-Vu-tru-trong-vo-hat-de.png"
-								alt="" class="item-image">
-								<div class="item-title">
-									<p class="category">Sách nói cho trẻ</p>
-									<p class="name">Chủ đề vật lý lý thuyết thật mới mẻ trong
-										sách nói Vũ trụ trong vỏ hạt dẻ</p>
-								</div>
-							</a>
-						</div>
-					</div>
-					<div class="item">
-						<div class="item-product" id="item-product-first">
-							<a href="/product01" class="item-product-link"> <img
-								src="./assets/images/Mot-hien-tuong-tam-ly-trinh-tham-khong-nen-bo-qua-Sach-noi-Co-gai-tren-tau.png"
-								alt="" class="item-image">
-								<div class="item-title">
-									<p class="category">Sách nói tiểu thuyết</p>
-									<p class="name">Một hiện tượng tâm lý trinh thám: Sách nói
-										Cô gái trên tàu</p>
-								</div>
-							</a>
-						</div>
-						<div class="item-product" id="item-product-first">
-							<a href="/product01" class="item-product-link"> <img
-								src="./assets/images/Sach-noi-Ba-oi-minh-di-dau-Tinh-yeu-cao-thuong-cua-cha.jpg"
-								alt="" class="item-image">
-								<div class="item-title">
-									<p class="category">Sách nói cho trẻ5</p>
-									<p class="name">Sách nói Ba ơi mình đi đâu - Tình yêu cao
-										thượng của cha</p>
-								</div>
-							</a>
-						</div>
-					</div>
-					<div class="item">
-						<div class="item-product" id="item-product-first">
-							<a href="/product01" class="item-product-link"> <img
-								src="./assets/images/Sach-noi-Ba-oi-minh-di-dau-Tinh-yeu-cao-thuong-cua-cha.jpg"
-								alt="" class="item-image">
-								<div class="item-title">
-									<p class="category">Sách nói cho trẻ5</p>
-									<p class="name">Sách nói Ba ơi mình đi đâu - Tình yêu cao
-										thượng của cha</p>
-								</div>
-							</a>
-						</div>
-						<div class="item-product" id="item-product-first">
-							<a href="/product01" class="item-product-link"> <img
-								src="./assets/images/Gia-tri-noi-dung-cua-sach-noi-Troi-sinh-vung-ve-hay-bu-dap-bang-su-kien-tri.png"
-								alt="" class="item-image">
-								<div class="item-title">
-									<p class="category">Sách nói hay về giao tiếp</p>
-									<p class="name">Giá trị của sách nói Trời sinh vụng về, hãy
-										bù đắp bằng sự kiên trì</p>
-								</div>
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
 		</div>
 
 		<div class="col-md-3">
@@ -355,71 +132,76 @@
 				<div class="top-range">
 					<h3>Bảng xếp hạng</h3>
 					<ul class="tab-list">
-						<li class="tab-item active">Sách nói</li>
-						<li class="tab-item">Ebook</li>
+						<li class="tab-item active" id="audio-tab">Sách nói</li>
+						<li class="tab-item"  id="online-tab">Ebook</li>
 					</ul>
 					<div class="tab-content">
-						<div class="top-range-content">
-							<a href="#">
-								<div class="top-range-item">
-									<div class="item-left">
-										<img src="./assets/images/product02.png" alt="">
+						<div class="top-range-content" id="audio-list">
+							<c:forEach items="${top_audios}" var="audio" varStatus="loop">
+								<div>
+									<div class="top-range-item">
+										<div class="item-left">
+											<img src="${audio.thumbnail}" alt="Not found">
+										</div>
+										<div class="item-right">
+											<h3 class="item-position">${loop.index + 1}</h3>
+											<a href="/books/${audio.slug}"><h4 class="item-title">${audio.name}</h4></a>
+											<p class="item-author">
+												<i class="fa-solid fa-circle-user"></i> <span> <c:forEach
+														items="${audio.authors}" var="author"
+														varStatus="loopAuthor">
+														<a href="/books?type=${type}">${author.fullname}<c:if
+																test="${audio.authors.size() - 1 != loopAuthor.index}">, </c:if></a>
+													</c:forEach>
+												</span>
+											</p>
+											<p class="item-category">
+												<i class="fa-solid fa-folder-closed"></i> <span> <c:forEach
+														items="${audio.categories}" var="category"
+														varStatus="loopCategory">
+														<a href="/books?type=${type}">${category.name}<c:if
+																test="${audio.categories.size() - 1 != loopCategory.index}">, </c:if></a>
+													</c:forEach>
+												</span>
+											</p>
+										</div>
 									</div>
-									<div class="item-right">
-										<h3 class="item-position">01</h3>
-										<h4 class="item-title">Tuổi trẻ dùng để làm gì?</h4>
-										<p class="item-author">
-											<i class="fa-solid fa-circle-user"></i> <span>Huỳnh
-												Chí Viễn</span>
-										</p>
-										<p class="item-category">
-											<i class="fa-solid fa-folder-closed"></i> <span>Kỹ
-												năng sống</span>
-										</p>
-									</div>
-
 								</div>
-							</a> <a href="#">
-								<div class="top-range-item">
-									<div class="item-left">
-										<img src="./assets/images/product02.png" alt="">
-									</div>
-									<div class="item-right">
-										<h3 class="item-position">01</h3>
-										<h4 class="item-title">Tuổi trẻ dùng để làm gì?</h4>
-										<p class="item-author">
-											<i class="fa-solid fa-circle-user"></i> <span>Huỳnh
-												Chí Viễn</span>
-										</p>
-										<p class="item-category">
-											<i class="fa-solid fa-folder-closed"></i> <span>Kỹ
-												năng sống</span>
-										</p>
-									</div>
-
-								</div>
-							</a> <a href="#">
-								<div class="top-range-item">
-									<div class="item-left">
-										<img src="./assets/images/product02.png" alt="">
-									</div>
-									<div class="item-right">
-										<h3 class="item-position">01</h3>
-										<h4 class="item-title">Tuổi trẻ dùng để làm gì?</h4>
-										<p class="item-author">
-											<i class="fa-solid fa-circle-user"></i> <span>Huỳnh
-												Chí Viễn</span>
-										</p>
-										<p class="item-category">
-											<i class="fa-solid fa-folder-closed"></i> <span>Kỹ
-												năng sống</span>
-										</p>
-									</div>
-
-								</div>
-							</a>
+							</c:forEach>
 						</div>
-
+						<div class="top-range-content non-active" id="online-list">
+							<c:forEach items="${top_ebooks}" var="ebook" varStatus="loop">
+								<div>
+									<div class="top-range-item">
+										<div class="item-left">
+											<img src="${ebook.thumbnail}" alt="Not found">
+										</div>
+										<div class="item-right">
+											<h3 class="item-position">${loop.index + 1}</h3>
+											<a href="/books/${ebook.slug}"><h4 class="item-title">${ebook.name}</h4></a>
+											<p class="item-author">
+												<i class="fa-solid fa-circle-user"></i> <span> <c:forEach
+														items="${ebook.authors}" var="author"
+														varStatus="loopAuthor">
+														<a href="/books?type=${type}">${author.fullname}<c:if
+																test="${ebook.authors.size() - 1 != loopAuthor.index}">, </c:if></a>
+													</c:forEach>
+												</span>
+											</p>
+											<p class="item-category">
+												<i class="fa-solid fa-folder-closed"></i> <span> <c:forEach
+														items="${ebook.categories}" var="category"
+														varStatus="loopCategory">
+														<a href="/books?type=${type}">${category.name}<c:if
+																test="${ebook.categories.size() - 1 != loopCategory.index}">, </c:if></a>
+													</c:forEach>
+												</span>
+											</p>
+										</div>
+									</div>
+								</div>
+							</c:forEach>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -427,50 +209,25 @@
 			<div class="quote">
 				<div class="title-quote">Danh ngôn hay</div>
 				<ul class="list-quote">
-					<li class="item-quote"><a href="">
-							<p>Thời gian và hoàn cảnh mang lại sự khôn ngoan</p>
-							<div class="infor-quote">
-								<p class="view">
-									<i class="fa-solid fa-eye"></i> <span class="quantity-view">22</span>
-									<i class="fa-solid fa-thumbs-up"></i> <span
-										class="quantity-like">10</span>
-								</p>
-								<p class="category">Ngạn ngữ Trung Quốc</p>
-							</div>
-					</a></li>
-					<li class="item-quote"><a href="">
-							<p>Thời gian và hoàn cảnh mang lại sự khôn ngoan</p>
-							<div class="infor-quote">
-								<p class="view">
-									<i class="fa-solid fa-eye"></i> <span class="quantity-view">22</span>
-									<i class="fa-solid fa-thumbs-up"></i> <span
-										class="quantity-like">10</span>
-								</p>
-								<p class="category">Ngạn ngữ Trung Quốc</p>
-							</div>
-					</a></li>
-					<li class="item-quote"><a href="">
-							<p>Thời gian và hoàn cảnh mang lại sự khôn ngoan</p>
-							<div class="infor-quote">
-								<p class="view">
-									<i class="fa-solid fa-eye"></i> <span class="quantity-view">22</span>
-									<i class="fa-solid fa-thumbs-up"></i> <span
-										class="quantity-like">10</span>
-								</p>
-								<p class="category">Ngạn ngữ Trung Quốc</p>
-							</div>
-					</a></li>
-					<li class="item-quote"><a href="">
-							<p>Thời gian và hoàn cảnh mang lại sự khôn ngoan</p>
-							<div class="infor-quote">
-								<p class="view">
-									<i class="fa-solid fa-eye"></i> <span class="quantity-view">22</span>
-									<i class="fa-solid fa-thumbs-up"></i> <span
-										class="quantity-like">10</span>
-								</p>
-								<p class="category">Ngạn ngữ Trung Quốc</p>
-							</div>
-					</a></li>
+					<c:forEach items="${top_quotes}" var="quote">
+						<li class="item-quote"><a href="http://localhost:8080/quotes?q=${quote.content}">
+								<p>${quote.content}</p>
+								<div class="infor-quote">
+									<p class="view">
+										<i class="fa-solid fa-eye"></i> <span class="quantity-view">${quote.view}</span>
+										<i class="fa-solid fa-thumbs-up"></i> <span
+											class="quantity-like">${quote.commentQuotes.size()}</span>
+									</p>
+									<p class="category">
+										<c:forEach items="${quote.quoteCategories}" var="category"
+											varStatus="loop">
+												${category.name}<c:if
+												test="${book.categories.size() - 1 != loop.index}">, </c:if>
+										</c:forEach>
+									</p>
+								</div>
+						</a></li>
+					</c:forEach>
 				</ul>
 			</div>
 		</div>

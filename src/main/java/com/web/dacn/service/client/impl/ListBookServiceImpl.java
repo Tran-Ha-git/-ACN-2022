@@ -2,6 +2,7 @@ package com.web.dacn.service.client.impl;
 
 import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
@@ -110,7 +111,7 @@ public class ListBookServiceImpl implements ListBookService {
 			});
 
 			return dto;
-		}).toList();
+		}).collect(Collectors.toList());
 	}
 
 	@Override
@@ -129,7 +130,7 @@ public class ListBookServiceImpl implements ListBookService {
 				dto.getCategories().add(bookCategoryDTO);
 			});
 			return dto;
-		}).toList();
+		}).collect(Collectors.toList());
 	}
 
 	@Override
@@ -138,7 +139,7 @@ public class ListBookServiceImpl implements ListBookService {
 			BookCategoryDTO dto = new BookCategoryDTO();
 			BeanUtils.copyProperties(category, dto);
 			return dto;
-		}).toList();
+		}).collect(Collectors.toList());
 	}
 
 
