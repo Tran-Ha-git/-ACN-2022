@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -109,6 +108,26 @@ public class BookManagementController {
 
 		return "adminListBook";
 	}
+	@RequestMapping(value = "/books/addBook")
+	public String add(Model model, HttpSession session, HttpServletRequest request) {
 
+		return "adminNewBook";
 
+	}
+	@RequestMapping(value = "/edit")
+	public String Edit(Model model, HttpServletRequest request) {
+		String id = request.getParameter("id");
+		long bId = Long.parseLong(id);
+		String vipStatus="";
+		
+		BookDTO bookDto = bookService.findById(bId);
+		if(bookDto.getVip()) {
+			vipStatus="checked";
+		}
+		model.addAttribute("book", bookDto);
+		model.addAttribute("check", vipStatus);
+	
+		return "adminEditBook";
+
+	}
 }

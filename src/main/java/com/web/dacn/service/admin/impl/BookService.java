@@ -2,6 +2,7 @@
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -17,9 +18,16 @@ import com.web.dacn.entity.book.Book;
 import com.web.dacn.entity.book.Online;
 import com.web.dacn.entity.book.Pdf;
 import com.web.dacn.repository.AudioRepository;
+import com.web.dacn.repository.BookAuthorRepository;
+import com.web.dacn.repository.BookCategoryRepository;
+import com.web.dacn.repository.BookMarkRepository;
 import com.web.dacn.repository.BookRepository;
+import com.web.dacn.repository.Book_BookCategoryRepository;
+import com.web.dacn.repository.CommentBookRepository;
+import com.web.dacn.repository.FavoriteBookRepository;
 import com.web.dacn.repository.OnlineRepository;
 import com.web.dacn.repository.PdfRepository;
+import com.web.dacn.repository.ReviewBookRepository;
 import com.web.dacn.service.admin.IBookService;
 import com.web.dacn.utils.Converter;
 
@@ -36,6 +44,8 @@ public class BookService implements IBookService {
 	private OnlineRepository onlineRepository;
 	@Autowired
 	private Converter bookConverter;
+	
+	
 
 	// Get read format of book
 	@Override
@@ -58,11 +68,9 @@ public class BookService implements IBookService {
 
 	}
 
-	
 	public Pageable getBookEntitesByPage(int page) {
 		Pageable pageable = PageRequest.of(page, size);
 		return pageable;
-				
 	}
 
 	@Override
@@ -71,6 +79,7 @@ public class BookService implements IBookService {
 		Page<Book> entities = bookRepository.findAll(getBookEntitesByPage(page));
 		Page<BookDTO> books = entities.map(entity -> {
 			BookDTO dto = bookConverter.toDTO(entity);
+			
 			return dto;
 		});
 		return books;
@@ -91,5 +100,26 @@ public class BookService implements IBookService {
 
 	}
 
+	@Override
+	public Book addBook(Book newBook) {
 
+		return bookRepository.save(newBook);
+
+	}
+
+	
+
+	@Override
+	public BookDTO findById(long id) {		
+		Book book = bookRepository.findById(id);
+		BookDTO dto = bookConverter.toDTO(book);
+		return dto;
+	}
+
+	@Override
+	public Book getBookById(long id) {	
+		return bookRepository.findById(id);
+	}
+
+	
 }

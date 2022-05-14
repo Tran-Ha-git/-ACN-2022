@@ -21,4 +21,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 	Page<Book> search(String bookName, String authorName, Pageable pageable);
 
 	Optional<Book> findOneBySlug(String slug);
+
+	
+	Book findById(long id);
 }
