@@ -1,12 +1,15 @@
 package com.web.dacn.repository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
 import com.web.dacn.entity.book.Book;
 
 @Repository
@@ -22,6 +25,8 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
 	Optional<Book> findOneBySlug(String slug);
 
-	
 	Book findById(long id);
+	void deleteById(long id);
+	
+	
 }

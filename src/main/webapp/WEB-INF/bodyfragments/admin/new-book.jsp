@@ -65,7 +65,7 @@
 			<br> <label>Tác giả</label><br /> <input type="text"
 				name="fullname" class="width-input" /><br />
 			<br /> <label>Thể loại</label><br /> <input type="text"
-				name="nameCategory" class="width-input" /><br />
+				name="categoryName" class="width-input" /><br />
 			<br />
 			<div class="btn spacing">
 				<a href="" class="grey">Hủy</a>

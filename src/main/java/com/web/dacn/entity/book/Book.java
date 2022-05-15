@@ -101,15 +101,15 @@ public class Book {
 	@JsonIgnore
 	private List<BookCategory> categories = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonIgnore
 	private List<Audio> audios = new ArrayList<>();
 
-	@OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "book", cascade = CascadeType.ALL,orphanRemoval = true)
 	@JsonIgnore
 	private List<Online> onlines = new ArrayList<>();
 
-	@OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "book", cascade = CascadeType.ALL,orphanRemoval = true)
 	@JsonIgnore
 	private List<Pdf> pdfs = new ArrayList<>();
 
@@ -129,4 +129,7 @@ public class Book {
         Book that = (Book) obj;
         return  Objects.equals(getId(),that.getId());
     }
+
+	 
+    
 }

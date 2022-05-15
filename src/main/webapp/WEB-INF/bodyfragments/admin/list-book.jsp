@@ -82,7 +82,7 @@
 					<th class="header-row-content">Thể loại</th>
 					<th class="header-row-content">Trạng thá</th>
 					<th class="header-row-content">Ngày đăng</th>
-					<th class="header-row-content">Trạng thái đọcc</th>
+					<th class="header-row-content">Trạng thái đọc</th>
 					<th class="header-row-content">Tùy chỉnh</th>
 				</tr>
 				<!--End table header -->
@@ -136,7 +136,7 @@
 
 								</c:url>
 								<a href="${url}" class="edit-custom-btn">Sửa</a>
-								<c:url value="/admin/DeleteBook" var="url">
+								<c:url value="/admin/deleteBook" var="url">
 									<c:param name="id" value="${book.id}" />
 
 								</c:url>

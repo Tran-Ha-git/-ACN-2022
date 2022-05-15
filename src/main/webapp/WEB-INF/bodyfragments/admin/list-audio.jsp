@@ -7,9 +7,13 @@
 
 <div class="main-content item">
 	<div class="title">
-		<h2 class="title-content">
-		Cập nhật danh sách Audio
-		</h2>
+	<h2 class="title-content">
+		<a href="/admin/edit?id=${book.id }" class="title-content">
+		Cập nhật sách/
+		</a>
+     	Cập nhật danh sách chương
+	</h2>
+	
 	</div>
 
 	<div class="list-book-container">
@@ -109,7 +113,8 @@
 			     </div>
 				<div class="btn spacing">
 					<a href="" class="grey">Hủy</a> 
-					<input type="submit" value="Edit" data-id="${currentAudio.id}" id="submit-edit-audio"
+					<input type="submit" value="Lưu thay đổi" data-id="${currentAudio.id}" 
+					id="submit-edit-audio"
 						class="black" />
 				</div>
 			</form>

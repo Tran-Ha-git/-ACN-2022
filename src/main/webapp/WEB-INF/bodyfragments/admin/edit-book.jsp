@@ -10,10 +10,10 @@
 
 
 	<div class="list-book-container">
-		<form action="/admin/editBook/${book.id}" method="post">
+		<form action="/admin/editBook/${book.id}" method="post" enctype="multipart/form-data">
 			<label>Tên sách</label> <input type="text" name="name"
 				class="width-input" value="${book.name}" /><br /> <br /> <label>Upload
-				hình</label><br /> <input type="file" name="thumbnail" class="width-input"
+				hình</label><br /> <input type="file" name="fileUpload" class="width-input"
 				value="${book.thumbnail}" /><br /> <br />
 
 			<div class="form-lable-tyle">
@@ -29,7 +29,7 @@
 
 				<div class="form-lable-3">
 					<label>Loại</label><br /> <input type="checkbox"
-						class="width-input" ${check}/> <label>Vip</label>
+						class="width-input"  value="false" name="vip" ${check}/> <label>Vip</label>
 
 				</div>
 
@@ -45,9 +45,9 @@
 				<br />
 			</div>
 
-			<label>Meta title</label><br /> <input type="text" name="meta_Title"
+			<label>Meta title</label><br /> <input type="text" name="metaTitle"
 				class="width-input" value="${book.metaDescription}" /><br /> <br /> <label>Meta
-				Description</label> <input type="text" name="meta_Description"
+				Description</label> <input type="text" name="metaDescription"
 				class="width-input" value="${book.metaDescription}" /><br /> <br />
 			<label>Giới thiệu sách</label><br /> <input type="text"
 				name="description" class="width-input" value="${book.description}">
@@ -59,9 +59,16 @@
 					<div class="form-1">
 						<c:forEach items="${book.authors}" var="author">
 							<div class="form_input">
-								<input type="checkbox" id="form-1" name="fullname"
-									value="${author.fullname}" /> <label>
-									${author.fullname} </label><br />
+								<input type="radio" class="authorName" 
+								    data-authorid="${author.id }"
+								    data-authorname="${author.fullname }"/>
+								<input type="text" 
+							    class="edit-authorname-input"
+								value="${author.fullname}"
+								id="authorName${author.id }"
+								 style="width:140px" disabled/>
+								 
+								 <br />
 							</div>
 						</c:forEach>
 
@@ -72,8 +79,16 @@
 					<div class="form-1">
 						<c:forEach items="${book.categories}" var="category">
 							<div class="form_input">
-								<input type="checkbox" id="form-1" name="nameCategory"
-									value="${category.name}" /> <label> ${category.name} </label><br />
+							
+							<input class="categoryName"
+							type="radio" 
+								    data-categoryid="${category.id }"
+								    data-categoryname="${category.name }"/>
+								<input type="text" 
+							    class="edit-categoryname-input"
+								value="${category.name}"
+								id="categoryName${category.id }"
+								 style="width:140px" disabled />
 							</div>
 						</c:forEach>
 					</div>
@@ -117,3 +132,36 @@
 	</div>
 
 </div>
+<script>
+var authorNames = document.querySelectorAll('.authorName');
+
+authorNames.forEach(name =>{
+	var authorId= name.dataset.authorid;
+	var authorName = name.dataset.authorname;
+
+	name.onclick= function(){
+		var authorInput = document.querySelector("#authorName"+authorId);
+	
+		authorInput.removeAttribute('disabled');
+		authorInput.setAttribute('name', 'fullname');
+	
+	}
+	
+})
+
+var categoryNames = document.querySelectorAll('.categoryName');
+
+categoryNames.forEach(name =>{
+	var categoryId= name.dataset.categoryid;
+	var categoryName = name.dataset.categoryname;
+
+	name.onclick= function(){
+		var categoryInput = document.querySelector("#categoryName"+categoryId);
+		categoryInput.removeAttribute('disabled');
+		categoryInput.setAttribute('name', 'categoryName');
+		
+	}
+	
+})
+
+</script>

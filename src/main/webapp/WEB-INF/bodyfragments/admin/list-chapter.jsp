@@ -7,7 +7,10 @@
 
 <div class="main-content item">
 	<div class="title">
-		<h2 class="title-content">Cập nhật danh sách chương</h2>
+	<h2 class="title-content">
+	<a href="/admin/edit?id=${book.id }" class="title-content">Cập nhật sách/</a>
+    Cập nhật danh sách chương
+	</h2>
 	</div>
 
 	<div class="list-book-container">

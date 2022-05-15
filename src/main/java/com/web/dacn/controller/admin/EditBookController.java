@@ -1,13 +1,14 @@
 package com.web.dacn.controller.admin;
 
 import java.io.IOException;
+import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,10 +18,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.sun.xml.messaging.saaj.packaging.mime.internet.ParseException;
 import com.web.dacn.dto.book.BookDTO;
-import com.web.dacn.entity.book.Audio;
 import com.web.dacn.entity.book.Book;
+import com.web.dacn.entity.book.BookCategory;
+import com.web.dacn.entity.user.Author;
+import com.web.dacn.entity.user.User;
+import com.web.dacn.repository.UserRepository;
 import com.web.dacn.service.admin.IAudioService;
 import com.web.dacn.service.admin.impl.BookService;
+import com.web.dacn.service.auth.UserService;
 import com.web.dacn.utils.UploadFile;
 
 @Controller
@@ -29,54 +34,94 @@ public class EditBookController {
 	@Autowired
 
 	private BookService bookService;
-
 	@Autowired
-	private IAudioService audioService;
+	private UploadFile uploadFile;
+	@Autowired
+	private UserService userService;
+
+	@RequestMapping(value = "/editBook/{id}")
+	public String edit(@PathVariable("id") long id,@ModelAttribute Book book, @RequestParam("fileUpload") MultipartFile file, ModelMap model,
+		HttpServletRequest request, HttpSession session) throws ParseException, IOException {
+		String[] authorNames = request.getParameterValues("fullname");
+		String[] categoryNames = request.getParameterValues("categoryName");
+		 
+		Book newBook = bookService.getBookById(id);
+		
+		String vip = request.getParameter("vip");
+		if (vip != null) {
+			newBook.setVip(true);
+		}
+
+		// tu cho du liệu test
+		User user = userService.getById(1L);
+		
+		long millis = System.currentTimeMillis();
+		Date date = new Date(millis);
+		String serverImageFilePath = uploadFile.upload(file, request, "/assets/images/");
+
+		if (serverImageFilePath == null) {
+			model.addAttribute("message", "Your image has not been upload yet");
+
+			return "message";
+
+		}
+
+		newBook.setMod_time(date);
+		newBook.setUser(user);
+		
+		
+		if (!file.isEmpty()) {
+			newBook.setThumbnail(serverImageFilePath);
+		}
+		if(authorNames!=null) {
+		for(String authorName: authorNames) {
+					Author author = bookService.findAuthorByFullName(authorName);
+				
+						
+					if (author == null) {	
+						Author newAuthor = new Author();
 	
-//	@RequestMapping(value = "/editBook/{id}")
-//	public String edit(@PathVariable("id") long id, @RequestParam(name = "name") String name,
-//			@RequestParam(name = "description") String description, @RequestParam(name = "thumbnail") String thumbnail,
-//			@RequestParam(name = "status") String status, @RequestParam(name = "price") String price,
-//			@RequestParam(name = "slug") String slug, @RequestParam(name = "meta_Title") String meta_title,
-//			@RequestParam(name = "meta_Description") String meta_description,
-//
-//			ModelMap model, HttpServletRequest request, HttpSession session) throws ParseException {
-//
-//		String vips = request.getParameter("vip");
-//		boolean vip = false;
-//		if (vips != null) {
-//			vip = true;
-//		}
-//
-//		// boolean vipB= Boolean.parseBoolean(vip);
-//		double priceB = Double.parseDouble(price);
-//		Date date = new Date(24, 4, 2022);
-//		int sta = bookService.convertStatus(status);
-//
-//		// sd @manyToMany
-//		Book book = new Book();
-//		book.setName(name);
-//		book.setThumbnail(thumbnail);
-//		book.setDescription(description);
-//		book.setMetaTitle(meta_title);
-//		book.setMetaDescription(meta_description);
-//		book.setMod_time(date);
-//		book.setPrice(priceB);
-//		book.setSlug(slug);
-//		book.setVip(vip);
-//		book.setStatus(sta);
-//
-//		book.setMod_usre_id(4L);
-//
-//		Author author = new Author();
-//		// author.setFullname(fullname);
-//		BookCategory bookcategory = new BookCategory();
-//		// bookcategory.setName(nameCategory);
-//		bookService.updateBook(id, book);
-//
-//		return "redirect:/admin/books";
-//
-//	}
+						newAuthor.setFullname(authorName);
+						newAuthor.setDescription("default");
+						newAuthor.setSlug(newAuthor.getFullname().trim().replaceAll(" ", "-"));
+						newAuthor.setMod_time(date);
+						newAuthor.setUser(user);
+	
+						bookService.saveAuthor(newAuthor);
+					
+						newAuthor.getBooks().add(newBook);
+						newBook.getAuthors().add(author);
+					}
+		}		
+		}
+		if (categoryNames != null) {
+			for (String categoryName : categoryNames) {
+				List<BookCategory> categories = bookService.findCategoryByName(categoryName);
+
+				
+					BookCategory category = categories.get(0);
+					category.getBooks().add(newBook);
+					newBook.getCategories().add(category);
+
+					if (categories.size() == 0) {
+					BookCategory newCategory = new BookCategory();
+
+					newCategory.setName(categoryName);
+					newCategory.setSlug(categoryName.trim().replaceAll(" ", "-"));
+
+					bookService.saveCategory(newCategory);
+					newCategory.getBooks().add(newBook);
+					newBook.getCategories().add(newCategory);
+
+				}
+
+			}
+		}
+
+		bookService.saveBook(newBook);
+		return "redirect:/admin/books";
+
+	}
 
 //hiển thị list online
 	@RequestMapping(value = "/editBook/listChapter")
@@ -92,7 +137,5 @@ public class EditBookController {
 
 		return "adminListChapterOnline";
 	}
-    
-
 
 }

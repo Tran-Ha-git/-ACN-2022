@@ -20,10 +20,7 @@ public interface AudioRepository extends JpaRepository<Audio, Long> {
 	List<Audio> findByBookIdOrderByPriorityAsc(Long bookId);
 	Audio findById(long id);
 	
-	@Transactional
-	@Modifying
-	@Query(value = "delete " + " from audio a " + " where book_id=?1", nativeQuery = true)
-	int deleteAudioByBookId(long id);
+	
 	
 	@Transactional
 	@Modifying	
