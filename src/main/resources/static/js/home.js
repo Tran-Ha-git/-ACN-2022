@@ -1,59 +1,59 @@
-$("#list-suggest").owlCarousel({
-  loop: true,
-  margin: 10,
-  nav: true,
-  dots: false,
-  navContainer: ".list-product-container .header-list #owl-nav-1",
-  //navText: [$('#am-next'),$('#am-prev')],
-  responsive: {
-    0: {
-      items: 1,
-    },
-    600: {
-      items: 2,
-    },
-    1000: {
-      items: 4,
-    },
-  },
+var swiper = new Swiper(".suggest-book", {
+	slidesPerView: 4,
+	grid: {
+		rows: 2
+	},
+	spaceBetween: 30,
+	freeMode: true,
+	navigation: {
+		nextEl: ".suggest-button-next",
+		prevEl: ".suggest-button-prev",
+	}
 });
 
-$("#list-new").owlCarousel({
-  loop: true,
-  margin: 10,
-  nav: true,
-  dots: false,
-  navContainer: ".list-product-container .header-list #owl-nav-2",
-  //navText: [$('#am-next'),$('#am-prev')],
-  responsive: {
-    0: {
-      items: 1,
-    },
-    600: {
-      items: 2,
-    },
-    1000: {
-      items: 4,
-    },
-  },
+var swiper = new Swiper(".new-book", {
+	slidesPerView: 4,
+	grid: {
+		rows: 2
+	},
+	spaceBetween: 30,
+	freeMode: true,
+	navigation: {
+		nextEl: ".new-button-next",
+		prevEl: ".new-button-prev",
+	}
 });
 
-$("#list-story").owlCarousel({
-  loop: true,
-  margin: 10,
-  nav: true,
-  dots: false,
-  navContainer: ".list-product-container .header-list #owl-nav-3",
-  //navText: [$('#am-next'),$('#am-prev')],
-  responsive: {
-    0: {
-      items: 1,
-    },
-    600: {
-      items: 2,
-    },
-    1000: {
-      items: 4,
-    },
-  },
+var swiper = new Swiper(".manga-book", {
+	slidesPerView: 4,
+	grid: {
+		rows: 2
+	},
+	spaceBetween: 30,
+	freeMode: true,
+	navigation: {
+		nextEl: ".manga-button-next",
+		prevEl: ".manga-button-prev",
+	}
 });
+
+const audioTab = document.getElementById("audio-tab");
+const onlineTab = document.getElementById("online-tab");
+const audioList = document.getElementById("audio-list");
+const onlineList = document.getElementById("online-list");
+
+audioTab.onclick = () => {
+	audioTab.classList.add("active");
+	onlineTab.classList.remove("active");
+	
+	audioList.classList.add("non-active");
+	onlineList.classList.remove("non-active");
+}
+
+onlineTab.onclick = () => {
+	onlineTab.classList.add("active");
+	audioTab.classList.remove("active");
+
+	onlineList.classList.add("non-active");
+	audioList.classList.remove("non-active");
+}
