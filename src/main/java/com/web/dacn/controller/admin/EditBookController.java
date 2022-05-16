@@ -40,13 +40,26 @@ public class EditBookController {
 	private UserService userService;
 
 	@RequestMapping(value = "/editBook/{id}")
-	public String edit(@PathVariable("id") long id,@ModelAttribute Book book, @RequestParam("fileUpload") MultipartFile file, ModelMap model,
-		HttpServletRequest request, HttpSession session) throws ParseException, IOException {
-		String[] authorNames = request.getParameterValues("fullname");
-		String[] categoryNames = request.getParameterValues("categoryName");
-		 
+	public String edit(@PathVariable("id") long id, @ModelAttribute Book book,
+			@RequestParam("fileUpload") MultipartFile file, ModelMap model, HttpServletRequest request,
+			HttpSession session) throws ParseException, IOException {
+		String authorid = request.getParameter("authorid");
+		long authorId = 0L;
+		if (authorid != null) {
+			authorId = Long.parseLong(authorid);
+		}
+		String authorName = request.getParameter("fullname");
+
+		String categoryid = request.getParameter("categoryid");
+		long categoryId = 0L;
+		if (categoryid != null) {
+			categoryId = Long.parseLong(categoryid);
+		}
+
+		String categoryName = request.getParameter("categoryName");
+
 		Book newBook = bookService.getBookById(id);
-		
+
 		String vip = request.getParameter("vip");
 		if (vip != null) {
 			newBook.setVip(true);
@@ -54,7 +67,7 @@ public class EditBookController {
 
 		// tu cho du liệu test
 		User user = userService.getById(1L);
-		
+
 		long millis = System.currentTimeMillis();
 		Date date = new Date(millis);
 		String serverImageFilePath = uploadFile.upload(file, request, "/assets/images/");
@@ -68,54 +81,65 @@ public class EditBookController {
 
 		newBook.setMod_time(date);
 		newBook.setUser(user);
-		
-		
+
 		if (!file.isEmpty()) {
 			newBook.setThumbnail(serverImageFilePath);
 		}
-		if(authorNames!=null) {
-		for(String authorName: authorNames) {
-					Author author = bookService.findAuthorByFullName(authorName);
-				
-						
-					if (author == null) {	
-						Author newAuthor = new Author();
-	
-						newAuthor.setFullname(authorName);
-						newAuthor.setDescription("default");
-						newAuthor.setSlug(newAuthor.getFullname().trim().replaceAll(" ", "-"));
-						newAuthor.setMod_time(date);
-						newAuthor.setUser(user);
-	
-						bookService.saveAuthor(newAuthor);
-					
-						newAuthor.getBooks().add(newBook);
-						newBook.getAuthors().add(author);
-					}
-		}		
-		}
-		if (categoryNames != null) {
-			for (String categoryName : categoryNames) {
-				List<BookCategory> categories = bookService.findCategoryByName(categoryName);
+		// Author
+		if (authorName != null) {
+			Author author = bookService.findAuthorByFullName(authorName);
+			if (author != null) {
+				Author authorBeforeChange = bookService.findAuthorById(authorId);
 
-				
+				if (!authorName.equalsIgnoreCase(authorBeforeChange.getFullname())) {
+					author.getBooks().add(newBook);
+					newBook.getAuthors().add(author);
+				}
+
+			}
+
+			else {
+				Author newAuthor = new Author();
+
+				newAuthor.setFullname(authorName);
+				newAuthor.setDescription("default");
+				newAuthor.setSlug(authorName.trim().replaceAll(" ", "-"));
+				newAuthor.setMod_time(date);
+				newAuthor.setUser(user);
+
+				bookService.saveAuthor(newAuthor);
+
+				newAuthor.getBooks().add(newBook);
+				newBook.getAuthors().add(newAuthor);
+			}
+		}
+
+		if (categoryName != null) {
+
+			List<BookCategory> categories = bookService.findCategoryByName(categoryName);
+
+			if (categories.size() == 0) {
+				BookCategory newCategory = new BookCategory();
+
+				newCategory.setName(categoryName);
+				newCategory.setSlug(categoryName.trim().replaceAll(" ", "-"));
+
+				bookService.saveCategory(newCategory);
+				newCategory.getBooks().add(newBook);
+				newBook.getCategories().add(newCategory);
+
+			} else {
+				BookCategory categoryBeforeChange = bookService.findCategoryById(categoryId);
+
+				if (!categoryName.equalsIgnoreCase(categoryBeforeChange.getName())) {
+
 					BookCategory category = categories.get(0);
 					category.getBooks().add(newBook);
 					newBook.getCategories().add(category);
 
-					if (categories.size() == 0) {
-					BookCategory newCategory = new BookCategory();
-
-					newCategory.setName(categoryName);
-					newCategory.setSlug(categoryName.trim().replaceAll(" ", "-"));
-
-					bookService.saveCategory(newCategory);
-					newCategory.getBooks().add(newBook);
-					newBook.getCategories().add(newCategory);
-
 				}
-
 			}
+
 		}
 
 		bookService.saveBook(newBook);

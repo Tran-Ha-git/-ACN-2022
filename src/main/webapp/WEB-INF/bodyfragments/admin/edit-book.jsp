@@ -60,13 +60,16 @@
 						<c:forEach items="${book.authors}" var="author">
 							<div class="form_input">
 								<input type="radio" class="authorName" 
+							      name="radio"
+								   value="${author.id}"
 								    data-authorid="${author.id }"
-								    data-authorname="${author.fullname }"/>
+								    data-authorname="${author.fullname }
+								    "/>
 								<input type="text" 
 							    class="edit-authorname-input"
 								value="${author.fullname}"
 								id="authorName${author.id }"
-								 style="width:140px" disabled/>
+								 style="width:140px"  disabled/>
 								 
 								 <br />
 							</div>
@@ -81,7 +84,9 @@
 							<div class="form_input">
 							
 							<input class="categoryName"
-							type="radio" 
+							       type="radio" 
+							       name ="radio"
+							       value="${category.id }"
 								    data-categoryid="${category.id }"
 								    data-categoryname="${category.name }"/>
 								<input type="text" 
@@ -138,13 +143,15 @@ var authorNames = document.querySelectorAll('.authorName');
 authorNames.forEach(name =>{
 	var authorId= name.dataset.authorid;
 	var authorName = name.dataset.authorname;
+	
 
 	name.onclick= function(){
 		var authorInput = document.querySelector("#authorName"+authorId);
 	
-		authorInput.removeAttribute('disabled');
+		name.setAttribute('name', 'authorid');
 		authorInput.setAttribute('name', 'fullname');
-	
+		authorInput.removeAttribute('disabled');
+		
 	}
 	
 })
@@ -157,6 +164,7 @@ categoryNames.forEach(name =>{
 
 	name.onclick= function(){
 		var categoryInput = document.querySelector("#categoryName"+categoryId);
+		name.setAttribute('name', 'categoryid');
 		categoryInput.removeAttribute('disabled');
 		categoryInput.setAttribute('name', 'categoryName');
 		

@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.web.dacn.dto.book.BookDTO;
 import com.web.dacn.service.admin.IBookService;
@@ -129,6 +130,20 @@ public class BookManagementController {
 	
 		return "adminEditBook";
 
+	}
+	@RequestMapping("/delete-book")
+	public String deleteBook(@RequestParam("id") long id,Model model, HttpServletRequest request) {
+		bookService.deleteBook(id);
+		return "redirect:/admin/books";
+	}
+	@RequestMapping("/DeleteAll")
+	public String deleteAllBook(Model model, HttpServletRequest request) {
+		 String[] deleteItems = request.getParameterValues("delete-item");
+		 for(String item: deleteItems) {
+				long id = Long.parseLong(item);
+				bookService.deleteBook(id);
+		 }
+			return "redirect:/admin/books";
 	}
 	
 }

@@ -74,13 +74,13 @@
 				<!-- table header -->
 				<tr class="header-row">
 					<th class="header-row-content"><input type="checkbox"
-						name="checkbox-delete-btn" /></th>
+						class="checkbox-delete-btn" /></th>
 					<th class="header-row-content">ID</th>
 					<th class="header-row-content">Hình ảnh</th>
 					<th class="header-row-content">Tên sách</th>
 					<th class="header-row-content">Tác giả</th>
 					<th class="header-row-content">Thể loại</th>
-					<th class="header-row-content">Trạng thá</th>
+					<th class="header-row-content">Trạng thái</th>
 					<th class="header-row-content">Ngày đăng</th>
 					<th class="header-row-content">Trạng thái đọc</th>
 					<th class="header-row-content">Tùy chỉnh</th>
@@ -89,14 +89,14 @@
 				<c:forEach items="${books}" var="book">
 					<!--Start table data -->
 					<tr class="data-row">
-						<td class="book-data"><input type="checkbox" name="delete"
-							value="${book.id}" /></td>
+						<td class="book-data"><input type="checkbox" name="delete-item"
+							class="delete-item" value="${book.id}" /></td>
 						<td class="book-data">${book.id }</td>
 						<td class="book-data tr-book-image"><img
 							src="${book.thumbnail }" alt="Image" class="book-image"
 							width="36px" height="30px" /></td>
 						<td class="book-data tr-width-12">${book.name}</td>
-						<td class="book-data  tr-width-12"><c:forEach
+						<td class="book-data tr-width-12"><c:forEach
 								items="${book.authors}" var="author">
 	                    
 	                     ${author.fullname},
@@ -136,11 +136,11 @@
 
 								</c:url>
 								<a href="${url}" class="edit-custom-btn">Sửa</a>
-								<c:url value="/admin/deleteBook" var="url">
+								<c:url value="/admin/delete-book" var="url">
 									<c:param name="id" value="${book.id}" />
 
 								</c:url>
-								<a href="${url }" class="delete-custom-btn">Xóa</a>
+								<a href="${url}" class="delete-custom-btn">Xóa</a>
 
 							</div>
 						</td>
@@ -182,3 +182,21 @@
 		<!--End list books -->
 	</form>
 </div>
+<script>
+var checkboxBtn = document.querySelector('.checkbox-delete-btn');
+checkboxBtn.onclick= function(){
+	var items = document.querySelectorAll('.delete-item');
+	if(checkboxBtn.checked){
+	
+		items.forEach(item =>{
+			item.checked=true;
+		})
+	}
+	else{
+		items.forEach(item =>{
+			item.checked=false;
+		})	
+	}
+}
+
+</script>

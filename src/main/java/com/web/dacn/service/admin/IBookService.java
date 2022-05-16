@@ -20,18 +20,24 @@ public interface IBookService {
 	Page<BookDTO> search(String bookName, String authorName, int page);
 
 	Book saveBook(Book entity);
-	
 
 	BookDTO findById(long id);
 
 	Author saveAuthor(Author author);
 
+	boolean checkAuthor(Author a, List<Author> authors);
+
 	Book getBookById(long id);
 
 	Author findAuthorByFullName(String name);
 
+	Author findAuthorById(long id);
+
 	List<BookCategory> findCategoryByName(String name);
 
+	BookCategory findCategoryById(long id);
+
 	BookCategory saveCategory(BookCategory category);
-	
+
+	Book deleteBook(long id);
 }
