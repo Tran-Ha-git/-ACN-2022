@@ -44,19 +44,18 @@ public class EditBookController {
 			@RequestParam("fileUpload") MultipartFile file, ModelMap model, HttpServletRequest request,
 			HttpSession session) throws ParseException, IOException {
 		String authorid = request.getParameter("authorid");
+		String authorName = request.getParameter("fullname");
 		long authorId = 0L;
 		if (authorid != null) {
 			authorId = Long.parseLong(authorid);
 		}
-		String authorName = request.getParameter("fullname");
 
 		String categoryid = request.getParameter("categoryid");
+		String categoryName = request.getParameter("categoryName");
 		long categoryId = 0L;
 		if (categoryid != null) {
 			categoryId = Long.parseLong(categoryid);
 		}
-
-		String categoryName = request.getParameter("categoryName");
 
 		Book newBook = bookService.getBookById(id);
 
@@ -78,7 +77,13 @@ public class EditBookController {
 			return "message";
 
 		}
-
+		newBook.setName(book.getName());
+		newBook.setDescription(book.getDescription());
+		newBook.setStatus(book.getStatus());
+		newBook.setPrice(book.getPrice());
+		newBook.setSlug(book.getSlug());
+		newBook.setMetaDescription(book.getMetaDescription());
+		newBook.setMetaTitle(book.getMetaTitle());
 		newBook.setMod_time(date);
 		newBook.setUser(user);
 
