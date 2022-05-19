@@ -1,11 +1,14 @@
 package com.web.dacn.repository;
+
 import java.util.List;
 import java.util.Optional;
+import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -23,6 +26,9 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 	Page<Book> search(String bookName, String authorName, Pageable pageable);
 
 	Optional<Book> findOneBySlug(String slug);
+
+	Book findById(long id);
+	void deleteById(long id);
 	
 	@Query(value = "SELECT * FROM book b WHERE EXISTS(SELECT * FROM online WHERE book_id = b.id) ORDER BY view DESC LIMIT 10", nativeQuery = true)
 	List<Book> findTop10OnlineBook();
@@ -73,5 +79,6 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 			+ "SELECT * FROM pdf WHERE book_id = b.id) AND EXISTS("
 			+ "SELECT * FROM book_bookcategory WHERE book_id = b.id AND category_id = :categoryId) AND name LIKE %:search%", nativeQuery = true)
 	Page<Book> findPdfBookByCategoryIdAndContainingSearchOrderBySort(String search, Pageable pageable, Long categoryId);
+
 	
 }

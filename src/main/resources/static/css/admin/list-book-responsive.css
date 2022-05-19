@@ -1,7 +1,7 @@
 /* PC */
 @media (min-width: 64em) {
     .container{
-        grid-template-columns: 25% 70%;
+        grid-template-columns: 18% 80%;
     }  
     .header-manage-list{
         width: 100%;
@@ -15,7 +15,7 @@
 /* Tablet */
 @media(min-width: 46.25em) and (max-width:63.9375em){
     .container{
-        grid-template-columns: 25% 70%;
+        grid-template-columns: 18% 80%;
     }
     .search-by-bookname .search-bookname-label{
         margin-right: 12px;
