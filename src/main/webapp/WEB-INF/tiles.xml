@@ -70,14 +70,14 @@
 			value="css/client/audio.css" />
 	</definition>
 
-	<!-- List Audio Page -->
-	<definition name="listAudioPage"
+	<!-- List Book Page -->
+	<definition name="listBookPage"
 		extends="client.base.definition">
-		<put-attribute name="title" value="List Audio Page" />
+		<put-attribute name="title" value="List Book Page" />
 		<put-attribute name="body"
-			value="/WEB-INF/bodyfragments/client/list-audio.jsp" />
+			value="/WEB-INF/bodyfragments/client/list-book.jsp" />
 		<put-attribute name="style"
-			value="css/client/list-audio.css" />
+			value="css/client/list-book.css" />
 	</definition>
 	
 	

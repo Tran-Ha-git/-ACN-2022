@@ -9,16 +9,7 @@ import com.web.dacn.entity.user.Author;
 
 @Controller
 public class DemoController {
-	@GetMapping("/home")
-	public String getHomePage(Model model) {		
-		return "homePage";
-	}
 	
-	@GetMapping("/books")
-	public String getDetailBookPage(Model model) {
-		return "detailBookPage";
-	}
-
 	@GetMapping("/pdf-read")
 	public String getPdfRead(Model model) {
 		return "pdfReadPage";
@@ -39,11 +30,11 @@ public class DemoController {
 		return "audioPage";
 	}
 
-	@GetMapping("/list-audio")
-	public String getListAudio(Model model) {
-		return "listAudioPage";
+	@GetMapping("/detail")
+	public String getDetail(Model model) {
+		return "detailBookPage";
 	}
-
+	
 //	@GetMapping("/admin/books")
 //	public String getAdminListBook(Model model) {
 //		return "adminListBook";

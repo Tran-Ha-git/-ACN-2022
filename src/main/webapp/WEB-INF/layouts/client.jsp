@@ -28,7 +28,6 @@
     <script src="/vendor/jquery/jquery3.6.0.min.js"></script>
     <script src="/vendor/owlcarousel/owl.carousel.min.js"></script>
 	<script src="/vendor/swiperjs/swiper-bundle.min.js"></script>
-    
 	<script src="<tiles:insertAttribute name="script" />"></script>
     
 </body>

@@ -13,6 +13,5 @@ public interface BookCategoryRepository extends JpaRepository<BookCategory, Long
 	BookCategory findById(int id);
 	List<BookCategory> findByName(String name);
 	
-
 }
 
