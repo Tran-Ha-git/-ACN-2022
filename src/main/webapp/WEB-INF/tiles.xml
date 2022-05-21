@@ -37,7 +37,7 @@
 			value="/WEB-INF/bodyfragments/client/detail-book.jsp" />
 		<put-attribute name="style"
 			value="css/client/detail-book.css" />
-		<put-attribute name="script" value="js/detail-book.js" />
+		<put-attribute name="script" value="./../js/detail-book.js" />
 	</definition>
 
 	<!-- Online Read Page -->

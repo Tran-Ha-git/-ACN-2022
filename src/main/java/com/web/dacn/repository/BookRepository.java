@@ -80,5 +80,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 			+ "SELECT * FROM book_bookcategory WHERE book_id = b.id AND category_id = :categoryId) AND name LIKE %:search%", nativeQuery = true)
 	Page<Book> findPdfBookByCategoryIdAndContainingSearchOrderBySort(String search, Pageable pageable, Long categoryId);
 
-	
+	List<Book> findByCategoriesIdOrderByViewDesc(Long id);
+
+	List<Book> findByAuthorsIdOrderByViewDesc(Long id);
 }
