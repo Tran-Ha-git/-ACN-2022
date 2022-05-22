@@ -10,7 +10,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/admin/list-book-styles.css">
     <link rel="stylesheet" href="/css/admin/list-book-responsive.css">
-<link rel="stylesheet"
+   
+    <link rel="stylesheet"
 	href="/vendor/fontawesome-free-6.1.1-web/css/all.min.css">
 
 <title>Book Management</title>

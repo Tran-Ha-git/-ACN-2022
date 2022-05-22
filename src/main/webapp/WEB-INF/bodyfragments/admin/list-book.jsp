@@ -119,7 +119,8 @@
 						</c:choose>
 
 						<td class="book-data">${book.mod_time }</td>
-						<td class="book-data tr-width-12"><c:forEach
+						<td class="book-data tr-width-12">
+						<c:forEach
 								items="${readFormats}" var="readFormat">
 								<c:if test="${readFormat.key==book.id }">
 									<c:forEach items="${readFormat.value}" var="format">
