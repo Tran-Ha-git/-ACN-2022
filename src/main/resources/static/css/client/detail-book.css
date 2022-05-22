@@ -1,5 +1,7 @@
 .bookinfo .bookinfo-thumbnail {
   width: 100%;
+  height: 410px;
+  text-align: center;
 }
 
 .bookinfo h2 {
@@ -7,25 +9,35 @@
 }
 
 .bookinfo p {
-  font-size: 30px;
+  font-size: 20px;
+  min-height: 200px;
 }
 
 .bookinfo h3 {
-  font-size: 50px;
+  font-size: 24px;
   margin-bottom: 20px;
+  color: #2932ac;
 }
 
 .bookinfo .bookinfo-thumbnail img {
-  width: 100%;
+  height: 100%;
+  box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
+  border-radius: 3px;
+  object-fit: cover;
 }
 
 .bookinfo .bookinfo-row {
-  margin: 10px 0px;
-  font-size: 30px;
+  margin: 5px 0px;
+  font-size: 18px;
+}
+
+.bookinfo .bookinfo-row span:nth-child(1) {
+  min-width:20%;
 }
 
 .bookinfo .bookinfo-row span:nth-child(2) {
-  max-width: 300px;
+  max-width: 75%;
+  color: #4e4e4e;
 }
 
 .bookinfo .bookinfo-row a {
@@ -35,19 +47,20 @@
 
 .bookinfo .socials {
   display: flex;
-  margin: 20px 0px;;
+  margin: 15px 0px;;
 }
 
 .bookinfo .socials .social {
-  width: 80px;
-  height: 80px;
+  width: 50px;
+  height: 50px;
   color: white;
   border-radius: 10px;
   margin-right: 15px;
-  font-size: 40px;
+  font-size: 22px;
   text-align: center;
-  padding-top: 8px;
+  padding-top: 5px;
   cursor: pointer;
+  line-height:40px;
 }
 
 .bookinfo .socials .social:nth-child(1) {
@@ -73,9 +86,9 @@
 .bookinfo .read-types button {
   border: none;
   color: white;
-  padding: 20px 20px;
+  padding: 10px 20px;
   border-radius: 10px;
-  font-size: 25px;
+  font-size: 20px;
   margin-top: 20px;
   margin-right: 10px;
 }
@@ -103,12 +116,12 @@
 
 .related_books .controls span {
   display: inline-block;
-  width: 70px;
-  height: 70px;
+  width: 50px;
+  height: 50px;
   background-color: #EBEBEB;
   border-radius: 5px;
   margin-left: 10px;
-  font-size: 35px;
+  font-size: 22px;
   text-align: center;
   padding-top: 10px;
   cursor: pointer;
@@ -121,6 +134,9 @@
 
 .related_books .book img {
   width: 100%;
+  height: 250px;
+  object-fit: cover;
+  background-position: center;
 }
 
 .related_books .book .category {
@@ -133,12 +149,22 @@
   font-size: 20px;
 }
 
+.wrap-comment{
+	margin-bottom:40px;
+}
+
 .wrap-comment .comment-header {
-  margin: 20px 0px;
+  line-height: 32px;
+  font-weight: 400;
+  text-transform: capitalize;
+}
+
+.wrap-comment .comment-header h3 {
+  font-size: 24px;
 }
 
 .wrap-comment button {
-  padding: 10px 20px;
+  padding: 6px 15px;
   border: none;
   color: white;
   background-color: #0088FF;
@@ -151,19 +177,19 @@
 }
 
 .rating .score {
-  font-size: 40px;
+  font-size: 22px;
   margin-right: 20px;
 }
 
 .rating .star-rating {
   align-items: center;
-  font-size: 30px;
+  font-size: 22px;
   justify-content: center;
   margin-right: 20px;
 }
 
 .rating .user {
-  font-size: 20px;
+  font-size: 18px;
   color: gray;
 }
 
@@ -200,34 +226,47 @@
 
 .comments {
   margin: 20px 0px;
+  width: 80%;
+  margin-left:5%;
 }
 
 .comments .comment {
-  margin: 20px 0px;
-  padding: 20px 0px;
-  font-size: 20px;
+  margin-bottom: 15px;
 }
 
-.comments .comment .avatar {
-  width: 80px;
-  height: 80px;
+.comments .comment .review{
+  font-size: 15px;
+  display:flex;
+  padding: 15px;
+  box-shadow: rgb(0 0 0 / 5%) 0px 0px 0px 1px;
+  flex-wrap: wrap;
+  background-color: #fdfdfd;
+}
+
+.comments .comment .avatar, .response .avatar {
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   border: 0.5px solid rgb(212, 212, 212);
-  font-size: 40px;
+  font-size: 20px;
   text-align: center;
   padding-top: 5px;
   margin-right: 20px;
 }
 
-.comments .comment .content-comment > * {
-  margin: 10px 0px;
+.comments .comment .content-comment, .response .content{
+	max-width:90%;
 }
 
-.comments .comment .content-comment .name {
+.comments .comment .content-comment > * {
+  margin: 1px 0px;
+}
+
+.comments .comment .content-comment .name, .response .name, .sub-response .name {
   font-weight: bold;
 }
 
-.comments .comment .content-comment .join-date {
+.comments .comment .content-comment .join-date , .response .join-date, .sub-response .join-date{
   color: gray;
 }
 
@@ -237,6 +276,31 @@
 
 .comments .comment .content-comment .evaluate {
   color: #f1f1f1;
+}
+
+.comments .comment .content-comment button , .response button, .sub-response button{
+  margin-top:4px !important;
+}
+#show-more-btn{
+	margin:10px;
+}
+.response, .sub-response{
+    display: flex;
+    padding: 15px;
+    box-shadow: rgb(0 0 0 / 5%) 0px 0px 0px 1px;
+    font-size: 15px;
+    margin-top: 2px;
+    background-color: #fafafa;
+}
+
+.response{
+	width: 95%;
+    margin-left: 5%;
+}
+
+.sub-response{
+	width: 90%;
+    margin-left: 10%;
 }
 
 /* Rating template */
@@ -387,4 +451,10 @@
 
 .modal .rating-btn button:nth-child(2), .modal .comment-btn button:nth-child(3) {
   background-color: red;
+}
+#response #content-response {
+	width: 100%;
+    height: 200px;
+    border: none;
+    outline: none;
 }

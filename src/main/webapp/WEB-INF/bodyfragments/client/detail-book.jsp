@@ -1,45 +1,60 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
-
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <main>
 	<div class="container bookinfo">
 		<div class="row my-4">
 			<div class="col-lg-6 col-sm-12 px-4">
 				<div class="bookinfo-thumbnail">
-					<img src="./assets/images/book-thumbnail.png" alt="Not found" />
+					<img src="${bookDTO.thumbnail}" alt="${bookDTO.name}" />
 				</div>
-				<h2 class="my-4">Tuổi trẻ dùng để làm gì?</h2>
+				<h2 class="my-4">${bookDTO.name}</h2>
 				<div class="d-flex justify-content-between bookinfo-row">
-					<span>Tác giả: </span> <a href="#">Huỳnh Chí Viên</a>
-				</div>
-				<div class="d-flex justify-content-between bookinfo-row">
-					<span>Thể loại: </span> <span><a href="#">Kĩ năng sống,
-					</a> <a href="#">Phát triển bản thân</a></span>
-				</div>
-				<div class="d-flex justify-content-between bookinfo-row">
-					<span>Thời lượng: </span> <span>30p</span>
-				</div>
-				<div class="d-flex justify-content-between bookinfo-row">
-					<span>Số chương: </span> <span>3 chương</span>
+					<span>Tác giả: </span> 
+					<span>
+					<c:forEach items="${bookDTO.authors}" var="author" varStatus="loop">
+						<a href="/books?author=${author.slug}">
+							<span class="info-item">${author.fullname}</span>
+							<c:if test="${loop.index != bookDTO.authors.size() - 1}"> <span class="mr-3">,</span> </c:if>
+						</a>
+					</c:forEach>
+					</span> 
 				</div>
 				<div class="d-flex justify-content-between bookinfo-row">
-					<span>Số trang: </span> <span>178 trang</span>
+					<span>Thể loại: </span> 
+					<span>
+					<c:forEach items="${bookDTO.categories}" var="category" varStatus="loop">
+					<a href="/books?category_id=${category.id}">
+						<span class="info-item">${category.name}</span>
+						<c:if test="${loop.index != bookDTO.categories.size() - 1}"> <span class="mr-3">,</span> </c:if>
+					</a> 
+					</c:forEach>
+					</span>
 				</div>
 				<div class="d-flex justify-content-between bookinfo-row">
-					<span>Lượt xem: </span> <span>221</span>
+					<span>Thời lượng: </span> 
+					<c:if test="${bookDTO.audios.size() > 0}">
+					<span>${bookDTO.audios.size()*18} phút</span>
+					</c:if>
+				</div>
+				<div class="d-flex justify-content-between bookinfo-row">
+					<span>Số chương: </span> 
+					<c:if test="${bookDTO.onlines.size() > 0}">
+					<span>${bookDTO.onlines.size()} chương</span>
+					</c:if>
+				</div>
+				<div class="d-flex justify-content-between bookinfo-row">
+					<span>Số trang: </span> 
+					<c:if test="${bookDTO.onlines.size() > 0}">
+					<span>${bookDTO.onlines.size()*48} trang</span>
+					</c:if>
+				</div>
+				<div class="d-flex justify-content-between bookinfo-row">
+					<span>Lượt xem: </span> <span>${bookDTO.view}</span>
 				</div>
 			</div>
 			<div class="col-lg-6 col-sm-12 px-4">
 				<h3>Giới thiệu sách</h3>
-				<p>Những bài viết trong cuốn sách này là những trải nghiệm của
-					bản thân tôi cũng như những trăn trở mỗi ngày của tôi với một mong
-					mỏi: giúp các bạn trẻ tận dụng được thời gian tuổi trẻ và những
-					tiềm năng của mình một cách hiệu quả nhất để có thể tiếp tục gặt
-					hái những thành công quan trọng hơn trong cuộc sống.” trích Lời nói
-					đầu Tuổi trẻ của bạn dùng để làm gì? Cuốn sách như một người cố vấn
-					cho các bạn trẻ trong thời đại ngày hôm nay những vấn đề cập nhật,
-					hay những chủ đề muôn thuở mà nhiều bạn trẻ đang gặp phải. Đồng
-					thời cũng là lời giải đáp cho các bạn trẻ về nhiều câu hỏi tại sao
-					trong cuộc sống.</p>
+				<p>${bookDTO.description }</p>
 				<div class="socials">
 					<div class="social">
 						<i class="fa-brands fa-facebook-f"></i>
@@ -55,18 +70,21 @@
 					</div>
 				</div>
 				<div class="read-types">
-					<button>
-						<span><i class="fa-solid fa-headphones-simple"></i></span> <span>Nghe
-							Audio</span>
+					<c:if test="${bookDTO.audios.size() > 0}">
+						<button onclick="window.location.href = '/audio/${bookDTO.slug}';">
+							<span><i class="fa-solid fa-headphones-simple"></i></span> <span>Nghe Audio</span>
+						</button>
+					</c:if>
+					<c:if test="${bookDTO.pdfs.size() > 0}">
+					<button onclick="window.location.href = '/pdf-read/${book.slug}';">
+						<span><i class="fa-solid fa-file-pdf"></i></span> <span>Đọc PDF</span>
 					</button>
-					<button>
-						<span><i class="fa-solid fa-file-pdf"></i></span> <span>Đọc
-							PDF</span>
-					</button>
-					<button>
-						<span><i class="fa-solid fa-book-open-reader"></i></span> <span>Đọc
-							Online</span>
-					</button>
+					</c:if>
+					<c:if test="${bookDTO.onlines.size() > 0}">
+						<button onclick="window.location.href = '/doc-online/${bookDTO.slug}?chapter=1';">
+							<span><i class="fa-solid fa-book-open-reader"></i></span> <span>Đọc Online</span>
+						</button>
+					</c:if>
 				</div>
 			</div>
 		</div>
@@ -83,78 +101,24 @@
 		<div class="books">
 			<div class="swiper mySwiper">
 				<div class="swiper-wrapper">
-					<div class="swiper-slide">
-						<a href="#" class="book"> <img
-							src="./assets/images/book-thumbnail.png" alt="Not found" />
-							<div class="category">SÁCH MỚI CHO TRẺ</div>
-							<div class="title">Chủ đề vật lý lý thuyết thật mới mẻ
-								trong sách nói Vũ trụ trong vỏ hạ dẻ</div>
-						</a>
-					</div>
-					<div class="swiper-slide">
-						<a href="#" class="book"> <img
-							src="./assets/images/book-thumbnail.png" alt="Not found" />
-							<div class="category">SÁCH MỚI CHO TRẺ</div>
-							<div class="title">Chủ đề vật lý lý thuyết thật mới mẻ
-								trong sách nói Vũ trụ trong vỏ hạ dẻ</div>
-						</a>
-					</div>
-					<div class="swiper-slide">
-						<a href="#" class="book"> <img
-							src="./assets/images/book-thumbnail.png" alt="Not found" />
-							<div class="category">SÁCH MỚI CHO TRẺ</div>
-							<div class="title">Chủ đề vật lý lý thuyết thật mới mẻ
-								trong sách nói Vũ trụ trong vỏ hạ dẻ</div>
-						</a>
-					</div>
-					<div class="swiper-slide">
-						<a href="#" class="book"> <img
-							src="./assets/images/book-thumbnail.png" alt="Not found" />
-							<div class="category">SÁCH MỚI CHO TRẺ</div>
-							<div class="title">Chủ đề vật lý lý thuyết thật mới mẻ
-								trong sách nói Vũ trụ trong vỏ hạ dẻ</div>
-						</a>
-					</div>
-					<div class="swiper-slide">
-						<a href="#" class="book"> <img
-							src="./assets/images/book-thumbnail.png" alt="Not found" />
-							<div class="category">SÁCH MỚI CHO TRẺ</div>
-							<div class="title">Chủ đề vật lý lý thuyết thật mới mẻ
-								trong sách nói Vũ trụ trong vỏ hạ dẻ</div>
-						</a>
-					</div>
-					<div class="swiper-slide">
-						<a href="#" class="book"> <img
-							src="./assets/images/book-thumbnail.png" alt="Not found" />
-							<div class="category">SÁCH MỚI CHO TRẺ</div>
-							<div class="title">Chủ đề vật lý lý thuyết thật mới mẻ
-								trong sách nói Vũ trụ trong vỏ hạ dẻ</div>
-						</a>
-					</div>
-					<div class="swiper-slide">
-						<a href="#" class="book"> <img
-							src="./assets/images/book-thumbnail.png" alt="Not found" />
-							<div class="category">SÁCH MỚI CHO TRẺ</div>
-							<div class="title">Chủ đề vật lý lý thuyết thật mới mẻ
-								trong sách nói Vũ trụ trong vỏ hạ dẻ</div>
-						</a>
-					</div>
-					<div class="swiper-slide">
-						<a href="#" class="book"> <img
-							src="./assets/images/book-thumbnail.png" alt="Not found" />
-							<div class="category">SÁCH MỚI CHO TRẺ</div>
-							<div class="title">Chủ đề vật lý lý thuyết thật mới mẻ
-								trong sách nói Vũ trụ trong vỏ hạ dẻ</div>
-						</a>
-					</div>
-					<div class="swiper-slide">
-						<a href="#" class="book"> <img
-							src="./assets/images/book-thumbnail.png" alt="Not found" />
-							<div class="category">SÁCH MỚI CHO TRẺ</div>
-							<p class="title">Chủ đề vật lý lý thuyết thật mới mẻ trong
-								sách nói Vũ trụ trong vỏ hạ dẻ</p>
-						</a>
-					</div>
+					<c:forEach items="${similarBooks}" var="similarBook" varStatus="loop">						
+						<div class="swiper-slide">
+							<a href="/books/${similarBook.slug}" class="book"> 
+								<img src="${similarBook.thumbnail}" alt="Not found" />
+								<div class="category">
+									<c:forEach items="${similarBook.categories}" var="category" varStatus="loop">						
+										<a href="/books?author=${category.slug}">
+											<span class="info-item">${category.name}</span>
+											<c:if test="${loop.index != similarBook.categories.size() - 1}">
+												<span class="mr-3">,</span>
+								    		</c:if>
+										</a>
+									</c:forEach>
+								</div>
+								<div class="title">${similarBook.name}</div>
+							</a>
+						</div>
+					</c:forEach>
 				</div>
 			</div>
 		</div>
@@ -163,169 +127,103 @@
 		<div
 			class="comment-header d-flex justify-content-between align-items-center">
 			<h3>Đánh giá sản phẩm</h3>
-			<button data-bs-toggle="modal" data-bs-target="#star">Thêm
-				sản phẩm</button>
+			<button id="comment-btn">Viết nhận xét</button>
 		</div>
 		<hr>
 		<div
 			class="rating d-lg-flex d-sm-block justify-content-between align-items-center">
 			<div class="average d-flex align-items-center">
-				<div class="score">3.4</div>
+				<div class="score">${score}</div>
 				<div class="star-rating" title="70%">
 					<div class="back-stars">
-						<i class="fa fa-star" aria-hidden="true"></i> <i
-							class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star"
-							aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i>
+						<i class="fa fa-star" aria-hidden="true"></i> 
+						<i class="fa fa-star" aria-hidden="true"></i> 
+						<i class="fa fa-star" aria-hidden="true"></i> 
 						<i class="fa fa-star" aria-hidden="true"></i>
-						<div class="front-stars" style="width: 70%">
-							<i class="fa fa-star" aria-hidden="true"></i> <i
-								class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star"
-								aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i>
+						<i class="fa fa-star" aria-hidden="true"></i>
+						<div class="front-stars" style="width: ${score/5*100}%">
+							<i class="fa fa-star" aria-hidden="true"></i> 
+							<i class="fa fa-star" aria-hidden="true"></i> 
+							<i class="fa fa-star" aria-hidden="true"></i> 
+							<i class="fa fa-star" aria-hidden="true"></i>
 							<i class="fa fa-star" aria-hidden="true"></i>
 						</div>
 					</div>
 				</div>
 				<div class="user">
-					<span><i class="fa-solid fa-user"></i>&nbsp;</span><span>823</span>
+					<span><i class="fa-solid fa-user"></i>&nbsp;</span>
+					<span>
+					<c:choose>
+					  <c:when test="${totalReviews > 0}">${totalReviews}</c:when>
+					  <c:otherwise>Chưa có đánh giá</c:otherwise>
+					</c:choose>
+					</span>
 				</div>
 			</div>
 			<div class="filter d-flex align-items-center">
-				<span>Lọc theo:</span> <span>5 <i class="fa-regular fa-star"></i></span>
-				<span>4 <i class="fa-regular fa-star"></i></span> <span>3 <i
-					class="fa-regular fa-star"></i></span> <span>2 <i
-					class="fa-regular fa-star"></i></span> <span>1 <i
-					class="fa-regular fa-star"></i></span>
+				<span>Lọc theo:</span>
+				<c:forEach var="i" begin="1" end="5">
+					<span onclick="filterStar(${6-i })" class="filter-star" id="filter-star-${6-i }"> 
+						${6-i}  
+						<i class="fa fa-star" aria-hidden="true"></i>
+					</span>
+				</c:forEach>
 			</div>
 		</div>
+		
 		<div class="comments">
-			<div class="comment d-flex">
-				<div class="avatar">
-					<i class="fa-regular fa-user"></i>
+		<input type="hidden" value="0" id ="page-comment">
+		<input type="hidden" value="${comments.totalPages}" id ="total-page-comment">
+		<input type="hidden" value="${bookDTO.slug}" id="slug">
+		
+		<c:forEach items="${comments.content}" var="comment" varStatus="loop">
+			<div class="comment" id="comment-${comment.id}">
+				<input type="hidden" value="${comment.star}" class ="star">
+				<div class="review">
+					<div class="avatar">
+						<i class="fa-regular fa-user"></i>
+					</div>
+					<div class="content-comment">
+						<div class="name">${comment.user.fullname}</div>
+						<div class="join-date">Đã đăng vào ${comment.modTime}</div>
+						<div class="evaluate d-flex"></div>
+						<p>${comment.content}</p>
+						<input type="hidden" value="${comment.id}" class ="commentId">
+						<button>Trả lời</button>
+					</div>
 				</div>
-				<div class="content-comment">
-					<div class="name">Hồ Cẩm My</div>
-					<div class="join-date">Đã tham gia vào 22/03/2020</div>
-					<div class="evaluate d-flex">
-						<div class="c-green">
-							<b>Hài lòng</b>
+				<div class="responses ">
+				<c:forEach var = "response" items= "${comment.commentBooks}">
+					<div class = "response">
+						<div class="avatar">
+							<i class="fa-regular fa-user"></i>
 						</div>
-						<div>
-							<span class="c-yellow"><i class="fa fa-star"
-								aria-hidden="true"></i></span> <span class="c-yellow"><i
-								class="fa fa-star" aria-hidden="true"></i></span> <span
-								class="c-yellow"><i class="fa fa-star" aria-hidden="true"></i></span>
-							<span><i class="fa fa-star" aria-hidden="true"></i></span> <span><i
-								class="fa fa-star" aria-hidden="true"></i></span>
+						<div  class="content">
+							<div class="name">${response.user.fullname}</div>
+							<div class="join-date">Đã đăng vào ${response.modTime}</div>
+							<p>${response.content}</p>
+							<button hidden>Trả lời</button>
 						</div>
 					</div>
-					<p>Sách cũng bình thường, không có gì đặc biệt</p>
-					<button>Trả lời</button>
-				</div>
-			</div>
-			<hr>
-			<div class="comment d-flex">
-				<div class="avatar">
-					<i class="fa-regular fa-user"></i>
-				</div>
-				<div class="content-comment">
-					<div class="name">Hồ Cẩm My</div>
-					<div class="join-date">Đã tham gia vào 22/03/2020</div>
-					<div class="evaluate d-flex">
-						<div class="c-green">
-							<b>Hài lòng</b>
+					<div class = "sub-response" hidden >
+						<div class="avatar">
+							<i class="fa-regular fa-user"></i>
 						</div>
-						<div>
-							<span class="c-yellow"><i class="fa fa-star"
-								aria-hidden="true"></i></span> <span class="c-yellow"><i
-								class="fa fa-star" aria-hidden="true"></i></span> <span
-								class="c-yellow"><i class="fa fa-star" aria-hidden="true"></i></span>
-							<span><i class="fa fa-star" aria-hidden="true"></i></span> <span><i
-								class="fa fa-star" aria-hidden="true"></i></span>
+						<div  class="content">
+							<div class="name">Hồ Cẩm</div>
+							<div class="join-date">Đã đăng vào 22/03/2020</div>
+							<p>không có gì</p>
 						</div>
 					</div>
-					<p>Sách cũng bình thường, không có gì đặc biệt</p>
-					<button>Trả lời</button>
+				</c:forEach>
 				</div>
 			</div>
-			<hr>
-			<div class="comment d-flex">
-				<div class="avatar">
-					<i class="fa-regular fa-user"></i>
-				</div>
-				<div class="content-comment">
-					<div class="name">Hồ Cẩm My</div>
-					<div class="join-date">Đã tham gia vào 22/03/2020</div>
-					<div class="evaluate d-flex">
-						<div class="c-green">
-							<b>Hài lòng</b>
-						</div>
-						<div>
-							<span class="c-yellow"><i class="fa fa-star"
-								aria-hidden="true"></i></span> <span class="c-yellow"><i
-								class="fa fa-star" aria-hidden="true"></i></span> <span
-								class="c-yellow"><i class="fa fa-star" aria-hidden="true"></i></span>
-							<span><i class="fa fa-star" aria-hidden="true"></i></span> <span><i
-								class="fa fa-star" aria-hidden="true"></i></span>
-						</div>
-					</div>
-					<p>Sách cũng bình thường, không có gì đặc biệt</p>
-					<button>Trả lời</button>
-				</div>
+		</c:forEach>
+			<c:if test="${comments.totalPages > 1}">
+			<div class="d-flex justify-content-center show-more-div">
+				<button id="show-more-btn">Hiển thị thêm bình luận</button>
 			</div>
-			<hr>
-			<div class="comment d-flex">
-				<div class="avatar">
-					<i class="fa-regular fa-user"></i>
-				</div>
-				<div class="content-comment">
-					<div class="name">Hồ Cẩm My</div>
-					<div class="join-date">Đã tham gia vào 22/03/2020</div>
-					<div class="evaluate d-flex">
-						<div class="c-green">
-							<b>Hài lòng</b>
-						</div>
-						<div>
-							<span class="c-yellow"><i class="fa fa-star"
-								aria-hidden="true"></i></span> <span class="c-yellow"><i
-								class="fa fa-star" aria-hidden="true"></i></span> <span
-								class="c-yellow"><i class="fa fa-star" aria-hidden="true"></i></span>
-							<span><i class="fa fa-star" aria-hidden="true"></i></span> <span><i
-								class="fa fa-star" aria-hidden="true"></i></span>
-						</div>
-					</div>
-					<p>Sách cũng bình thường, không có gì đặc biệt</p>
-					<button>Trả lời</button>
-				</div>
-			</div>
-			<hr>
-			<div class="comment d-flex">
-				<div class="avatar">
-					<i class="fa-regular fa-user"></i>
-				</div>
-				<div class="content-comment">
-					<div class="name">Hồ Cẩm My</div>
-					<div class="join-date">Đã tham gia vào 22/03/2020</div>
-					<div class="evaluate d-flex">
-						<div class="c-green">
-							<b>Hài lòng</b>
-						</div>
-						<div>
-							<span class="c-yellow"><i class="fa fa-star"
-								aria-hidden="true"></i></span> <span class="c-yellow"><i
-								class="fa fa-star" aria-hidden="true"></i></span> <span
-								class="c-yellow"><i class="fa fa-star" aria-hidden="true"></i></span>
-							<span><i class="fa fa-star" aria-hidden="true"></i></span> <span><i
-								class="fa fa-star" aria-hidden="true"></i></span>
-						</div>
-					</div>
-					<p>Sách cũng bình thường, không có gì đặc biệt</p>
-					<button>Trả lời</button>
-				</div>
-			</div>
-			<hr>
-			<div class="d-flex justify-content-center">
-				<button>Hiển thị thêm bình luận</button>
-			</div>
+			</c:if>
 		</div>
 	</div>
 	<div class="modal fade" id="star" data-bs-backdrop="static"
@@ -340,14 +238,16 @@
 				</div>
 				<div class="modal-body">
 					<div class="rating">
-						<input type="radio" name="rating" id="rating-5"> <label
-							for="rating-5"></label> <input type="radio" name="rating"
-							id="rating-4"> <label for="rating-4"></label> <input
-							type="radio" name="rating" id="rating-3"> <label
-							for="rating-3"></label> <input type="radio" name="rating"
-							id="rating-2"> <label for="rating-2"></label> <input
-							type="radio" name="rating" id="rating-1"> <label
-							for="rating-1"></label>
+						<input type="radio" name="rating" id="rating-5" value="5">
+	                    <label for="rating-5"></label>
+	                    <input type="radio" name="rating" id="rating-4" value="4">
+	                    <label for="rating-4"></label>
+	                    <input type="radio" name="rating" id="rating-3" value="3">
+	                    <label for="rating-3"></label>
+	                    <input type="radio" name="rating" id="rating-2" value="2">
+	                    <label for="rating-2"></label>
+	                    <input type="radio" name="rating" id="rating-1" value="1">
+	                    <label for="rating-1"></label>
 						<div class="emoji-wrapper">
 							<div class="emoji">
 								<svg class="rating-0" xmlns="http://www.w3.org/2000/svg"
@@ -527,10 +427,12 @@
 							</div>
 						</div>
 					</div>
+				<br>
+                <p class="text-center text-success fw-bold fs-5 ms-1" id="label-rating">Hãy chọn đánh giá của bạn</p>
 				</div>
 				<div class="modal-footer rating-btn">
 					<button type="button" data-bs-toggle="modal"
-						data-bs-target="#comment">OK</button>
+						data-bs-target="#comment" disabled id="review-btn">OK</button>
 					<button type="button" data-bs-toggle="modal"
 						data-bs-target="#comment">Bỏ qua</button>
 				</div>
@@ -543,22 +445,350 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="staticBackdropLabel">Bình luận
-						sách</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
+					<h5 class="modal-title" id="staticBackdropLabel">Bình luận sách</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
-					<textarea placeholder="Bạn nghĩ sao về cuốn sách này?"></textarea>
+					<textarea placeholder="Bạn nghĩ sao về cuốn sách này?" required="required" id="content-comment-txt" ></textarea>
 				</div>
 				<div class="modal-footer comment-btn">
-					<button data-bs-toggle="modal" data-bs-target="#star"">Đánh
-						giá</button>
-					<button>OK</button>
-					<button>Hủy</button>
+					<button data-bs-toggle="modal" data-bs-target="#star" id="show-review-btn"">Đánh giá</button>
+					<button id="save-comment-btn">OK</button>
+					<button data-bs-dismiss="modal">Hủy</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="response" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <h5 class="modal-title" id="staticBackdropLabel">Gửi phản hồi</h5>
+	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	            </div>
+	            <div class="modal-body">
+	            	<input type="hidden" value="0" id="review-id">
+	                <textarea placeholder="Phản hồi của bạn?" required="required" id="content-response"></textarea>
+	            </div>
+	            <div class="modal-footer comment-btn">
+	            	<input type="hidden" value="0" class ="commentId" id="response-comment-id">
+	            	<button type="button" id="response-btn">Gửi</button>
+					<button type="button" data-bs-dismiss="modal">Hủy</button>
 				</div>
 			</div>
 		</div>
 	</div>
 </main>
+<script src="./../vendor/jquery/jquery3.6.0.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+$("#comment-btn").click(function(){
+	 $.ajax({url: "/api/book/checkLogin", success: function(result){
+		   if(!result){
+			   alertLogin();
+		   }else{
+			   checkReviewed();
+			  
+		   }
+	}});
+});
 
+function checkReviewed(){
+	let slug = $("#slug").val();
+	$.ajax({
+		type: 'GET',
+		url: '/api/book/'+slug+'/checkReview',
+		success: function(response){
+			console.log(response)
+			if(response){
+				$("#star").modal("hide");
+				$("#show-review-btn").hide()
+				$("#comment").modal("show");
+			}else{
+				 $('#star').modal('show');
+			}
+		},
+	});
+}
+function alertLogin(){
+	alert("Vui lòng đăng nhập");
+	$('#star').modal('hide');
+}
+
+$(document).ready(function () {
+	$(".comment input[type=hidden].star").each(function(){
+		let star = parseInt($(this).val());
+		showStar($(this), star);
+	});
+});
+function showStar(ele, star){
+	if(star>0){
+		let evaluateHtml =`<div class="c-green">`;
+		let quote ='';
+		switch(star) {
+			case 1:
+				quote ='Không thích';
+			break;
+			case 2:
+				quote ='Tạm được';
+			break;
+			case 3:
+				quote ='Hài lòng';
+			break;
+			case 4:
+				quote ='Rất hay';
+			break;
+			case 5:
+				quote ='Quá tuyệt vời';
+			break;	  
+			 default:
+				 quote ='';
+		}  
+		evaluateHtml +=`<b>`+quote+`</b> </div> <div>`;
+		for(let i=0; i<star; i++){
+			evaluateHtml+=`<span class="c-yellow"><i class="fa fa-star" aria-hidden="true"></i></span>`
+		}
+		for(let i=star; i<5; i++){
+			evaluateHtml+=`<span><i class="fa fa-star" aria-hidden="true"></i></span>`
+		}
+		evaluateHtml +=`</div> </div>`;
+		ele.siblings(".review").children(".content-comment").children(".evaluate").html(evaluateHtml);
+	}
+};
+$(document).ready(function () {
+	$('.rating input[type="radio"][name="rating"]').on('change', function() {
+		let rating =parseInt( $('.rating input[type="radio"][name="rating"]:checked').val());
+		let label ="Hãy chọn đánh giá của bạn!"
+		
+		switch(rating) {
+		  case 1:
+			  label ="Không thích"
+		    break;
+		  case 2:
+			  label ="Tạm được"
+		    break;
+		  case 3:
+			  label ="Hài lòng"
+			    break;
+		  case 4:
+			  label ="Rất hay"
+		  break;
+		  case 5:
+			  label ="Quá tuyệt vời!"
+			break;
+		default:
+			label ="Hãy chọn đánh giá của bạn!"
+		}
+		$("#label-rating").html(label);
+		$("#review-btn").removeAttr('disabled');
+	});
+});
+let arrFilterStar= [];
+function noFilterStar(){
+	if(arrFilterStar.length==0){
+		$(".comment").each(function () {
+	   		$(this).css('display', 'block')
+		});
+		$(".filter-star").each(function () {
+	   		$(this).children().removeClass("c-yellow");
+		});
+	}
+}
+function filterStar (star){	
+	if($("#filter-star-"+star).children().hasClass( "c-yellow" )){
+		arrFilterStar.splice( $.inArray(star, arrFilterStar), 1 );
+		if(arrFilterStar.length==0) {
+			noFilterStar();
+			return;
+		}
+		$("#filter-star-"+star).children().removeClass("c-yellow");
+		$(".comment input.star").each(function () {
+		   	if($.inArray(parseInt($(this).val()), arrFilterStar)!=-1){
+		   		$(this).parent(".comment").css('display', 'block')
+		   	}else{
+		   		$(this).parent(".comment").css('display', 'none')
+		   	}
+		});
+	}else{
+		arrFilterStar.push(star);
+		$("#filter-star-"+star).children().addClass("c-yellow");
+		$(".comment input.star").each(function () {
+			if($.inArray(parseInt($(this).val()), arrFilterStar)==-1){
+		   		$(this).parent(".comment").css('display', 'none')
+		   	}else{
+		   		$(this).parent(".comment").css('display', 'block')
+		   	}
+		});
+	}
+}
+
+$(document).ready(function () {
+	$("#save-comment-btn").click(function(e) {
+		e.preventDefault();
+		saveComment();
+	});
+});
+
+function saveComment(){
+	let slug = $("#slug").val();
+	let rating =parseInt( $('.rating input[type="radio"][name="rating"]:checked').val());
+	if(isNaN(rating)) {
+		rating = 0;
+	}
+	let content=$("#content-comment-txt").val();
+	$.ajax({
+		type: 'POST',
+		url: '/api/book/'+slug+'/comment',
+	    dataType: 'json',
+	    data: "star="+rating+"&content="+content,
+	    complete: function(response){
+	    	let commentHtml=``;
+	    	let value = response.responseJSON
+	    	let star = parseInt(value.star);
+
+	    	commentHtml +=`
+	    	<div class="comment" id="comment-`+ value.id+`">
+				<input type="hidden" value="`+value.star+`" class ="star">
+				<div class="review">
+					<div class="avatar">
+						<i class="fa-regular fa-user"></i>
+					</div>
+					<div class="content-comment">
+						<div class="name">`+value.user.fullname+`</div>
+						<div class="join-date">Đã đăng vào `+value.modTime+`</div>
+						<div class="evaluate d-flex"></div>
+						<p>`+value.content+`</p>
+						<input type="hidden" value="`+value.id+`" class ="commentId">
+						<button>Trả lời</button>
+					</div>
+				</div>
+				<div class="responses "></div>
+			</div>`;
+	    	$(".comments").prepend(commentHtml);
+	    	
+	    	$(".comment input[type=hidden].star").each(function(){
+				let star = parseInt($(this).val());
+				showStar($(this), star);
+			});
+			$("#comment").modal("hide");
+			$("#content-comment-txt").val("");
+			addEventButtonResponse();
+	    },
+	});
+}
+$(document).ready(function () {
+	$("#show-more-btn").click(function(e) {
+		e.preventDefault();
+		
+		arrFilterStar=[]
+		noFilterStar();
+		let slug = $("#slug").val();
+
+		let page = parseInt($("input#page-comment").val());
+		$("input#page-comment").val(page +1);
+		page = parseInt($( "input#page-comment" ).val());
+		
+		if($("input#total-page-comment").val() < page + 2 ) {
+			 $( "#show-more-btn" ).hide()
+		}
+		
+		$.ajax({
+	        type: "GET",
+	        url: "/api/book/"+slug+"/more-review/"+page,
+	        complete: function(result) {
+	        	let data = result.responseJSON;
+	        	let commentHtml=``;
+	        	$.each(data, function( index, value ) {
+			    	let star = parseInt(value.star);
+	
+			    	commentHtml +=`
+			    	<div class="comment" id="comment-`+ value.id+`">
+						<input type="hidden" value="`+value.star+`" class ="star">
+						<div class="review">
+							<div class="avatar">
+								<i class="fa-regular fa-user"></i>
+							</div>
+							<div class="content-comment">
+								<div class="name">`+value.user.fullname+`</div>
+								<div class="join-date">Đã đăng vào `+value.modTime+`</div>
+								<div class="evaluate d-flex"></div>
+								<p>`+value.content+`</p>
+								<input type="hidden" value="`+value.id+`" class ="commentId">
+								<button>Trả lời</button>
+							</div>
+						</div>
+						<div class="responses ">`
+						let responses = data[index].commentBooks;
+						
+						$.each(responses, function( i, v ) {
+						  let response = v;
+							commentHtml+=`
+							<div class = "response">
+								<div class="avatar">
+									<i class="fa-regular fa-user"></i>
+								</div>
+								<div  class="content">
+									<div class="name">`+response.user.fullname+`</div>
+									<div class="join-date">Đã đăng vào `+response.modTime+`</div>
+									<p>`+response.content+`</p>
+								</div>
+							</div>
+							`
+						});
+												
+			commentHtml+=`</div>
+					</div>`;
+	        	});
+	        	$(commentHtml).insertBefore( ".show-more-div" );
+				$(".comment input[type=hidden].star").each(function(){
+					let star = parseInt($(this).val());
+					showStar($(this), star);
+				});
+				addEventButtonResponse();
+	        },
+		}); 
+	});
+});
+$(document).ready(function () {
+	addEventButtonResponse();
+});
+
+$(document).ready(function () {
+	$("#response-btn").click(function(e) {
+		let slug = $("#slug").val();
+		let commentId = $("#response-comment-id").val();
+		let content = $("#content-response").val();
+		$.ajax({
+	        type: "POST",
+	        url: "/api/book/"+slug+"/response/"+commentId,
+	        data: "content="+content,
+	        complete: function(result) {
+	        	let data = result.responseJSON;
+	        	let commentHtml=``;
+	        	commentHtml+=`
+	        <div class = "response">
+				<div class="avatar">
+					<i class="fa-regular fa-user"></i>
+				</div>
+				<div  class="content">
+					<div class="name">`+data.user.fullname+`</div>
+					<div class="join-date">Đã đăng vào `+data.modTime+`</div>
+					<p>`+data.content+`</p>
+				</div>
+			</div>`;
+	        	let item= "#comment-"+commentId;
+	        	$(item).children(".responses").append(commentHtml);
+	        	$("#content-response").val("");
+	        	$("#response").modal("hide");
+	        },
+		});
+	});
+});
+function addEventButtonResponse(){
+	$(".comment .review .content-comment button").click(function(e) {
+		let commentId = $(this).siblings("input[type=hidden].commentId").val();
+		$("#response-comment-id").val(commentId);
+		$("#response").modal("show");
+	});
+}
+</script>
