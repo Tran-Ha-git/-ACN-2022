@@ -116,7 +116,7 @@ public class UserManagementController {
 		model.addAttribute("role", roles.get(0));
 		model.addAttribute("user", user);
 
-		return "adminEditUser";
+		return "redirect:/admin/users?role-id="+roles.get(0).getId();
 	}
 
 	@PostMapping("search-users")

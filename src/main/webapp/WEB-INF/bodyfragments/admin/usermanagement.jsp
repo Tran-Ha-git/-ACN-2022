@@ -45,7 +45,7 @@
        </div>
        <div class="manage-user-btn">
         <button class="delete-user-btn" type="submit">
-					<i class="far fa-times-circle"></i>Xóa
+					<i class="far fa-times-circle"></i>Xóa tất cả
 		</button>
        </div>
     </div>

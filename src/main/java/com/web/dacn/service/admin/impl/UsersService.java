@@ -87,19 +87,6 @@ public class UsersService implements IUserService {
 		return userRepository.save(entity);
 	}
 
-	public boolean isNumber(String str) {
-		String newString = "";
-
-		if (str.contains("-")) {
-			newString = str.replaceAll("-", "");
-		}
-		for (char c : newString.toCharArray()) {
-			if (!Character.isDigit(c))
-				return false;
-		}
-		return true;
-	}
-
 	@Override
 	public Page<UserDto> search(String input, int page) {
 
