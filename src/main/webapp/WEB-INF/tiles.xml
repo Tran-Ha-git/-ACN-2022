@@ -159,5 +159,12 @@
 			value="/WEB-INF/bodyfragments/admin/list-audio.jsp" />
 		<put-attribute name="style" value="css/admin/new-book.css" />
 	</definition>
+	<!-- Admin ListComment Page -->
+	<definition name="adminListComment" extends="admin.base.definition">
+		<put-attribute name="title" value="Admin List Comment Page" />
+		<put-attribute name="body"
+			value="/WEB-INF/bodyfragments/admin/list-comment.jsp" />
+		<put-attribute name="style" value="css/admin/list-comment.css" />
+	</definition>
 
 </tiles-definitions> 

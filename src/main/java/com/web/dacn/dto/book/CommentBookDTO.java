@@ -18,6 +18,7 @@ public class CommentBookDTO implements Serializable{
 	private Long id;
 	private String content;
 	private Date mod_time;
+	private int status;
 	private CommentBookDTO commentBook;
 	private UserDto user; 
 	private BookDTO book; 

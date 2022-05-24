@@ -3,7 +3,20 @@
 <div class="side-menu item">
 	<div class="menu-manage-book">
 		<p class="menu-manage-book-name">
-			<i class="fas fa-book-open"></i> <b><a href="/admin/books">Quản lý sách</a></b>
+			<i class="fas fa-book-open"></i> <b><a href="/admin/books">Quản
+					lý sách</a></b>
+		</p>
+	</div>
+	<div class="menu-manage-book">
+		<p class="menu-manage-book-name">
+			<i class="fas fa-book-open"></i> <b><a href="/admin/books">Quản
+					lý user</a></b>
+		</p>
+	</div>
+	<div class="menu-manage-book manage-review">
+		<p class="menu-manage-book-name">
+			<i class="fas fa-book-open"></i> <b> <a href="/admin/comments">Quản
+					lý bình luận</a></b>
 		</p>
 	</div>
 </div>
