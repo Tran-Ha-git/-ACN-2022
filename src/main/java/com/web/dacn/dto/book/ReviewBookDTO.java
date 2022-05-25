@@ -16,7 +16,7 @@ public class ReviewBookDTO implements Serializable {
 	private Long id;
 	private String content;
 	private Integer star;
-	private Date mod_time;
+	private Date modTime;
 	private UserDto user; 
 	private BookDTO Book; 
 }

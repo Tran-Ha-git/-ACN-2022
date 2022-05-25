@@ -38,16 +38,14 @@ public class ListBookServiceImpl implements ListBookService {
 		PageRequest pageRequest = PageRequest.of(page, 16);
 		
 		// check sort
-		if(sortStr.split("_").length == 2) {
+		if(sortStr.split("__").length == 2) {
 			String[] arrSort = sortStr.split("__");
-			
-			if(arrSort[1] == "ASC") {
-				Order order = new Order(Direction.ASC, arrSort[0]);
-				pageRequest.withSort(Sort.by(order));
+						
+			if(arrSort[1].equals("ASC")) {
+				pageRequest = PageRequest.of(page, 16, Sort.by(arrSort[0]).ascending());
 			} else {
-				Order order = new Order(Direction.DESC, arrSort[0]);
-				pageRequest.withSort(Sort.by(order));
-			}			
+				pageRequest = PageRequest.of(page, 16, Sort.by(arrSort[0]).descending());
+			}
 		}
 				
 		Page<Book> booksPage;

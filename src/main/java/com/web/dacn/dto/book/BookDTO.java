@@ -26,7 +26,7 @@ public class BookDTO {
 	private String metaTitle;
 	private String metaDescription;
 	private Integer status;
-	private Date mod_time;
+	private Date modTime;
 	private UserDto user;
 	private List<AuthorDTO> authors = new ArrayList<AuthorDTO>();
 	private List<BookCategoryDTO> categories = new ArrayList<>();

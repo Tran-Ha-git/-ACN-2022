@@ -15,7 +15,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.web.dacn.entity.book.Book_BookCategory;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -97,7 +97,7 @@
 	                       ${category.name},
 	                      </c:forEach></td>
 
-	
+
 					<c:choose>
 						<c:when test="${book.status==1}">
 							<td class="book-data">Hoàn thành</td>
@@ -110,25 +110,19 @@
 					</c:choose>
 
 					<td class="book-data">${book.mod_time }</td>
-					<td class="book-data tr-width-12">
-				
-			              <c:forEach items="${readFormats}" var="readFormat">
-				               <c:if test="${readFormat.key==book.id }">
-				                 <c:forEach items="${readFormat.value}" var="format">
-			                          ${format} <br/>
-			                      </c:forEach>
-			                   </c:if>
-						  </c:forEach>
-			              
-	              	 </td>
-	              
+					<td class="book-data tr-width-12"><c:forEach
+							items="${readFormats}" var="readFormat">
+							<c:if test="${readFormat.key==book.id }">
+								<c:forEach items="${readFormat.value}" var="format">
+			                          ${format} <br />
+								</c:forEach>
+							</c:if>
+						</c:forEach></td>
+
 					<td class="book-data ">
 						<div class="custom-btn">
-                         
-							<a href="#" class="edit-custom-btn">Sửa</a> 
-							<a href="#"
+							<a href="#" class="edit-custom-btn">Sửa</a> <a href="#"
 								class="delete-custom-btn">Xóa</a>
-
 						</div>
 					</td>
 				</tr>
@@ -137,7 +131,7 @@
 			<!-- End table data -->
 		</table>
 		<!-- Start paging -->
-	
+
 		<div class="paging">
 			<ul class="list-paging-numbers">
 
@@ -162,7 +156,7 @@
 				</c:if>
 			</ul>
 		</div>
-	
+
 
 		<!-- End paging -->
 	</div>

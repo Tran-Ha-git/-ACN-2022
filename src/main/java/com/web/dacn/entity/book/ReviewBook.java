@@ -44,7 +44,7 @@ public class ReviewBook implements Serializable {
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="mod_time")
-	private Date mod_time;
+	private Date modTime;
 	
 	@ManyToOne(cascade = CascadeType.ALL, targetEntity = User.class)
 	@JoinColumn(name="user_id")

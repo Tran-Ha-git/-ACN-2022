@@ -36,13 +36,13 @@ public class HomeServiceImpl implements HomeService{
 
 	@Override
 	public List<BookDTO> getNewBooks() {
-		Page<Book> booksPage = bookRepository.findBookContainingSearchOrderBySort("", PageRequest.of(0, 16, Sort.by(new Order(Direction.DESC, "mod_time"))));
+		Page<Book> booksPage = bookRepository.findBookContainingSearchOrderBySort("", PageRequest.of(0, 16, Sort.by("mod_time").descending()));
 		return convertBookEntityToBookDTO(booksPage).getContent();
 	}
 
 	@Override
 	public List<BookDTO> getMangaBookByTopView() {
-		return bookRepository.findBookByCategoryIdAndContainingSearchOrderBySort("", PageRequest.of(0, 16, Sort.by(new Order(Direction.DESC, "view"))), 1L).stream().map(book -> {
+		return bookRepository.findBookByCategoryIdAndContainingSearchOrderBySort("", PageRequest.of(0, 16, Sort.by("view").descending()), 1L).stream().map(book -> {
 			BookDTO dto = new BookDTO();
 			BeanUtils.copyProperties(book, dto);
 			book.getAuthors().stream().forEach(author -> {
@@ -62,7 +62,7 @@ public class HomeServiceImpl implements HomeService{
 
 	@Override
 	public List<BookDTO> getAudioBookByTopView() {
-		return bookRepository.findAudioBookContainingSearchOrderBySort("", PageRequest.of(0, 10, Sort.by(new Order(Direction.DESC, "view")))).stream().map(book -> {
+		return bookRepository.findAudioBookContainingSearchOrderBySort("", PageRequest.of(0, 10, Sort.by("view").descending())).stream().map(book -> {
 			BookDTO dto = new BookDTO();
 			BeanUtils.copyProperties(book, dto);
 			book.getAuthors().stream().forEach(author -> {
@@ -82,7 +82,7 @@ public class HomeServiceImpl implements HomeService{
 
 	@Override
 	public List<BookDTO> getEbookBookByTopView() {
-		return bookRepository.findPdfBookContainingSearchOrderBySort("", PageRequest.of(0, 10, Sort.by(new Order(Direction.DESC, "view")))).stream().map(book -> {
+		return bookRepository.findPdfBookContainingSearchOrderBySort("", PageRequest.of(0, 10, Sort.by("view").descending())).stream().map(book -> {
 			BookDTO dto = new BookDTO();
 			BeanUtils.copyProperties(book, dto);
 			book.getAuthors().stream().forEach(author -> {
@@ -102,7 +102,7 @@ public class HomeServiceImpl implements HomeService{
 
 	@Override
 	public List<QuoteDto> getQuoteByTopView() {
-		Page<Quote> quotesPage = quoteRepository.findAll(PageRequest.of(0, 10, Sort.by(new Order(Direction.DESC, "view"))));		
+		Page<Quote> quotesPage = quoteRepository.findAll(PageRequest.of(0, 10, Sort.by("view").descending()));		
 		return convertQuoteEntityToQuoteDTO(quotesPage).getContent();
 	}
 	
@@ -143,7 +143,7 @@ public class HomeServiceImpl implements HomeService{
 
 	@Override
 	public List<BookDTO> getSuggestBook() {
-		Page<Book> booksPage = bookRepository.findAll(PageRequest.of(0, 16, Sort.by(new Order(Direction.DESC, "view"))));
+		Page<Book> booksPage = bookRepository.findAll(PageRequest.of(0, 16, Sort.by("view").descending()));
 		return convertBookEntityToBookDTO(booksPage).getContent();
 	}
 }

@@ -47,7 +47,7 @@ public class CommentBook implements Serializable{
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="mod_time")
-	private Date mod_time;
+	private Date modTime;
 	
 	@ManyToOne(cascade = CascadeType.ALL, targetEntity = CommentBook.class)
 	@JoinColumn(name="parent_id")

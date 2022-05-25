@@ -79,9 +79,9 @@ public class Book {
 	private Integer status;
 
 	@Column(name = "mod_time", nullable = false)
-	private Date mod_time;
+	private Date modTime;
 
-	@ManyToOne(cascade = CascadeType.ALL, targetEntity = User.class)
+	@ManyToOne(targetEntity = User.class)
 	@JoinColumn(name="mod_user_id")
 	@JsonIgnore
 	private User user;

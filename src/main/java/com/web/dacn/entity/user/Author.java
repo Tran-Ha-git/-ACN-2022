@@ -61,17 +61,17 @@ public class Author implements Serializable{
 	private Integer status;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date mod_time;
+	@Column(name = "mod_time")
+	private Date modTime;
 	
-	@ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
 	@JoinColumn(name="mod_user_id")
 	private User user;
 	
-	@ManyToMany(mappedBy = "authors")
+	@ManyToMany(mappedBy = "authors", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Book> books = new ArrayList<>();
-	
-
+		
 	@Override
     public int hashCode() {
 		 return Objects.hash(getId());

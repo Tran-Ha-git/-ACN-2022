@@ -130,15 +130,25 @@
 		<put-attribute name="title" value="Admin List Book Page" />
 		<put-attribute name="body"
 			value="/WEB-INF/bodyfragments/admin/list-book.jsp" />
+		<put-attribute name="style" value="css/admin/list-book.css" />
 	</definition>
 
-	<!-- Admin New Book Page -->
+	<!-- Admin New Book Page  -->
 	
 	<definition name="adminNewBook" extends="admin.base.definition">
 		<put-attribute name="title" value="Admin New Book Page" />
 		<put-attribute name="body"
 			value="/WEB-INF/bodyfragments/admin/new-book.jsp" />
 		<put-attribute name="style" value="css/admin/new-book.css" />
+	</definition>
+	
+		<!-- Admin List Author Page -->
+	
+	<definition name="adminListAuthor" extends="admin.base.definition">
+		<put-attribute name="title" value="Admin List Author Page" />
+		<put-attribute name="body"
+			value="/WEB-INF/bodyfragments/admin/list-author.jsp" />
+		<put-attribute name="style" value="css/admin/list-author.css" />
 	</definition>
 
 </tiles-definitions> 
