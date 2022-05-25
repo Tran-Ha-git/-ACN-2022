@@ -11,6 +11,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -34,26 +36,25 @@ public class Role implements Serializable {
 	@Column(nullable = false)
 	private String name;
 
-	@ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
-	@JsonIgnore
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private List<User> users = new ArrayList<>();
-	
 
 	@Override
-    public int hashCode() {
-		 return Objects.hash(getId());
-    }
- 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (!(obj instanceof Role)) {
-            return false;
-        }
-        Role that = (Role) obj;
-        return  Objects.equals(getId(),that.getId());
-    }	
+	public int hashCode() {
+		return Objects.hash(getId());
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof Role)) {
+			return false;
+		}
+		Role that = (Role) obj;
+		return Objects.equals(getId(), that.getId());
+	}
 
 }
