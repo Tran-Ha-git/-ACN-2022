@@ -122,7 +122,7 @@ public class HomeServiceImpl implements HomeService{
 		    		BookCategoryDTO bookCategoryDTO = new BookCategoryDTO();
 		    		BeanUtils.copyProperties(e, bookCategoryDTO);
 		    		return bookCategoryDTO;
-		    	}).toList();
+		    	}).collect(Collectors.toList());
 		    	bookDTO.setCategories(listBookCategoryDTOs);
 		    	
 		    	return bookDTO;

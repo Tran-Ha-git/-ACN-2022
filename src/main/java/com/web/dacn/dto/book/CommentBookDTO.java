@@ -22,4 +22,6 @@ public class CommentBookDTO implements Serializable{
 	private UserDto user; 
 	private BookDTO book; 
 	private List<CommentBookDTO> commentBooks = new ArrayList<CommentBookDTO>();
+	private Integer status = 1;
+	private int star = 0;
 }

@@ -55,6 +55,7 @@
 					<c:if test="${existsPdf}">
 						<a href="/pdf-read/${bookDTO.slug}" class="btn btn-danger read-pdf">Đọc PDF</a> 
 					</c:if>
+					<a href="/books/${bookDTO.slug}" class="btn btn-outline-primary read-online">Xem sách</a>
 				</div>
 			</div>
 

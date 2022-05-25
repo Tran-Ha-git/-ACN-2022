@@ -11,4 +11,5 @@ import com.web.dacn.entity.user.Author;
 public interface AuthorRepository extends JpaRepository<Author, Long> {
 	Author findById(long id);
 	Page<Author> findByFullnameContaining(String fullname, Pageable page);
+	Author findByFullname(String name);
 }

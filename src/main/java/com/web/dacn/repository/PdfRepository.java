@@ -12,4 +12,5 @@ public interface PdfRepository extends JpaRepository<Pdf, Long> {
 	 PdfRepository save(PdfRepository pdfEntity);
 	 List<Pdf> findByBookId(long id);
 	 boolean existsByBookId(long bookId);
+	
  }

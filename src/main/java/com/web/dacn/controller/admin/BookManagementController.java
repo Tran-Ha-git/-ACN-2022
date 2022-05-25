@@ -11,10 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.web.dacn.dto.book.BookDTO;
 import com.web.dacn.service.admin.IBookService;
@@ -109,6 +109,41 @@ public class BookManagementController {
 
 		return "adminListBook";
 	}
+	@RequestMapping(value = "/books/addBook")
+	public String add(Model model, HttpSession session, HttpServletRequest request) {
 
+		return "adminNewBook";
 
+	}
+	@RequestMapping(value = "/edit")
+	public String Edit(Model model, HttpServletRequest request) {
+		String id = request.getParameter("id");
+		long bId = Long.parseLong(id);
+		String vipStatus="";
+		
+		BookDTO bookDto = bookService.findById(bId);
+		if(bookDto.getVip()) {
+			vipStatus="checked";
+		}
+		model.addAttribute("book", bookDto);
+		model.addAttribute("check", vipStatus);
+	
+		return "adminEditBook";
+
+	}
+	@RequestMapping("/delete-book")
+	public String deleteBook(@RequestParam("id") long id,Model model, HttpServletRequest request) {
+		bookService.deleteBook(id);
+		return "redirect:/admin/books";
+	}
+	@RequestMapping("/DeleteAll")
+	public String deleteAllBook(Model model, HttpServletRequest request) {
+		 String[] deleteItems = request.getParameterValues("delete-item");
+		 for(String item: deleteItems) {
+				long id = Long.parseLong(item);
+				bookService.deleteBook(id);
+		 }
+			return "redirect:/admin/books";
+	}
+	
 }

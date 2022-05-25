@@ -199,14 +199,15 @@
   height: 36px;
 }
 
-.custom-btn .edit-custom-btn, 
-.custom-btn .delete-custom-btn{
+.custom-btn .edit-custom-btn, .edit-audio-btn,.edit-online-btn,
+.custom-btn .delete-custom-btn,.add-audio-btn, .add-online-btn{
     text-decoration: none;
     padding: 5px 15px;
     background-color:  var(--btn-blue-color);
     color: #fff;
     border-radius: 20px;
 }
+.
 .add-image .add-image-btn{
     text-decoration: none;
     padding: 0px 5px;
@@ -251,6 +252,7 @@
 .fas, .far{
     border: none;
 }
+<<<<<<< HEAD:src/main/resources/static/css/admin/list-book.css
 
 /* PC */
 @media (min-width: 64em) {
@@ -323,3 +325,167 @@
   
   
 }
+=======
+.width-input{
+    width: 100%;
+    height: 32px ;
+    margin-top: 8px;
+}
+.height-input{
+    height: 60px;
+}
+.form-lable-tyle{
+    display: flex;
+  }
+  .form-lable-3{
+      margin-right: 32px;
+      
+  }
+  .form-1{
+    border:1px solid #363636;
+    width:200px;
+            height:100px;
+    overflow-x:hidden;
+    padding-left: 12px;
+    margin-top: 8px;
+
+    
+}
+.form_input{
+    margin-top: 12px;
+}
+.listCheck_three{
+    display: flex;
+}
+.list-checkbox{
+
+margin-right: 36px;
+
+}
+.pdf-links{
+	flex-grow:1;
+}
+.spacing{
+    margin-top: 36px;
+
+  }
+  .btn{
+    position: absolute;
+    right: 0;
+    display: flex;
+    
+  }
+  .btn_two{
+    margin-top: 8px;
+    position: absolute;
+    left: 0;
+    display: flex;
+  }
+  .black{
+   
+   margin-left: 8px;
+    background-color: #1a6cf0;
+    border-color: transparent;
+    color: white;
+    padding:3px 6px 3px 6px;
+    
+    
+    
+   
+    
+   
+  }
+  .grey{
+    background-color: #535354;
+    color: #fff;
+    padding:3px 6px 3px 6px;
+    text-decoration:none ;
+
+  }
+  .btn_two-input{
+      
+      margin-left: 100px;
+  }
+.list-space {
+ 
+    border-collapse: collapse;
+  
+    
+  }
+  
+  .list-audio-td, .list-audio-th{
+    border: 1px solid rgb(223, 221, 221);
+    text-align: left;
+    padding: 8px;
+ 
+
+   
+  }
+
+  .width-input{
+    width: 100%;
+    height: 32px ;
+    margin-top: 8px;
+}
+ 
+.form__list-chapter{
+   
+    margin-top: 16px;
+    
+}
+.width-input-prioty{
+    width: 20%;
+}
+.border-form{
+    border:1px solid rgb(223, 221, 221) ;
+    padding: 24px 16px 48px 16px;
+}
+.spacing{
+    margin-top: 8px;
+
+  }
+  .btn{
+    position: absolute;
+    right: 0;
+    margin-right: 40px;
+    display: flex;
+    
+  }
+  .black{
+   
+    margin-left: 8px;
+     background-color: #1a6cf0;
+     border-color: transparent;
+     color: white;
+     padding:3px 6px 3px 6px;
+     
+     
+     
+   
+    
+   }
+   .grey{
+     background-color: #535354;
+     color: #fff;
+     padding:3px 6px 3px 6px;
+     
+     text-decoration:none ;
+ 
+   }
+  #update-audio{
+  display:none;
+  }
+  #edit-audio,#edit-online{
+  display:none
+  }
+  .audio-name, .audio-url{
+  border:none;
+  }
+ .edit-header{
+ margin-bottom:12px; 
+  display: flex;
+   justify-content: space-between;
+  }
+ 
+ 
+>>>>>>> d8ef8ff88b3a0ecc70dbed3832f33718db08cede:src/main/resources/static/css/admin/list-book-styles.css

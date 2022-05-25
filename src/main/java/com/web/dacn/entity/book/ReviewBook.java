@@ -54,7 +54,7 @@ public class ReviewBook implements Serializable {
 	@ManyToOne(cascade = CascadeType.ALL, targetEntity = Book.class)
 	@JoinColumn(name="book_id")
 	@JsonIgnore
-	private Book Book;
+	private Book book;
 	
 	@Override
     public int hashCode() {
