@@ -64,7 +64,7 @@
 								   value="${author.id}"
 								    data-authorid="${author.id }"
 								    data-authorname="${author.fullname }
-								    "/>
+								    " />
 								<input type="text" 
 							    class="edit-authorname-input"
 								value="${author.fullname}"
@@ -86,13 +86,13 @@
 							<input class="categoryName"
 							       type="radio" 
 							       name ="radio"
-							       value="${category.id }"
+							        value="${category.id }"
 								    data-categoryid="${category.id }"
-								    data-categoryname="${category.name }"/>
+								    data-categoryname="${category.name }" />
 								<input type="text" 
-							    class="edit-categoryname-input"
-								value="${category.name}"
-								id="categoryName${category.id }"
+							     class="edit-categoryname-input"
+								 value="${category.name}"
+								id="categoryName${category.id}"
 								 style="width:140px" disabled />
 							</div>
 						</c:forEach>
