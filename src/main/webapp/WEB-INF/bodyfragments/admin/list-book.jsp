@@ -106,50 +106,10 @@
 	                       ${category.name},
 	                      </c:forEach></td>
 
-<<<<<<< HEAD
-
-					<c:choose>
-						<c:when test="${book.status==1}">
-							<td class="book-data">Hoàn thành</td>
-
-						</c:when>
-						<c:otherwise>
-
-							<td class="book-data">Đang update</td>
-						</c:otherwise>
-					</c:choose>
-
-					<td class="book-data">${book.mod_time }</td>
-					<td class="book-data tr-width-12"><c:forEach
-							items="${readFormats}" var="readFormat">
-							<c:if test="${readFormat.key==book.id }">
-								<c:forEach items="${readFormat.value}" var="format">
-			                          ${format} <br />
-								</c:forEach>
-							</c:if>
-						</c:forEach></td>
-
-					<td class="book-data ">
-						<div class="custom-btn">
-							<a href="#" class="edit-custom-btn">Sửa</a> <a href="#"
-								class="delete-custom-btn">Xóa</a>
-						</div>
-					</td>
-				</tr>
-			</c:forEach>
-
-			<!-- End table data -->
-		</table>
-		<!-- Start paging -->
-
-		<div class="paging">
-			<ul class="list-paging-numbers">
-=======
 
 						<c:choose>
 							<c:when test="${book.status==1}">
 								<td class="book-data">Hoàn thành</td>
->>>>>>> d8ef8ff88b3a0ecc70dbed3832f33718db08cede
 
 							</c:when>
 							<c:otherwise>
@@ -219,14 +179,6 @@
 
 			<!-- End paging -->
 		</div>
-<<<<<<< HEAD
-
-
-		<!-- End paging -->
-	</div>
-	<!--End list books -->
-</div>
-=======
 		<!--End list books -->
 	</form>
 </div>
@@ -248,4 +200,3 @@ checkboxBtn.onclick= function(){
 }
 
 </script>
->>>>>>> d8ef8ff88b3a0ecc70dbed3832f33718db08cede

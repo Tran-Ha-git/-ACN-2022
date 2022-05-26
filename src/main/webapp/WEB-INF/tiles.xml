@@ -137,16 +137,16 @@
 			value="/WEB-INF/bodyfragments/admin/new-book.jsp" />
 		<put-attribute name="style" value="css/admin/new-book.css" />
 	</definition>
-<<<<<<< HEAD
 	
-		<!-- Admin List Author Page -->
+	<!-- Admin List Author Page -->
 	
 	<definition name="adminListAuthor" extends="admin.base.definition">
 		<put-attribute name="title" value="Admin List Author Page" />
 		<put-attribute name="body"
 			value="/WEB-INF/bodyfragments/admin/list-author.jsp" />
 		<put-attribute name="style" value="css/admin/list-author.css" />
-=======
+	</definition>
+	
 	<!-- Admin Edit Book Page -->
 	<definition name="adminEditBook" extends="admin.base.definition">
 		<put-attribute name="title" value="Admin Edit Book Page" />
@@ -169,7 +169,6 @@
 		<put-attribute name="body"
 			value="/WEB-INF/bodyfragments/admin/list-audio.jsp" />
 		<put-attribute name="style" value="css/admin/new-book.css" />
->>>>>>> d8ef8ff88b3a0ecc70dbed3832f33718db08cede
 	</definition>
 
 </tiles-definitions> 
