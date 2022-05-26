@@ -93,17 +93,15 @@ public class EditBookController {
 		// Author
 		if (authorName != null) {
 			Author author = bookService.findAuthorByFullName(authorName);
+			
+			Author authorBeforeChange = bookService.findAuthorById(authorId);
+			newBook.getAuthors().remove(authorBeforeChange);
 			if (author != null) {
-				Author authorBeforeChange = bookService.findAuthorById(authorId);
-				newBook.getAuthors().remove(authorBeforeChange);
 				newBook.getAuthors().add(author);
-
 			}
 
 			else {
-				Author authorBeforeChange = bookService.findAuthorById(authorId);
-				newBook.getAuthors().remove(authorBeforeChange);
-
+			
 				Author newAuthor = new Author();
 
 				newAuthor.setFullname(authorName);
@@ -121,12 +119,11 @@ public class EditBookController {
 
 			List<BookCategory> categories = bookService.findCategoryByName(categoryName);
 
+			BookCategory categoryBeforeChange = bookService.findCategoryById(categoryId);
+			newBook.getCategories().remove(categoryBeforeChange);
+			
 			if (categories.size() == 0) {
-				BookCategory categoryBeforeChange = bookService.findCategoryById(categoryId);
-				newBook.getCategories().remove(categoryBeforeChange);
-
 				BookCategory newCategory = new BookCategory();
-
 				newCategory.setName(categoryName);
 				newCategory.setSlug(categoryName.trim().replaceAll(" ", "-"));
 
@@ -134,9 +131,7 @@ public class EditBookController {
 				newBook.getCategories().add(newCategory);
 
 			} else {
-				BookCategory categoryBeforeChange = bookService.findCategoryById(categoryId);
-				newBook.getCategories().remove(categoryBeforeChange);
-
+		
 				BookCategory category = categories.get(0);
 				newBook.getCategories().add(category);
 
