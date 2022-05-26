@@ -5,11 +5,7 @@ package com.web.dacn.entity.user;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-
 import java.util.List;
-import java.util.Objects;
-
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -28,7 +24,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.web.dacn.entity.book.Book;
 import com.web.dacn.entity.book.BookMark;
-import com.web.dacn.entity.book.Book_BookCategory;
+import com.web.dacn.entity.book.FavoriteBook;
 import com.web.dacn.entity.quote.Quote;
 
 import lombok.AllArgsConstructor;
@@ -40,7 +36,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "user")
-public class User implements Serializable{
+public class User implements Serializable {
 
 	/**
 	 * 
@@ -91,6 +87,7 @@ public class User implements Serializable{
 	@JoinTable(	name = "user_role", 
 				joinColumns = @JoinColumn(name = "user_id", nullable = false), 
 				inverseJoinColumns = @JoinColumn(name = "role_id", nullable = false))
+	@JsonIgnore
 	private List<Role> roles = new ArrayList<>();
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "book")

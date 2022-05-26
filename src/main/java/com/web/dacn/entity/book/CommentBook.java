@@ -64,10 +64,12 @@ public class CommentBook implements Serializable{
 	@JsonIgnore
 	private Book book;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "commentBook", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "commentBook")
 	@JsonIgnore
 	private List<CommentBook> commentBooks = new ArrayList<>();
+	
 	private Integer status = 1;
+	
 	@Override
     public int hashCode() {
 		 return Objects.hash(getId());

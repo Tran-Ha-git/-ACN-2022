@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -32,7 +33,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "author")
-public class Author implements Serializable{
+public class Author implements Serializable {
 	/**
 	 * 
 	 */
@@ -41,51 +42,52 @@ public class Author implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@Column(columnDefinition = "nvarchar(2000) NOT NULL", unique=true)
+
+	@Column(columnDefinition = "nvarchar(2000) NOT NULL", unique = true)
 	private String slug;
-	
+
 	private String fullname;
-	
+
 	private Date birthday;
-	
+
 	@Column(columnDefinition = "nvarchar(1000)")
 	private String address;
-	
+
 	@Column(columnDefinition = "nvarchar(20)")
 	private String phone;
-	
+
 	@Column(columnDefinition = "nvarchar(MAX)")
 	private String description;
-	
+
 	private Integer status;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date mod_time;
-	
-	@ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name="mod_user_id")
+	@Column(name = "mod_time")
+	private Date modTime;
+
+	@ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+	@JoinColumn(name = "mod_user_id")
 	private User user;
-	
-	@ManyToMany(mappedBy = "authors")
+
+	@ManyToMany(cascade = CascadeType.PERSIST)
+	@JoinTable(name = "book_author", joinColumns = @JoinColumn(name = "author_id"), inverseJoinColumns = @JoinColumn(name = "book_id"))
 	@JsonIgnore
 	private List<Book> books = new ArrayList<>();
-	
 
 	@Override
-    public int hashCode() {
-		 return Objects.hash(getId());
-    }
- 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (!(obj instanceof Author)) {
-            return false;
-        }
-        Author that = (Author) obj;
-        return  Objects.equals(getId(),that.getId());
-    }	
+	public int hashCode() {
+		return Objects.hash(getId());
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof Author)) {
+			return false;
+		}
+		Author that = (Author) obj;
+		return Objects.equals(getId(), that.getId());
+	}
 }

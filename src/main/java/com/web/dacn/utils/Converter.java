@@ -78,7 +78,7 @@ public class Converter {
 		book.setName(entity.getName());
 		book.setStatus(entity.getStatus());
 		book.setThumbnail(entity.getThumbnail());
-		book.setMod_time(entity.getMod_time());
+		book.setModTime(entity.getModTime());
 		book.setSlug(entity.getSlug());
 		book.setMetaDescription(entity.getMetaDescription());
 		book.setDescription(entity.getDescription());

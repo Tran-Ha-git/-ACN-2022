@@ -11,11 +11,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.web.dacn.entity.book.Book_BookCategory;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -35,26 +36,26 @@ public class Role implements Serializable {
 	@Column(nullable = false)
 	private String name;
 
-	@ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	@JsonIgnore
 	private List<User> users = new ArrayList<>();
-	
 
 	@Override
-    public int hashCode() {
-		 return Objects.hash(getId());
-    }
- 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (!(obj instanceof Role)) {
-            return false;
-        }
-        Role that = (Role) obj;
-        return  Objects.equals(getId(),that.getId());
-    }	
+	public int hashCode() {
+		return Objects.hash(getId());
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof Role)) {
+			return false;
+		}
+		Role that = (Role) obj;
+		return Objects.equals(getId(), that.getId());
+	}
 
 }

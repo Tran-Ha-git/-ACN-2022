@@ -20,6 +20,11 @@
 			value="/WEB-INF/basefragments/client/footer.jsp" />
 	</definition>
 
+	<!-- 404 Page -->
+	<definition name="404" extends="client.base.definition" template="/WEB-INF/layouts/404.jsp">
+	</definition>
+
+
 	<!-- Home Page -->
 	<definition name="homePage" extends="client.base.definition">
 		<put-attribute name="title" value="Home Page" />
@@ -126,9 +131,10 @@
 		<put-attribute name="title" value="Admin List Book Page" />
 		<put-attribute name="body"
 			value="/WEB-INF/bodyfragments/admin/list-book.jsp" />
+		<put-attribute name="style" value="css/admin/list-book.css" />
 	</definition>
 
-	<!-- Admin New Book Page -->
+	<!-- Admin New Book Page  -->
 	
 	<definition name="adminNewBook" extends="admin.base.definition">
 		<put-attribute name="title" value="Admin New Book Page" />
@@ -136,13 +142,26 @@
 			value="/WEB-INF/bodyfragments/admin/new-book.jsp" />
 		<put-attribute name="style" value="css/admin/new-book.css" />
 	</definition>
+	
+		<!-- Admin List Author Page -->
+	
+	<definition name="adminListAuthor" extends="admin.base.definition">
+		<put-attribute name="title" value="Admin List Author Page" />
+		<put-attribute name="body"
+			value="/WEB-INF/bodyfragments/admin/list-author.jsp" />
+		<put-attribute name="style" value="css/admin/list-author.css" />
+	</definition>
+	
+	
 	<!-- Admin Edit Book Page -->
+
 	<definition name="adminEditBook" extends="admin.base.definition">
 		<put-attribute name="title" value="Admin Edit Book Page" />
 		<put-attribute name="body"
 			value="/WEB-INF/bodyfragments/admin/edit-book.jsp" />
 		<put-attribute name="style" value="css/admin/new-book.css" />
 	</definition>
+
 	<!-- Admin ListOnline Page -->
 	
 	<definition name="adminListChapterOnline" extends="admin.base.definition">
@@ -151,6 +170,7 @@
 			value="/WEB-INF/bodyfragments/admin/list-chapter.jsp" />
 		<put-attribute name="style" value="css/admin/new-book.css" />
 	</definition>
+
 	<!-- Admin ListAudio Page -->
 	
 	<definition name="adminListChapterAudio" extends="admin.base.definition">

@@ -1,6 +1,5 @@
 package com.web.dacn.entity.user;
 
-import java.util.Date;
 import java.util.Objects;
 
 import javax.persistence.Entity;
@@ -10,8 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import com.web.dacn.entity.book.Book_BookCategory;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -104,12 +104,22 @@
 }
 
 .side-menu .menu-manage-book{
-    background-color: #CFCFCF;
     padding:16px 10px;   
 }
+
+.side-menu .menu-manage-book.active {
+    background-color: #CFCFCF;
+}
+
+.side-menu .menu-manage-book a {
+	text-decoration: none;
+	color: black;
+}
+
 .side-menu .menu-manage-book-name{
     font-size:20px;
 }
+
 .search{
     margin: 10px 5px;
 }
@@ -197,7 +207,6 @@
     color: #fff;
     border-radius: 20px;
 }
-.
 .add-image .add-image-btn{
     text-decoration: none;
     padding: 0px 5px;
@@ -242,6 +251,79 @@
 .fas, .far{
     border: none;
 }
+
+/* PC */
+@media (min-width: 64em) {
+    .container{
+        grid-template-columns: 25% 70%;
+    }  
+    .header-manage-list{
+        width: 100%;
+     
+    }
+}
+/* Tablet + Mobile */
+@media (max-width: 63.9375em) {
+    
+}
+/* Tablet */
+@media(min-width: 46.25em) and (max-width:63.9375em){
+    .container{
+        grid-template-columns: 25% 70%;
+    }
+    .search-by-bookname .search-bookname-label{
+        margin-right: 12px;
+    }
+    
+    .search .search-by-authorname{
+        display:inline-block;
+        margin-left:96px;
+    }
+    .custom-btn .edit-custom-btn, 
+    .custom-btn .delete-custom-btn{   
+        padding: 0px 15px;
+   
+    }
+    .list-book-container{
+        position: relative;
+     
+    }
+    .paging{
+          position: absolute;
+         
+    }
+    .header-manage-list{
+        width: 100%;
+     
+    }
+    .list-book-table{
+        width: 100%;
+    }
+    
+}
+
+/* Mobile */
+@media(max-width: 46.25em){
+    
+    .list-book-container{
+        position: relative;
+     width: 100%;
+    }
+    .list-book-table{
+        width: 100%;
+    }
+    .paging{
+        position: absolute;
+        
+    }
+    .header-manage-list{
+        width: 1320px;
+    
+    }
+  
+  
+}
+
 .width-input{
     width: 100%;
     height: 32px ;
@@ -305,9 +387,6 @@ margin-right: 36px;
     color: white;
     padding:3px 6px 3px 6px;
     
-    
-    
-   
     
    
   }
@@ -402,6 +481,7 @@ margin-right: 36px;
   display: flex;
    justify-content: space-between;
   }
+<<<<<<< HEAD:src/main/resources/static/css/admin/list-book-styles.css
 /*-------------------------------------------------------------------------*/
 .side-menu .menu-manage-user{
     background-color: #CFCFCF;

@@ -84,7 +84,7 @@ public class EditBookController {
 		newBook.setSlug(book.getSlug());
 		newBook.setMetaDescription(book.getMetaDescription());
 		newBook.setMetaTitle(book.getMetaTitle());
-		newBook.setMod_time(date);
+		newBook.setModTime(date);
 		newBook.setUser(user);
 
 		if (!file.isEmpty()) {
@@ -109,7 +109,7 @@ public class EditBookController {
 				newAuthor.setFullname(authorName);
 				newAuthor.setDescription("default");
 				newAuthor.setSlug(authorName.trim().replaceAll(" ", "-"));
-				newAuthor.setMod_time(date);
+				newAuthor.setModTime(date);
 				newAuthor.setUser(user);
 
 				bookService.saveAuthor(newAuthor);

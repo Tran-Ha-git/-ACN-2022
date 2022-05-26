@@ -26,8 +26,8 @@ CREATE TABLE `user_role` (
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	`user_id` INT NOT NULL,
 	`role_id` INT NOT NULL,
-	FOREIGN KEY (`user_id`) REFERENCES `user`(id),
-	FOREIGN KEY (`role_id`) REFERENCES `role`(id)
+	FOREIGN KEY (`user_id`) REFERENCES `user`(id) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (`role_id`) REFERENCES `role`(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE bookcategory (
@@ -39,7 +39,7 @@ CREATE TABLE bookcategory (
 	meta_title VARCHAR(50),
 	meta_description TEXT,
 	`status` INT DEFAULT 1,
-	FOREIGN KEY (`parent_id`) REFERENCES `bookcategory`(id)	
+	FOREIGN KEY (`parent_id`) REFERENCES `bookcategory`(id)	ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE book (
@@ -55,16 +55,16 @@ CREATE TABLE book (
 	meta_description TEXT,
 	`status` INT DEFAULT 1,
 	mod_time DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
-	mod_user_id INT NOT NULL,
-	FOREIGN KEY (`mod_user_id`) REFERENCES `user`(`id`)
+	mod_user_id INT,
+	FOREIGN KEY (`mod_user_id`) REFERENCES `user`(`id`) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE book_bookcategory (
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	`book_id` INT NOT NULL,
 	category_id INT NOT NULL,
-	FOREIGN KEY (`book_id`) REFERENCES `book`(`id`),
-	FOREIGN KEY (`category_id`) REFERENCES `bookcategory`(`id`)
+	FOREIGN KEY (`book_id`) REFERENCES `book`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (`category_id`) REFERENCES `bookcategory`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE quote (
@@ -73,30 +73,29 @@ CREATE TABLE quote (
 	thumbnail TEXT,
 	`view` INT DEFAULT 0,
 	author_id INT,
---	slug VARCHAR(2000) NOT NULL,
 	slug VARCHAR(2000),
 	meta_title VARCHAR(50),
 	meta_description TEXT,
 	`status` INT DEFAULT 1,
 	mod_time DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
-	mod_user_id INT NOT NULL,
-	FOREIGN KEY (`mod_user_id`) REFERENCES `user`(`id`)
+	mod_user_id INT,
+	FOREIGN KEY (`mod_user_id`) REFERENCES `user`(`id`) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE favoritebook (
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	`user_id` INT NOT NULL,
 	book_id INT NOT NULL,
-	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`),
-	FOREIGN KEY (`book_id`) REFERENCES `book`(`id`)
+	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (`book_id`) REFERENCES `book`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE favoritequote (
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	`user_id` INT NOT NULL,
 	quote_id INT NOT NULL,
-	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`),
-	FOREIGN KEY (`quote_id`) REFERENCES `quote`(`id`)
+	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (`quote_id`) REFERENCES `quote`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE audio (
@@ -104,8 +103,8 @@ CREATE TABLE audio (
 	`name` VARCHAR(100) NOT NULL,
 	`url` TEXT NOT NULL,
 	`priority` INT NOT NULL,
-	book_id INT NOT NULL,
-	FOREIGN KEY (`book_id`) REFERENCES `book`(`id`)
+	book_id INT,
+	FOREIGN KEY (`book_id`) REFERENCES `book`(`id`) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE pdf (
@@ -113,8 +112,8 @@ CREATE TABLE pdf (
 	`name` VARCHAR(100) NOT NULL,
 	`url` TEXT NOT NULL,
 	`priority` INT NOT NULL,
-	book_id INT NOT NULL,
-	FOREIGN KEY (`book_id`) REFERENCES `book`(`id`)
+	book_id INT,
+	FOREIGN KEY (`book_id`) REFERENCES `book`(`id`) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE `online` (
@@ -122,8 +121,8 @@ CREATE TABLE `online` (
 	`name` VARCHAR(100) NOT NULL,
 	`content` TEXT NOT NULL,
 	`priority` INT NOT NULL,
-	book_id INT NOT NULL,
-	FOREIGN KEY (`book_id`) REFERENCES `book`(`id`)
+	book_id INT,
+	FOREIGN KEY (`book_id`) REFERENCES `book`(`id`) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE author (
@@ -138,16 +137,16 @@ CREATE TABLE author (
 	meta_description TEXT,
 	`status` INT DEFAULT 1,
 	mod_time DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
-	mod_user_id INT NOT NULL,
-	FOREIGN KEY (`mod_user_id`) REFERENCES `user`(`id`)
+	mod_user_id INT,
+	FOREIGN KEY (`mod_user_id`) REFERENCES `user`(`id`) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE book_author (
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	book_id INT NOT NULL,
 	author_id INT NOT NULL,
-	FOREIGN KEY (`book_id`) REFERENCES book(`id`),
-	FOREIGN KEY (`author_id`) REFERENCES `author`(`id`)
+	FOREIGN KEY (`book_id`) REFERENCES book(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (`author_id`) REFERENCES `author`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE quotecategory (
@@ -159,7 +158,7 @@ CREATE TABLE quotecategory (
 	meta_title VARCHAR(50),
 	meta_description TEXT,
 	`status` INT DEFAULT 1,
-	FOREIGN KEY (`parent_id`) REFERENCES `quotecategory`(`id`)
+	FOREIGN KEY (`parent_id`) REFERENCES `quotecategory`(`id`) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE setting (
@@ -175,19 +174,19 @@ CREATE TABLE bookmark (
 	audio_id INT,
 	pdf_id INT,
 	online_id INT,
-	FOREIGN KEY (`audio_id`) REFERENCES `audio`(`id`),
-	FOREIGN KEY (`online_id`) REFERENCES `online`(`id`),
-	FOREIGN KEY (`pdf_id`) REFERENCES `pdf`(`id`),
-	FOREIGN KEY (`book_id`) REFERENCES `book`(`id`),
-	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`)
+	FOREIGN KEY (`audio_id`) REFERENCES `audio`(`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+	FOREIGN KEY (`online_id`) REFERENCES `online`(`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+	FOREIGN KEY (`pdf_id`) REFERENCES `pdf`(`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+	FOREIGN KEY (`book_id`) REFERENCES `book`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE quote_quotecategory (
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	quote_id INT NOT NULL,
 	category_id INT NOT NULL,
-	FOREIGN KEY (`quote_id`) REFERENCES `quote`(`id`),
-	FOREIGN KEY (`category_id`) REFERENCES `quotecategory`(`id`)
+	FOREIGN KEY (`quote_id`) REFERENCES `quote`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (`category_id`) REFERENCES `quotecategory`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE reviewbook (
@@ -197,8 +196,8 @@ CREATE TABLE reviewbook (
 	book_id INT NOT NULL,
 	`user_id` INT NOT NULL,
 	mod_time DATETIME DEFAULT CURRENT_TIMESTAMP,
-	FOREIGN KEY (`book_id`) REFERENCES book(`id`),
-	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`)
+	FOREIGN KEY (`book_id`) REFERENCES book(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE reviewquote (
@@ -208,8 +207,8 @@ CREATE TABLE reviewquote (
 	quote_id INT NOT NULL,
 	`user_id` INT NOT NULL,
 	mod_time DATETIME DEFAULT CURRENT_TIMESTAMP,
-	FOREIGN KEY (`quote_id`) REFERENCES `quote`(`id`),
-	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`)
+	FOREIGN KEY (`quote_id`) REFERENCES `quote`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 
@@ -221,9 +220,9 @@ CREATE TABLE commentbook (
 	`user_id` INT NOT NULL,
 	mod_time DATETIME DEFAULT CURRENT_TIMESTAMP,
 	`status` INT DEFAULT 1,
-	FOREIGN KEY (`book_id`) REFERENCES `book`(`id`),
-	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`),
-	FOREIGN KEY (`parent_id`) REFERENCES `commentbook`(`id`)
+	FOREIGN KEY (`book_id`) REFERENCES `book`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (`parent_id`) REFERENCES `commentbook`(`id`) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 
@@ -234,9 +233,9 @@ CREATE TABLE commentquote (
 	quote_id INT,
 	`user_id` INT NOT NULL,
 	mod_time DATETIME DEFAULT CURRENT_TIMESTAMP,
-	FOREIGN KEY (`quote_id`) REFERENCES `quote`(`id`),
-	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`),
-	FOREIGN KEY (`parent_id`) REFERENCES `commentquote`(`id`)
+	FOREIGN KEY (`quote_id`) REFERENCES `quote`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (`parent_id`) REFERENCES `commentquote`(`id`) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 

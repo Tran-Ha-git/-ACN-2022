@@ -57,7 +57,7 @@ public class AddBookController {
 			return "message";
 
 		}
-		book.setMod_time(date);
+		book.setModTime(date);
 		book.setUser(user);
 		book.setThumbnail(serverImageFilePath);
 
@@ -72,7 +72,7 @@ public class AddBookController {
 			newAuthor.setFullname(authorName);
 			newAuthor.setDescription("default");
 			newAuthor.setSlug(authorName.trim().replaceAll(" ", "-"));
-			newAuthor.setMod_time(date);
+			newAuthor.setModTime(date);
 			newAuthor.setUser(user);
 
 			bookService.saveAuthor(newAuthor);

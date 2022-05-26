@@ -34,11 +34,7 @@ public class DemoController {
 	public String getDetail(Model model) {
 		return "detailBookPage";
 	}
-	
-//	@GetMapping("/admin/books")
-//	public String getAdminListBook(Model model) {
-//		return "adminListBook";
-//	}
+
 	
 	@GetMapping("/admin/new-book")
 	public String getAdminNewBook(Model model) {
