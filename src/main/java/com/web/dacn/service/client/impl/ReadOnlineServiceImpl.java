@@ -88,8 +88,12 @@ public class ReadOnlineServiceImpl implements ReadOnlineService {
 	public OnlineDTO loadChapter(long bookId, int chapter) {
 		List<Online> onlines = onlineRepository.findByBookIdOrderByPriorityAsc(bookId, PageRequest.of(chapter - 1, 1));
 		OnlineDTO onlineDTO = new OnlineDTO();
-		BeanUtils.copyProperties(onlines.get(0), onlineDTO);
-		return onlineDTO;
+		if(onlines.size() > 0) {
+			BeanUtils.copyProperties(onlines.get(0), onlineDTO);			
+			return onlineDTO;
+		} else {
+			return null;
+		}
 	}
 
 

@@ -38,6 +38,7 @@ public class Role implements Serializable {
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+	@JsonIgnore
 	private List<User> users = new ArrayList<>();
 
 	@Override

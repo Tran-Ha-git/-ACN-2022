@@ -53,6 +53,13 @@ public class HomeController {
 	@GetMapping
 	public ModelAndView get() {
 		ModelAndView modelAndView = new ModelAndView();
+//		modelAndView.addObject("top_quotes", homeService.getQuoteByTopView());
+//		modelAndView.addObject("top_mangas", homeService.getMangaBookByTopView());
+//		modelAndView.addObject("top_newbooks", homeService.getNewBooks());
+//		modelAndView.addObject("top_newbooks", homeService.getNewBooks());
+//		modelAndView.addObject("top_ebooks", homeService.getEbookBookByTopView());
+//		modelAndView.addObject("top_audios", homeService.getAudioBookByTopView());
+//		modelAndView.addObject("suggest_books", homeService.getSuggestBook());
 		modelAndView.setViewName("homePage");
 		return modelAndView;
 	}
