@@ -19,15 +19,15 @@ public class ReadOnlineController {
 	private ReadOnlineService readOnlineService;
 	
 	@GetMapping("/{slug}")
-	private ModelAndView readOnline(@PathVariable(value = "slug") String slug, @RequestParam(name = "chapter") Integer chapter) {
+	private ModelAndView readOnline(@PathVariable(value = "slug") String slug, @RequestParam(name = "chapter", defaultValue = "1") Integer chapter) {
 		if(chapter == null) chapter = 1;
 		
 		ModelAndView modelAndView = new ModelAndView();
 		try {
 			BookDTO bookDTO = readOnlineService.loadBook(slug);
-			if(bookDTO == null)
-				modelAndView.setViewName("404");
 			OnlineDTO onlineDTO = readOnlineService.loadChapter(bookDTO.getId(), chapter);
+			if(bookDTO == null || onlineDTO == null)
+				modelAndView.setViewName("404");
 			modelAndView.addObject("onlineSelected", onlineDTO);
 			modelAndView.addObject("existsPdf", readOnlineService.existsPdfRead(bookDTO.getId()));
 			modelAndView.addObject("existsAudio", readOnlineService.existsAudio(bookDTO.getId()));

@@ -87,6 +87,7 @@ public class User implements Serializable {
 	@JoinTable(	name = "user_role", 
 				joinColumns = @JoinColumn(name = "user_id", nullable = false), 
 				inverseJoinColumns = @JoinColumn(name = "role_id", nullable = false))
+	@JsonIgnore
 	private List<Role> roles = new ArrayList<>();
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "book")

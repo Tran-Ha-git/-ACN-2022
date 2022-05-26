@@ -4,14 +4,11 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 
 import com.web.dacn.dto.book.BookCategoryDTO;
@@ -20,6 +17,7 @@ import com.web.dacn.dto.user.AuthorDTO;
 import com.web.dacn.dto.user.UserDto;
 import com.web.dacn.entity.book.Book;
 import com.web.dacn.entity.book.BookCategory;
+import com.web.dacn.entity.user.User;
 import com.web.dacn.repository.BookCategoryRepository;
 import com.web.dacn.repository.BookRepository;
 import com.web.dacn.service.client.ListBookService;
@@ -76,8 +74,12 @@ public class ListBookServiceImpl implements ListBookService {
 		    	BeanUtils.copyProperties(entity, bookDTO);
 		    	
 		    	UserDto userDTO =  new UserDto();
-		    	BeanUtils.copyProperties(entity.getUser(), userDTO);
-		    	bookDTO.setUser(userDTO);
+		    	User user = entity.getUser();
+		    	
+		    	if(user != null) {
+			    	BeanUtils.copyProperties(user, userDTO);
+			    	bookDTO.setUser(userDTO);		    		
+		    	}
 		    	
 		    	List<BookCategory> listBookCategories = entity.getCategories();
 		    	List<BookCategoryDTO> listBookCategoryDTOs = listBookCategories.stream().map(e -> {

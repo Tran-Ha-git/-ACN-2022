@@ -8,11 +8,7 @@
 	</div>
 	<div class="menu-manage-book">
 		<p class="menu-manage-book-name">
-<<<<<<< HEAD
 			<a href="/admin/authors"><i class="fas fa-book-open"></i> <b>Quản lý tác giả</b></a>
-=======
-			<i class="fas fa-book-open"></i> <b><a href="/admin/books">Quản lý sách</a></b>
->>>>>>> d8ef8ff88b3a0ecc70dbed3832f33718db08cede
 		</p>
 	</div>
 </div>

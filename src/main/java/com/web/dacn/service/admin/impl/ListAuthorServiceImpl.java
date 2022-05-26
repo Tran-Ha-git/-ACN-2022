@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.web.dacn.dto.user.AuthorDTO;
 import com.web.dacn.dto.user.UserDto;
 import com.web.dacn.entity.user.Author;
+import com.web.dacn.entity.user.User;
 import com.web.dacn.repository.AuthorRepository;
 import com.web.dacn.service.admin.ListAuthorService;
 
@@ -48,9 +49,12 @@ public class ListAuthorServiceImpl implements ListAuthorService {
 		    	AuthorDTO authorDTO = new AuthorDTO();
 		    	BeanUtils.copyProperties(author, authorDTO);
 		    	
-		    	UserDto userDTO =  new UserDto();
-		    	BeanUtils.copyProperties(author.getUser(), userDTO);
-		    	authorDTO.setUser(userDTO);
+		    	User user = author.getUser();
+		    	if(user != null) {
+			    	UserDto userDTO =  new UserDto();
+			    	BeanUtils.copyProperties(author.getUser(), userDTO);
+			    	authorDTO.setUser(userDTO);		    		
+		    	}
 		    			    	
 		    	return authorDTO;
 		    }
