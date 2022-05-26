@@ -22,8 +22,8 @@
 							onchange="sortFunc(this, '<c:out value="${myUrl}"/>')">
 							<option selected="selected" value="view__DESC">Lượt xem
 								phổ biến</option>
-							<option value="mod_time__DESC">Mới nhất</option>
-							<option value="mod_time__ASC">Cũ nhất</option>
+							<option value="modTime__DESC">Mới nhất</option>
+							<option value="modTime__ASC">Cũ nhất</option>
 						</select>
 					</form>
 				</div>

@@ -79,37 +79,37 @@ public class Book {
 	private Integer status;
 
 	@Column(name = "mod_time", nullable = false)
-	private Date mod_time;
+	private Date modTime;
 
-	@ManyToOne(cascade = CascadeType.ALL, targetEntity = User.class)
+	@ManyToOne(targetEntity = User.class)
 	@JoinColumn(name="mod_user_id")
 	@JsonIgnore
 	private User user;
 
 	
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.PERSIST)
 	@JoinTable(name = "book_author", 
-		joinColumns = @JoinColumn(name = "book_id", nullable = false), 
-		inverseJoinColumns = @JoinColumn(name = "author_id", nullable = false))
+		joinColumns = @JoinColumn(name = "book_id"), 
+		inverseJoinColumns = @JoinColumn(name = "author_id"))
 	@JsonIgnore
 	private List<Author> authors = new ArrayList<>();
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.PERSIST)
 	@JoinTable(name = "book_bookcategory", 
-		joinColumns = @JoinColumn(name = "book_id", nullable = false), 
-		inverseJoinColumns = @JoinColumn(name = "category_id", nullable = false))
+		joinColumns = @JoinColumn(name = "book_id"), 
+		inverseJoinColumns = @JoinColumn(name = "category_id"))
 	@JsonIgnore
 	private List<BookCategory> categories = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "book")
 	@JsonIgnore
 	private List<Audio> audios = new ArrayList<>();
 
-	@OneToMany(mappedBy = "book", cascade = CascadeType.ALL,orphanRemoval = true)
+	@OneToMany(mappedBy = "book")
 	@JsonIgnore
 	private List<Online> onlines = new ArrayList<>();
 
-	@OneToMany(mappedBy = "book", cascade = CascadeType.ALL,orphanRemoval = true)
+	@OneToMany(mappedBy = "book")
 	@JsonIgnore
 	private List<Pdf> pdfs = new ArrayList<>();
 

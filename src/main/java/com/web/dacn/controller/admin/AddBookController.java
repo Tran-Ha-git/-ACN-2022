@@ -57,13 +57,13 @@ public class AddBookController {
 			return "message";
 
 		}
-		book.setMod_time(date);
+		book.setModTime(date);
 		book.setUser(user);
 		book.setThumbnail(serverImageFilePath);
 
 		Author author = bookService.findAuthorByFullName(authorName);
 		if (author != null) {
-			author.getBooks().add(book);
+			
 			book.getAuthors().add(author);
 
 		} else {
@@ -72,11 +72,11 @@ public class AddBookController {
 			newAuthor.setFullname(authorName);
 			newAuthor.setDescription("default");
 			newAuthor.setSlug(authorName.trim().replaceAll(" ", "-"));
-			newAuthor.setMod_time(date);
+			newAuthor.setModTime(date);
 			newAuthor.setUser(user);
 
 			bookService.saveAuthor(newAuthor);
-			newAuthor.getBooks().add(book);
+			
 			book.getAuthors().add(newAuthor);
 
 		}
@@ -85,7 +85,7 @@ public class AddBookController {
 
 		if (categories.size() > 0) {
 			BookCategory category = categories.get(0);
-			category.getBooks().add(book);
+			//category.getBooks().add(book);
 			book.getCategories().add(category);
 
 		} else {
@@ -95,7 +95,7 @@ public class AddBookController {
 			newCategory.setSlug(categoryName.trim().replaceAll(" ", "-"));
 
 			bookService.saveCategory(newCategory);
-			newCategory.getBooks().add(book);
+			//newCategory.getBooks().add(book);
 			book.getCategories().add(newCategory);
 
 		}

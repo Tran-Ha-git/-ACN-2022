@@ -43,7 +43,7 @@ public class Pdf {
 	@Column(name = "priority", nullable = false)
 	private Integer priority;
 	
-	@ManyToOne(cascade = CascadeType.ALL, targetEntity = Book.class)
+	@ManyToOne(targetEntity = Book.class)
 	@JoinColumn(name = "book_id", nullable = false)
 	@JsonIgnore
 	private Book book;

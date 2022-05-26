@@ -17,19 +17,19 @@ public class CommentConverter {
 		CommentBookDTO comment = new CommentBookDTO();
 		comment.setId(entity.getId());
 		comment.setContent(entity.getContent());
-		comment.setMod_time(entity.getMod_time());
+		comment.setModTime(entity.getModTime());
 		comment.setStatus(entity.getStatus());
-		
-	        UserDto userdto= new UserDto();
-	        
-	        userdto.setId(entity.getUser().getId());
-	        userdto.setUsername(entity.getUser().getUsername());
-	        userdto.setEmail(entity.getUser().getEmail());
-	        BookDTO bookdto= new BookDTO();
-	        bookdto.setName(entity.getBook().getName());
-	      
-	        comment.setUser(userdto);	
-	        comment.setBook(bookdto);
+
+		UserDto userdto = new UserDto();
+
+		userdto.setId(entity.getUser().getId());
+		userdto.setUsername(entity.getUser().getUsername());
+		userdto.setEmail(entity.getUser().getEmail());
+		BookDTO bookdto = new BookDTO();
+		bookdto.setName(entity.getBook().getName());
+
+		comment.setUser(userdto);
+		comment.setBook(bookdto);
 		return comment;
 
 	}
@@ -39,20 +39,19 @@ public class CommentConverter {
 		CommentBookDTO comment = new CommentBookDTO();
 		comment.setId(entity.getId());
 		comment.setContent(entity.getContent());
-		comment.setMod_time(entity.getMod_time());
-        UserDto userdto= new UserDto();
-        
-        userdto.setId(entity.getUser().getId());
-        userdto.setUsername(entity.getUser().getUsername());
-        userdto.setEmail(entity.getUser().getEmail());
-        
-        BookDTO bookdto= new BookDTO();
-        bookdto.setName(entity.getBook().getName());
-      
-        comment.setUser(userdto);	
-        comment.setBook(bookdto);
-	
-		
+		comment.setModTime(entity.getModTime());
+		UserDto userdto = new UserDto();
+
+		userdto.setId(entity.getUser().getId());
+		userdto.setUsername(entity.getUser().getUsername());
+		userdto.setEmail(entity.getUser().getEmail());
+
+		BookDTO bookdto = new BookDTO();
+		bookdto.setName(entity.getBook().getName());
+
+		comment.setUser(userdto);
+		comment.setBook(bookdto);
+
 		List<CommentBookDTO> listComment = new ArrayList<CommentBookDTO>();
 		for (CommentBook commentbook : entity.getCommentBooks()) {
 			CommentBookDTO dto = toDTO(commentbook);

@@ -1,7 +1,12 @@
 package com.web.dacn.dto.user;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import com.web.dacn.dto.book.BookDTO;
+import com.web.dacn.entity.book.Book;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,6 +24,7 @@ public class AuthorDTO implements Serializable{
 	private String phone;
 	private String description;
 	private Integer status;
-	private Date mod_time;
+	private Date modTime;
 	private UserDto user;
+	private List<BookDTO> books = new ArrayList<>();	
 }

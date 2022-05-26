@@ -83,7 +83,7 @@
 						</td>
 
 						<td class="book-data tr-width-12">${comment.content}</td>
-						<td class="book-data">${comment.mod_time}</td>
+						<td class="book-data tr-book-image">${comment.modTime}</td>
 						<td class="book-data tr-width-12" >${comment.book.name }</td>
 
 						<c:choose>

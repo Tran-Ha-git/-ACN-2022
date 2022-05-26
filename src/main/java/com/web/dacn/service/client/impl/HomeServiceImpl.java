@@ -21,6 +21,7 @@ import com.web.dacn.dto.user.UserDto;
 import com.web.dacn.entity.book.Book;
 import com.web.dacn.entity.book.BookCategory;
 import com.web.dacn.entity.quote.Quote;
+import com.web.dacn.entity.user.User;
 import com.web.dacn.repository.BookRepository;
 import com.web.dacn.repository.QuoteRepository;
 import com.web.dacn.service.client.HomeService;
@@ -36,13 +37,13 @@ public class HomeServiceImpl implements HomeService{
 
 	@Override
 	public List<BookDTO> getNewBooks() {
-		Page<Book> booksPage = bookRepository.findBookContainingSearchOrderBySort("", PageRequest.of(0, 16, Sort.by(new Order(Direction.DESC, "mod_time"))));
+		Page<Book> booksPage = bookRepository.findBookContainingSearchOrderBySort("", PageRequest.of(0, 16, Sort.by("mod_time").descending()));
 		return convertBookEntityToBookDTO(booksPage).getContent();
 	}
 
 	@Override
 	public List<BookDTO> getMangaBookByTopView() {
-		return bookRepository.findBookByCategoryIdAndContainingSearchOrderBySort("", PageRequest.of(0, 16, Sort.by(new Order(Direction.DESC, "view"))), 1L).stream().map(book -> {
+		return bookRepository.findBookByCategoryIdAndContainingSearchOrderBySort("", PageRequest.of(0, 16, Sort.by("view").descending()), 1L).stream().map(book -> {
 			BookDTO dto = new BookDTO();
 			BeanUtils.copyProperties(book, dto);
 			book.getAuthors().stream().forEach(author -> {
@@ -62,7 +63,7 @@ public class HomeServiceImpl implements HomeService{
 
 	@Override
 	public List<BookDTO> getAudioBookByTopView() {
-		return bookRepository.findAudioBookContainingSearchOrderBySort("", PageRequest.of(0, 10, Sort.by(new Order(Direction.DESC, "view")))).stream().map(book -> {
+		return bookRepository.findAudioBookContainingSearchOrderBySort("", PageRequest.of(0, 10, Sort.by("view").descending())).stream().map(book -> {
 			BookDTO dto = new BookDTO();
 			BeanUtils.copyProperties(book, dto);
 			book.getAuthors().stream().forEach(author -> {
@@ -82,7 +83,7 @@ public class HomeServiceImpl implements HomeService{
 
 	@Override
 	public List<BookDTO> getEbookBookByTopView() {
-		return bookRepository.findPdfBookContainingSearchOrderBySort("", PageRequest.of(0, 10, Sort.by(new Order(Direction.DESC, "view")))).stream().map(book -> {
+		return bookRepository.findPdfBookContainingSearchOrderBySort("", PageRequest.of(0, 10, Sort.by("view").descending())).stream().map(book -> {
 			BookDTO dto = new BookDTO();
 			BeanUtils.copyProperties(book, dto);
 			book.getAuthors().stream().forEach(author -> {
@@ -102,7 +103,7 @@ public class HomeServiceImpl implements HomeService{
 
 	@Override
 	public List<QuoteDto> getQuoteByTopView() {
-		Page<Quote> quotesPage = quoteRepository.findAll(PageRequest.of(0, 10, Sort.by(new Order(Direction.DESC, "view"))));		
+		Page<Quote> quotesPage = quoteRepository.findAll(PageRequest.of(0, 10, Sort.by("view").descending()));		
 		return convertQuoteEntityToQuoteDTO(quotesPage).getContent();
 	}
 	
@@ -114,8 +115,11 @@ public class HomeServiceImpl implements HomeService{
 		    	BeanUtils.copyProperties(entity, bookDTO);
 		    	
 		    	UserDto userDTO =  new UserDto();
-		    	BeanUtils.copyProperties(entity.getUser(), userDTO);
-		    	bookDTO.setUser(userDTO);
+		    	User user = entity.getUser();
+		    	if(user != null) {
+			    	BeanUtils.copyProperties(user, userDTO);
+			    	bookDTO.setUser(userDTO);		    		
+		    	}
 		    	
 		    	List<BookCategory> listBookCategories = entity.getCategories();
 		    	List<BookCategoryDTO> listBookCategoryDTOs = listBookCategories.stream().map(e -> {
@@ -143,7 +147,7 @@ public class HomeServiceImpl implements HomeService{
 
 	@Override
 	public List<BookDTO> getSuggestBook() {
-		Page<Book> booksPage = bookRepository.findAll(PageRequest.of(0, 16, Sort.by(new Order(Direction.DESC, "view"))));
+		Page<Book> booksPage = bookRepository.findAll(PageRequest.of(0, 16, Sort.by("view").descending()));
 		return convertBookEntityToBookDTO(booksPage).getContent();
 	}
 }

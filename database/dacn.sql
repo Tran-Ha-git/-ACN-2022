@@ -26,8 +26,8 @@ CREATE TABLE `user_role` (
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	`user_id` INT NOT NULL,
 	`role_id` INT NOT NULL,
-	FOREIGN KEY (`user_id`) REFERENCES `user`(id),
-	FOREIGN KEY (`role_id`) REFERENCES `role`(id)
+	FOREIGN KEY (`user_id`) REFERENCES `user`(id) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (`role_id`) REFERENCES `role`(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE bookcategory (
@@ -39,7 +39,7 @@ CREATE TABLE bookcategory (
 	meta_title VARCHAR(50),
 	meta_description TEXT,
 	`status` INT DEFAULT 1,
-	FOREIGN KEY (`parent_id`) REFERENCES `bookcategory`(id)	
+	FOREIGN KEY (`parent_id`) REFERENCES `bookcategory`(id)	ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE book (
@@ -55,16 +55,16 @@ CREATE TABLE book (
 	meta_description TEXT,
 	`status` INT DEFAULT 1,
 	mod_time DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
-	mod_user_id INT NOT NULL,
-	FOREIGN KEY (`mod_user_id`) REFERENCES `user`(`id`)
+	mod_user_id INT,
+	FOREIGN KEY (`mod_user_id`) REFERENCES `user`(`id`) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE book_bookcategory (
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	`book_id` INT NOT NULL,
 	category_id INT NOT NULL,
-	FOREIGN KEY (`book_id`) REFERENCES `book`(`id`),
-	FOREIGN KEY (`category_id`) REFERENCES `bookcategory`(`id`)
+	FOREIGN KEY (`book_id`) REFERENCES `book`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (`category_id`) REFERENCES `bookcategory`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE quote (
@@ -73,30 +73,29 @@ CREATE TABLE quote (
 	thumbnail TEXT,
 	`view` INT DEFAULT 0,
 	author_id INT,
---	slug VARCHAR(2000) NOT NULL,
 	slug VARCHAR(2000),
 	meta_title VARCHAR(50),
 	meta_description TEXT,
 	`status` INT DEFAULT 1,
 	mod_time DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
-	mod_user_id INT NOT NULL,
-	FOREIGN KEY (`mod_user_id`) REFERENCES `user`(`id`)
+	mod_user_id INT,
+	FOREIGN KEY (`mod_user_id`) REFERENCES `user`(`id`) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE favoritebook (
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	`user_id` INT NOT NULL,
 	book_id INT NOT NULL,
-	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`),
-	FOREIGN KEY (`book_id`) REFERENCES `book`(`id`)
+	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (`book_id`) REFERENCES `book`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE favoritequote (
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	`user_id` INT NOT NULL,
 	quote_id INT NOT NULL,
-	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`),
-	FOREIGN KEY (`quote_id`) REFERENCES `quote`(`id`)
+	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (`quote_id`) REFERENCES `quote`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE audio (
@@ -104,8 +103,8 @@ CREATE TABLE audio (
 	`name` VARCHAR(100) NOT NULL,
 	`url` TEXT NOT NULL,
 	`priority` INT NOT NULL,
-	book_id INT NOT NULL,
-	FOREIGN KEY (`book_id`) REFERENCES `book`(`id`)
+	book_id INT,
+	FOREIGN KEY (`book_id`) REFERENCES `book`(`id`) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE pdf (
@@ -113,8 +112,8 @@ CREATE TABLE pdf (
 	`name` VARCHAR(100) NOT NULL,
 	`url` TEXT NOT NULL,
 	`priority` INT NOT NULL,
-	book_id INT NOT NULL,
-	FOREIGN KEY (`book_id`) REFERENCES `book`(`id`)
+	book_id INT,
+	FOREIGN KEY (`book_id`) REFERENCES `book`(`id`) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE `online` (
@@ -122,8 +121,8 @@ CREATE TABLE `online` (
 	`name` VARCHAR(100) NOT NULL,
 	`content` TEXT NOT NULL,
 	`priority` INT NOT NULL,
-	book_id INT NOT NULL,
-	FOREIGN KEY (`book_id`) REFERENCES `book`(`id`)
+	book_id INT,
+	FOREIGN KEY (`book_id`) REFERENCES `book`(`id`) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE author (
@@ -138,16 +137,16 @@ CREATE TABLE author (
 	meta_description TEXT,
 	`status` INT DEFAULT 1,
 	mod_time DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
-	mod_user_id INT NOT NULL,
-	FOREIGN KEY (`mod_user_id`) REFERENCES `user`(`id`)
+	mod_user_id INT,
+	FOREIGN KEY (`mod_user_id`) REFERENCES `user`(`id`) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE book_author (
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	book_id INT NOT NULL,
 	author_id INT NOT NULL,
-	FOREIGN KEY (`book_id`) REFERENCES book(`id`),
-	FOREIGN KEY (`author_id`) REFERENCES `author`(`id`)
+	FOREIGN KEY (`book_id`) REFERENCES book(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (`author_id`) REFERENCES `author`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE quotecategory (
@@ -159,7 +158,7 @@ CREATE TABLE quotecategory (
 	meta_title VARCHAR(50),
 	meta_description TEXT,
 	`status` INT DEFAULT 1,
-	FOREIGN KEY (`parent_id`) REFERENCES `quotecategory`(`id`)
+	FOREIGN KEY (`parent_id`) REFERENCES `quotecategory`(`id`) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE setting (
@@ -175,19 +174,19 @@ CREATE TABLE bookmark (
 	audio_id INT,
 	pdf_id INT,
 	online_id INT,
-	FOREIGN KEY (`audio_id`) REFERENCES `audio`(`id`),
-	FOREIGN KEY (`online_id`) REFERENCES `online`(`id`),
-	FOREIGN KEY (`pdf_id`) REFERENCES `pdf`(`id`),
-	FOREIGN KEY (`book_id`) REFERENCES `book`(`id`),
-	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`)
+	FOREIGN KEY (`audio_id`) REFERENCES `audio`(`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+	FOREIGN KEY (`online_id`) REFERENCES `online`(`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+	FOREIGN KEY (`pdf_id`) REFERENCES `pdf`(`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+	FOREIGN KEY (`book_id`) REFERENCES `book`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE quote_quotecategory (
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	quote_id INT NOT NULL,
 	category_id INT NOT NULL,
-	FOREIGN KEY (`quote_id`) REFERENCES `quote`(`id`),
-	FOREIGN KEY (`category_id`) REFERENCES `quotecategory`(`id`)
+	FOREIGN KEY (`quote_id`) REFERENCES `quote`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (`category_id`) REFERENCES `quotecategory`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE reviewbook (
@@ -197,8 +196,8 @@ CREATE TABLE reviewbook (
 	book_id INT NOT NULL,
 	`user_id` INT NOT NULL,
 	mod_time DATETIME DEFAULT CURRENT_TIMESTAMP,
-	FOREIGN KEY (`book_id`) REFERENCES book(`id`),
-	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`)
+	FOREIGN KEY (`book_id`) REFERENCES book(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE reviewquote (
@@ -208,8 +207,8 @@ CREATE TABLE reviewquote (
 	quote_id INT NOT NULL,
 	`user_id` INT NOT NULL,
 	mod_time DATETIME DEFAULT CURRENT_TIMESTAMP,
-	FOREIGN KEY (`quote_id`) REFERENCES `quote`(`id`),
-	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`)
+	FOREIGN KEY (`quote_id`) REFERENCES `quote`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 
@@ -220,9 +219,10 @@ CREATE TABLE commentbook (
 	book_id INT NOT NULL,
 	`user_id` INT NOT NULL,
 	mod_time DATETIME DEFAULT CURRENT_TIMESTAMP,
-	FOREIGN KEY (`book_id`) REFERENCES `book`(`id`),
-	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`),
-	FOREIGN KEY (`parent_id`) REFERENCES `commentbook`(`id`)
+	`status` INT DEFAULT 1,
+	FOREIGN KEY (`book_id`) REFERENCES `book`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (`parent_id`) REFERENCES `commentbook`(`id`) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 
@@ -233,9 +233,9 @@ CREATE TABLE commentquote (
 	quote_id INT,
 	`user_id` INT NOT NULL,
 	mod_time DATETIME DEFAULT CURRENT_TIMESTAMP,
-	FOREIGN KEY (`quote_id`) REFERENCES `quote`(`id`),
-	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`),
-	FOREIGN KEY (`parent_id`) REFERENCES `commentquote`(`id`)
+	FOREIGN KEY (`quote_id`) REFERENCES `quote`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (`parent_id`) REFERENCES `commentquote`(`id`) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 
@@ -6448,7 +6448,7 @@ insert into reviewquote (id, content, star, quote_id, user_id, mod_time) values 
 
 
 
-
+/*
 insert into commentbook (id, content, book_id, user_id, mod_time) values (1, 'Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.', 41, 19, '2021-07-14');
 insert into commentbook (id, content, book_id, user_id, mod_time) values (2, 'Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.', 9, 5, '2021-06-06');
 insert into commentbook (id, content, book_id, user_id, mod_time) values (3, 'Proin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis. Ut at dolor quis odio consequat varius.', 59, 14, '2022-03-24');
@@ -6549,7 +6549,107 @@ insert into commentbook (id, content, book_id, user_id, mod_time) values (97, 'L
 insert into commentbook (id, content, book_id, user_id, mod_time) values (98, 'Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus.', 78, 15, '2022-01-30');
 insert into commentbook (id, content, book_id, user_id, mod_time) values (99, 'Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.', 49, 3, '2021-08-31');
 insert into commentbook (id, content, book_id, user_id, mod_time) values (100, 'Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus.', 54, 13, '2022-02-17');
-
+*/
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (1, 'Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.', 41, 19, '2021-07-14',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (2, 'Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.', 9, 5, '2021-06-06',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (3, 'Proin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis. Ut at dolor quis odio consequat varius.', 59, 14, '2022-03-24',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (4, 'Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.', 54, 12, '2021-06-25',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (5, 'Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.', 55, 9, '2021-12-10',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (6, 'Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque.', 24, 4, '2021-05-29',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (7, 'Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.', 98, 2, '2022-03-04',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (8, 'Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.', 62, 3, '2021-09-03',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (9, 'Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.', 13, 9, '2021-10-11',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (10, 'Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus.', 20, 1, '2021-11-07',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (11, 'Morbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.', 49, 9, '2022-03-07',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (12, 'Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci. Mauris lacinia sapien quis libero.', 23, 17, '2022-03-12',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (13, 'Morbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.', 79, 7, '2021-07-10',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (14, 'In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus.', 28, 19, '2021-05-01',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (15, 'Curabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est.', 72, 9, '2022-02-21',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (16, 'Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.', 46, 8, '2021-10-10',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (17, 'Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.', 22, 19, '2022-02-27',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (18, 'In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.', 83, 13, '2021-11-27',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (19, 'In sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.', 9, 12, '2021-08-13',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (20, 'Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus.', 35, 1, '2021-12-15',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (21, 'Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.', 11, 3, '2022-02-12',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (22, 'Proin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis. Ut at dolor quis odio consequat varius.', 30, 2, '2021-10-14',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (23, 'Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus.', 46, 18, '2021-10-06',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (24, 'In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.', 85, 3, '2021-10-14',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (25, 'Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.', 21, 5, '2021-10-26',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (26, 'In congue. Etiam justo. Etiam pretium iaculis justo.', 23, 17, '2021-10-05',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (27, 'Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.', 42, 17, '2021-05-25',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (28, 'Fusce consequat. Nulla nisl. Nunc nisl.', 50, 16, '2021-08-03',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (29, 'Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui.', 12, 9, '2022-04-07',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (30, 'Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum.', 85, 14, '2021-09-05',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (31, 'Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.', 80, 16, '2021-10-20',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (32, 'Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti.', 57, 3, '2021-06-17',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (33, 'Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.', 61, 18, '2021-09-15',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (34, 'Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus.', 51, 4, '2021-08-26',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (35, 'Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.', 83, 14, '2022-02-18',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (36, 'Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.', 27, 14, '2021-07-30',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (37, 'Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.', 24, 13, '2021-06-22',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (38, 'Phasellus in felis. Donec semper sapien a libero. Nam dui.', 14, 6, '2021-11-14',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (39, 'Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.', 91, 7, '2021-07-27',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (40, 'Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.', 49, 1, '2022-01-19',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (41, 'In sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.', 38, 19, '2021-09-26',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (42, 'Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.', 35, 15, '2021-06-13',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (43, 'Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.', 26, 9, '2022-04-15',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (44, 'Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.', 91, 2, '2021-12-13',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (45, 'Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus.', 54, 19, '2021-06-27',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (46, 'Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.', 8, 15, '2021-09-09',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (47, 'Morbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.', 28, 10, '2021-08-31',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (48, 'Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit.', 25, 20, '2021-09-05',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (49, 'Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.', 18, 12, '2021-10-24',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (50, 'Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.', 96, 6, '2021-06-15',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (51, 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.', 39, 4, '2021-11-25',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (52, 'Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.', 94, 10, '2021-09-01',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (53, 'Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.', 61, 1, '2021-08-05',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (54, 'Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh.', 65, 15, '2021-06-03',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (55, 'Fusce consequat. Nulla nisl. Nunc nisl.', 23, 1, '2021-11-19',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (56, 'Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh.', 28, 12, '2021-09-21',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (57, 'Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.', 73, 1, '2022-01-13',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (58, 'Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus.', 18, 10, '2021-09-25',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (59, 'Nullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.', 13, 18, '2021-05-07',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (60, 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus.', 50, 17, '2021-06-19',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (61, 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus.', 54, 16, '2021-05-03',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (62, 'Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.', 81, 17, '2021-09-02',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (63, 'Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum.', 84, 18, '2022-04-11',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (64, 'Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.', 5, 19, '2022-03-24',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (65, 'Morbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.', 2, 3, '2022-03-19',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (66, 'Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.', 79, 3, '2022-02-12',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (67, 'In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.', 32, 2, '2021-07-19',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (68, 'Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh.', 69, 16, '2021-08-05',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (69, 'In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus.', 10, 16, '2022-04-05',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (70, 'Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci. Mauris lacinia sapien quis libero.', 36, 3, '2021-10-18',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (71, 'Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.', 15, 9, '2022-03-26',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (72, 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus.', 21, 19, '2022-01-19',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (73, 'Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.', 85, 19, '2022-03-04',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (74, 'Fusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.', 84, 18, '2021-10-25',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (75, 'Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis.', 98, 10, '2021-05-15',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (76, 'Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus.', 26, 4, '2022-02-04',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (77, 'Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.', 48, 5, '2021-09-23',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (78, 'Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.', 4, 15, '2022-03-03',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (79, 'Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.', 73, 12, '2021-12-05',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (80, 'Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit.', 59, 13, '2021-07-20',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (81, 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.', 90, 3, '2021-09-29',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (82, 'Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.', 80, 7, '2021-09-12',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (83, 'Sed ante. Vivamus tortor. Duis mattis egestas metus.', 5, 20, '2022-04-04',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (84, 'In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus.', 78, 4, '2021-12-15',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (85, 'Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.', 60, 12, '2022-01-25',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (86, 'Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.', 82, 8, '2021-12-01',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (87, 'Nullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.', 94, 13, '2022-04-14',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (88, 'Curabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.', 27, 2, '2021-08-13',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (89, 'Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.', 42, 10, '2022-03-21',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (90, 'Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.', 24, 20, '2021-08-10',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (91, 'Morbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem.', 9, 14, '2022-01-31',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (92, 'Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.', 3, 5, '2021-08-17',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (93, 'Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus.', 53, 19, '2021-12-20',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (94, 'Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.', 95, 6, '2021-12-08',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (95, 'Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit.', 92, 12, '2022-02-08',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (96, 'Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti.', 86, 13, '2021-07-13',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (97, 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus.', 86, 15, '2022-01-20',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (98, 'Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus.', 78, 15, '2022-01-30',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (99, 'Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.', 49, 3, '2021-08-31',1);
+insert into commentbook (id, content, book_id, user_id, mod_time, status) values (100, 'Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus.', 54, 13, '2022-02-17',1);
 
 
 
