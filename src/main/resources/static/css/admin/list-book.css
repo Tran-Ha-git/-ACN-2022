@@ -388,9 +388,6 @@ margin-right: 36px;
     padding:3px 6px 3px 6px;
     
     
-    
-   
-    
    
   }
   .grey{
@@ -484,5 +481,132 @@ margin-right: 36px;
   display: flex;
    justify-content: space-between;
   }
- 
+<<<<<<< HEAD:src/main/resources/static/css/admin/list-book-styles.css
+/*-------------------------------------------------------------------------*/
+.side-menu .menu-manage-user{
+    background-color: #CFCFCF;
+    padding:16px 10px;   
+}
+.side-menu .menu-manage-user-name{
+    font-size:20px;
+}
+.search{
+    margin: 10px 0px;
+}
+.search .search-by-username{
+    display: inline-block;
+    
+    margin: 10px 0px;
+}
+.search-username-input{
+    padding: 4px;
+    width: 500px;
+}
+.search .search-btn{
+    text-decoration: none;
+    padding: 5px 15px;
+    background-color: var(--btn-blue-color);
+    color: #fff;
+    border-radius: 5px;
+}
+.user-role{
+    position: relative;
+    margin-bottom: 64px;
+
+}
+.role-control{
+   position: relative;
+    top : 30px;
+}
+.user-role .manage-user-btn{
+    position: relative;
+    top: 5px;
+  
+}
+.edit-user-btns .cancel-btn, .edit-user-btns .save-change-btn{
+  
+    right:0px;  
+    text-decoration: none;
+    padding: 12px 36px;
+    border-radius: 5px;
+    
+}
+.user-role .delete-user-btn {
+    position: absolute;
+    right:0px;  
+    text-decoration: none;
+    padding: 12px 36px;
+    border-radius: 5px;
+   
+}
+.cancel-btn{
+    background-color: #696969;
+    color: #fff;
+}
+.save-change-btn{
+    background-color: var(--btn-blue-color);
+    color: #fff;
+}
+
+.delete-user-btn{
+    background-color: rgb(196, 17, 17);
+    color: #fff;  
+}
+
+
+.list-user-container{
+    margin-top: 50px;
+    width: 100%;
+    position: relative;
+}
+.list-user-container .list-user-table{
+   
+    width: 100%;
+
+    border-collapse:collapse;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+    text-align: center;
+}
+.list-user-container .list-user-table, th, td{
+    border-top:1px solid #000;
+    border-bottom:1px solid #000;
+    padding-top:10px;
+    padding-bottom:10px;
+}
+
+
+
+.edit-content{
+    border: 1px solid #000;
+    padding: 12px 36px;
+
+    
+}
+.user-info-title, .user-info-value{
+    font-size:20px;
+    margin-bottom: 24px;
+}
+.user-info-title{
+    display: inline-block;
+    width:160px;
+
+}
+.select-role{
+    font-size:16px;
+    width:100px;
+}
+.role-user, .role-admin{
+    font-size:20px;
+   
+}
+.role-admin{
+    text-decoration: none;
+}
+.edit-user-btns{
+    position: absolute;
+    right: 32px;
+    bottom: -100px;
+    padding: 8px 12px;
+}
  

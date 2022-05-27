@@ -1,9 +1,7 @@
 package com.web.dacn.utils;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
@@ -13,12 +11,15 @@ import com.web.dacn.dto.book.BookDTO;
 import com.web.dacn.dto.book.OnlineDTO;
 import com.web.dacn.dto.book.PdfDTO;
 import com.web.dacn.dto.user.AuthorDTO;
+import com.web.dacn.dto.user.UserDto;
 import com.web.dacn.entity.book.Audio;
 import com.web.dacn.entity.book.Book;
 import com.web.dacn.entity.book.BookCategory;
 import com.web.dacn.entity.book.Online;
 import com.web.dacn.entity.book.Pdf;
 import com.web.dacn.entity.user.Author;
+import com.web.dacn.entity.user.Role;
+import com.web.dacn.entity.user.User;
 
 @Component
 public class Converter {
@@ -124,5 +125,21 @@ public class Converter {
 		
 
 		return book;
+	}
+	
+	
+	public UserDto toDTO(User user) {
+		UserDto dto= new UserDto();
+		
+		dto.setId(user.getId());
+		dto.setFullname(user.getFullname());
+		dto.setEmail(user.getEmail());
+		dto.setUsername(user.getUsername());
+		dto.setPhone(user.getPhone());
+		
+		
+		
+		
+		return dto;
 	}
 }

@@ -1,4 +1,4 @@
-<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
+﻿<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 
 <div class="side-menu item">
 	<div class="menu-manage-book active">
@@ -11,4 +11,11 @@
 			<a href="/admin/authors"><i class="fas fa-book-open"></i> <b>Quản lý tác giả</b></a>
 		</p>
 	</div>
+  <hr/>
+      <div class="menu-manage-book">
+        <p class="menu-manage-book-name">
+          
+         <i class="fas fa-user"></i> <b><a href="/admin/users">Quản lý tài khoản</a></b>
+      </p>
+    </div>
 </div>
