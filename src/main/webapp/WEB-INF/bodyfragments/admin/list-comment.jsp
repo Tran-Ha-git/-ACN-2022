@@ -98,7 +98,7 @@
 						</c:choose>
 
 						<td class="book-data">
-							<div class="custom-btn custom-btn-3">
+							<div class="custom-btn custom-btn-3" style="display:flex;">
 								<c:url value="/admin/DeleteCommentBook" var="url">
 									<c:param name="id" value="${comment.id}" />
 

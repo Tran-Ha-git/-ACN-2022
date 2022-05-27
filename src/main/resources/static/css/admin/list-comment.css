@@ -5,7 +5,7 @@
 :root{
     --header-manage-list-height: 64px;
     --side-menu-width:300px;
-    --container-width:1000px;
+    --container-width:1150px;
     
     --light-grey-color:#E8E8E8;
     --btn-blue-color: #0000FF;
@@ -203,6 +203,7 @@ background-color:#E8E8E8 ;
     background-color:  var(--btn-blue-color);
     color: #fff;
     border-radius: 20px;
+    margin:1px;
 }
 .add-image .add-image-btn{
     text-decoration: none;

@@ -140,7 +140,7 @@
 		<put-attribute name="title" value="Admin New Book Page" />
 		<put-attribute name="body"
 			value="/WEB-INF/bodyfragments/admin/new-book.jsp" />
-		<put-attribute name="style" value="css/admin/new-book.css" />
+		<put-attribute name="style" value="css/admin/list-book.css" />
 	</definition>
 	
 		<!-- Admin List Author Page -->
@@ -159,7 +159,7 @@
 		<put-attribute name="title" value="Admin Edit Book Page" />
 		<put-attribute name="body"
 			value="/WEB-INF/bodyfragments/admin/edit-book.jsp" />
-		<put-attribute name="style" value="css/admin/new-book.css" />
+		<put-attribute name="style" value="css/admin/list-book.css" />
 	</definition>
 
 	<!-- Admin ListOnline Page -->
