@@ -143,7 +143,7 @@
 		<put-attribute name="style" value="css/admin/list-book.css" />
 	</definition>
 	
-		<!-- Admin List Author Page -->
+	<!-- Admin List Author Page -->
 	
 	<definition name="adminListAuthor" extends="admin.base.definition">
 		<put-attribute name="title" value="Admin List Author Page" />
@@ -152,7 +152,7 @@
 		<put-attribute name="style" value="css/admin/list-author.css" />
 	</definition>
 	
-	
+
 	<!-- Admin Edit Book Page -->
 
 	<definition name="adminEditBook" extends="admin.base.definition">
@@ -186,7 +186,7 @@
 		<put-attribute name="title" value="Admin List User Page" />
 		<put-attribute name="body"
 			value="/WEB-INF/bodyfragments/admin/usermanagement.jsp" />
-		<put-attribute name="user-style"
+		<put-attribute name="style"
 			value="css/admin/userstyles.css" />
 	</definition>
 	
@@ -196,7 +196,7 @@
 		<put-attribute name="title" value="Admin Edit User Page" />
 		<put-attribute name="body"
 			value="/WEB-INF/bodyfragments/admin/edituser.jsp" />
-		<put-attribute name="user-style" value="css/admin/userstyles.css" />
+		<put-attribute name="style" value="css/admin/userstyles.css" />
 	</definition>
 
 	<!-- Admin ListComment Page -->

@@ -197,8 +197,4 @@ checkboxBtn.onclick= function(){
 		})	
 	}
 }
-<<<<<<< HEAD
-=======
 
->>>>>>> main
-</script>
