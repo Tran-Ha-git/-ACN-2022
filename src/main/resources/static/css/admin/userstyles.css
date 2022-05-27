@@ -132,8 +132,8 @@
 
 }
 .role-control{
-    position: absolute;
-    top : 5px;
+    /* position: absolute;
+    top : 5px; */
 }
 .user-role .manage-user-btn{
     position: relative;

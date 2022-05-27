@@ -186,7 +186,7 @@
 		<put-attribute name="title" value="Admin List User Page" />
 		<put-attribute name="body"
 			value="/WEB-INF/bodyfragments/admin/usermanagement.jsp" />
-		<put-attribute name="user-style"
+		<put-attribute name="style"
 			value="css/admin/userstyles.css" />
 	</definition>
 	
@@ -196,7 +196,7 @@
 		<put-attribute name="title" value="Admin Edit User Page" />
 		<put-attribute name="body"
 			value="/WEB-INF/bodyfragments/admin/edituser.jsp" />
-		<put-attribute name="user-style" value="css/admin/userstyles.css" />
+		<put-attribute name="style" value="css/admin/userstyles.css" />
 	</definition>
 
 	<!-- Admin ListComment Page -->
