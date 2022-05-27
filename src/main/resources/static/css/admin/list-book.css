@@ -395,9 +395,6 @@ margin-right: 36px;
     padding:3px 6px 3px 6px;
     
     
-    
-   
-    
    
   }
   .grey{
@@ -491,6 +488,9 @@ margin-right: 36px;
   display: flex;
    justify-content: space-between;
   }
+
+/*-------------------------------------------------------------------------*/
+
 .side-menu .menu-manage-user{
     background-color: #CFCFCF;
     padding:16px 10px;   
@@ -617,6 +617,3 @@ margin-right: 36px;
     bottom: -100px;
     padding: 8px 12px;
 }
-
- 
-

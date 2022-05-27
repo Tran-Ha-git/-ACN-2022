@@ -25,8 +25,7 @@
 
 			<div class="search-by-authorname">
 
-				<label class="search-authorname-label" for="search-authorname-input">Tên
-					tác giả</label> <input type="text" class="search-authorname-input"
+				<label class="search-authorname-label" for="search-authorname-input">Tên tác giả</label> <input type="text" class="search-authorname-input"
 					id="search-authorname-input" name="authorname" />
 			</div>
 
@@ -60,9 +59,7 @@
 			</div>
 
 			<div class="books-total">
-
-				<p class="books-amount">Tổng số sách là ${total} quyển</p>
-
+				<p class="books-amount">Tổng số sách là  ${total} quyển</p>
 			</div>
 		</div>
 		<!-- Manage book button-->
@@ -76,7 +73,7 @@
 				<tr class="header-row">
 					<th class="header-row-content"><input type="checkbox"
 						class="checkbox-delete-btn" /></th>
-					<th class="header-row-content" >ID</th>
+					<th class="header-row-content">ID</th>
 					<th class="header-row-content">Hình ảnh</th>
 					<th class="header-row-content">Tên sách</th>
 					<th class="header-row-content">Tác giả</th>
@@ -90,8 +87,8 @@
 				<c:forEach items="${books}" var="book">
 					<!--Start table data -->
 					<tr class="data-row">
-						<td class="book-data"><input type="checkbox"
-							name="delete-item" class="delete-item" value="${book.id}" /></td>
+						<td class="book-data"><input type="checkbox" name="delete-item"
+							class="delete-item" value="${book.id}" /></td>
 						<td class="book-data">${book.id }</td>
 						<td class="book-data tr-book-image"><img
 							src="${book.thumbnail }" alt="Image" class="book-image"
@@ -120,7 +117,8 @@
 						</c:choose>
 
 						<td class="book-data">${book.modTime }</td>
-						<td class="book-data tr-width-12"><c:forEach
+						<td class="book-data tr-width-12">
+						<c:forEach
 								items="${readFormats}" var="readFormat">
 								<c:if test="${readFormat.key==book.id }">
 									<c:forEach items="${readFormat.value}" var="format">
@@ -199,4 +197,8 @@ checkboxBtn.onclick= function(){
 		})	
 	}
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
 </script>

@@ -63,9 +63,7 @@ public class AddBookController {
 
 		Author author = bookService.findAuthorByFullName(authorName);
 		if (author != null) {
-			
 			book.getAuthors().add(author);
-
 		} else {
 			Author newAuthor = new Author();
 
@@ -76,7 +74,6 @@ public class AddBookController {
 			newAuthor.setUser(user);
 
 			bookService.saveAuthor(newAuthor);
-			
 			book.getAuthors().add(newAuthor);
 
 		}
@@ -105,6 +102,5 @@ public class AddBookController {
 		return "redirect:/admin/books";
 
 	}
-
 
 }

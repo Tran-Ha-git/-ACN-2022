@@ -60,13 +60,19 @@
 					<div class="form-1">
 						<c:forEach items="${book.authors}" var="author">
 							<div class="form_input">
-								<input type="radio" class="authorName" name="radio"
-									value="${author.id}" data-authorid="${author.id }"
-									data-authorname="${author.fullname }
-								    " /> <input
-									type="text" class="edit-authorname-input"
-									value="${author.fullname}" id="authorName${author.id }"
-									style="width: 140px" disabled /> <br />
+								<input type="radio" class="authorName" 
+							      name="radio"
+								   value="${author.id}"
+								    data-authorid="${author.id }"
+								    data-authorname="${author.fullname }
+								    " />
+								<input type="text" 
+							    class="edit-authorname-input"
+								value="${author.fullname}"
+								id="authorName${author.id }"
+								 style="width:140px"  disabled/>
+								 
+								 <br />
 							</div>
 						</c:forEach>
 
@@ -77,12 +83,17 @@
 					<div class="form-1">
 						<c:forEach items="${book.categories}" var="category">
 							<div class="form_input">
-
-								<input class="categoryName" type="radio" name="radio"
-									value="${category.id }" data-categoryid="${category.id }"
-									data-categoryname="${category.name }" /> <input type="text"
-									class="edit-categoryname-input" value="${category.name}"
-									id="categoryName${category.id }" style="width: 140px" disabled />
+							<input class="categoryName"
+							       type="radio" 
+							       name ="radio"
+							        value="${category.id }"
+								    data-categoryid="${category.id }"
+								    data-categoryname="${category.name }" />
+								<input type="text" 
+							     class="edit-categoryname-input"
+								 value="${category.name}"
+								id="categoryName${category.id}"
+								 style="width:140px" disabled />
 							</div>
 						</c:forEach>
 					</div>

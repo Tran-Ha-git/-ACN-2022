@@ -7,5 +7,5 @@ import com.web.dacn.entity.user.Role;
 
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
-
+   
 }
