@@ -14,25 +14,25 @@ import com.web.dacn.dto.user.UserDto;
 import com.web.dacn.entity.user.Author;
 import com.web.dacn.entity.user.User;
 import com.web.dacn.repository.AuthorRepository;
-import com.web.dacn.service.admin.ListAuthorService;
+import com.web.dacn.service.admin.AuthorService;
 
 @Service
-public class ListAuthorServiceImpl implements ListAuthorService {
+public class AuthorServiceImpl implements AuthorService {
 	@Autowired
 	private AuthorRepository authorRepository;
 
 	@Override
 	public Page<AuthorDTO> getListAuthor(String search, String sortStr, int page) {
-		PageRequest pageRequest = PageRequest.of(page, 10);
+		PageRequest pageRequest = PageRequest.of(page - 1, 10);
 		
 		// check sort
 		if(sortStr.split("__").length == 2) {
 			String[] arrSort = sortStr.split("__");
 			
 			if(arrSort[1].equals("ASC")) {
-				pageRequest = PageRequest.of(page, 10, Sort.by(arrSort[0]).ascending());
+				pageRequest = PageRequest.of(page - 1, 10, Sort.by(arrSort[0]).ascending());
 			} else {
-				pageRequest = PageRequest.of(page, 10, Sort.by(arrSort[0]).descending());
+				pageRequest = PageRequest.of(page - 1, 10, Sort.by(arrSort[0]).descending());
 			}			
 		}
 		

@@ -1,37 +1,33 @@
 package com.web.dacn.controller.api;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.web.dacn.repository.AuthorRepository;
-import com.web.dacn.repository.BookRepository;
-import com.web.dacn.service.api.AuthorService;
+import com.web.dacn.dto.user.AuthorDTO;
+import com.web.dacn.service.api.AuthorAPIService;
 import com.web.dacn.utils.ResponseObject;
 
 @RestController
 @RequestMapping("/api/authors")
 public class AuthorAPI {
 	@Autowired
-	private AuthorService authorService;
-	
-	@Autowired
-	private AuthorRepository authorRepository;
-	
-	@Autowired
-	private BookRepository bookRepository;
+	private AuthorAPIService authorAPIService;
 
 	@DeleteMapping("")
 	public ResponseEntity delete(@RequestBody Long[] ids) {
 		ResponseObject response = new ResponseObject<>();
 		try {
-			authorService.deleteAllById(ids);
+			authorAPIService.deleteAllById(ids);
 			response.setMessage("Successful!");
 			response.setSuccess(true);	
 			return ResponseEntity.ok(response);
@@ -43,16 +39,25 @@ public class AuthorAPI {
 		}
 	}
 	
-	@GetMapping("/{id}")
-	public ResponseEntity get(@PathVariable Long id) {
+	@PostMapping("")
+	public ResponseEntity add(@Valid @RequestBody AuthorDTO dto, BindingResult bindResult) {
 		ResponseObject response = new ResponseObject<>();
+		if(bindResult.hasErrors()) {
+			String message = "";
+			for (ObjectError error : bindResult.getAllErrors()) {
+				message += error.getDefaultMessage() + ". ";
+			}
+			response.setMessage(message.trim());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+		}
 		try {
-			bookRepository.deleteById(id);
-			response.setSuccess(true);
-			return ResponseEntity.status(HttpStatus.OK).body(response);
-		} catch(Exception e) {
-			e.printStackTrace();
-			response.setSuccess(false);
+			response.setData(authorAPIService.saveAuthorDTO(dto));
+			response.setMessage("Successful!");
+			response.setSuccess(true);	
+			return ResponseEntity.ok(response);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			response.setMessage(ex.getMessage());
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
 		}
 	}
