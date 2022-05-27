@@ -21,7 +21,7 @@ public class TestAPI {
 	public ResponseEntity a(@PathVariable Long id) {
 		ResponseObject response = new ResponseObject<>();
 		try {
-			bookRepository.deleteById(id);
+			response.setData(bookRepository.findById(id).get().getUser());
 			response.setSuccess(true);
 		} catch (Exception e) {
 			e.printStackTrace();

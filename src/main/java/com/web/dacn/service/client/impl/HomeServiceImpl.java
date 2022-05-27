@@ -21,6 +21,7 @@ import com.web.dacn.dto.user.UserDto;
 import com.web.dacn.entity.book.Book;
 import com.web.dacn.entity.book.BookCategory;
 import com.web.dacn.entity.quote.Quote;
+import com.web.dacn.entity.user.User;
 import com.web.dacn.repository.BookRepository;
 import com.web.dacn.repository.QuoteRepository;
 import com.web.dacn.service.client.HomeService;
@@ -114,8 +115,11 @@ public class HomeServiceImpl implements HomeService{
 		    	BeanUtils.copyProperties(entity, bookDTO);
 		    	
 		    	UserDto userDTO =  new UserDto();
-		    	BeanUtils.copyProperties(entity.getUser(), userDTO);
-		    	bookDTO.setUser(userDTO);
+		    	User user = entity.getUser();
+		    	if(user != null) {
+			    	BeanUtils.copyProperties(user, userDTO);
+			    	bookDTO.setUser(userDTO);		    		
+		    	}
 		    	
 		    	List<BookCategory> listBookCategories = entity.getCategories();
 		    	List<BookCategoryDTO> listBookCategoryDTOs = listBookCategories.stream().map(e -> {

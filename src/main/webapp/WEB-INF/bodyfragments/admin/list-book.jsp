@@ -59,9 +59,7 @@
 			</div>
 
 			<div class="books-total">
-
 				<p class="books-amount">Tổng số sách là  ${total} quyển</p>
-
 			</div>
 		</div>
 		<!-- Manage book button-->
@@ -118,8 +116,9 @@
 							</c:otherwise>
 						</c:choose>
 
-						<td class="book-data">${book.mod_time }</td>
-						<td class="book-data tr-width-12"><c:forEach
+						<td class="book-data">${book.modTime }</td>
+						<td class="book-data tr-width-12">
+						<c:forEach
 								items="${readFormats}" var="readFormat">
 								<c:if test="${readFormat.key==book.id }">
 									<c:forEach items="${readFormat.value}" var="format">
@@ -199,4 +198,3 @@ checkboxBtn.onclick= function(){
 	}
 }
 
-</script>

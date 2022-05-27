@@ -14,13 +14,13 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CommentBookDTO implements Serializable{
+public class CommentBookDTO implements Serializable {
 	private Long id;
 	private String content;
 	private Date modTime;
 	private CommentBookDTO commentBook;
-	private UserDto user; 
-	private BookDTO book; 
+	private UserDto user;
+	private BookDTO book;
 	private List<CommentBookDTO> commentBooks = new ArrayList<CommentBookDTO>();
 	private Integer status = 1;
 	private int star = 0;
