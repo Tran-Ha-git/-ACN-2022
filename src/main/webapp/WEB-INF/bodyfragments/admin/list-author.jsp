@@ -174,19 +174,19 @@
 					<c:when test="${sortName == 'modTime' && sortType == 'DESC'}">
 						<th class="header-row-content"><a
 							href="/admin/authors?search=${search}&sort=modTime__ASC">Ngày
-								tạo <i class="fa-solid fa-arrow-down"></i>
+								cập nhật <i class="fa-solid fa-arrow-down"></i>
 						</a></th>
 					</c:when>
 					<c:when test="${sortName == 'modTime' && sortType == 'ASC'}">
 						<th class="header-row-content"><a
 							href="/admin/authors?search=${search}&sort=modTime__DESC">Ngày
-								tạo <i class="fa-solid fa-arrow-up"></i>
+								cập nhật <i class="fa-solid fa-arrow-up"></i>
 						</a></th>
 					</c:when>
 					<c:otherwise>
 						<th class="header-row-content"><a
 							href="/admin/authors?search=${search}&sort=modTime__DESC">Ngày
-								tạo </a></th>
+								cập nhật </a></th>
 					</c:otherwise>
 				</c:choose>
 				<th class="header-row-content">Tùy chỉnh</th>
@@ -203,7 +203,7 @@
 							value="${author.birthday}" pattern="dd/MM/yyyy" /></td>
 					<td class="author-data tr-width-12">${author.address}</td>
 					<td class="author-data tr-width-12">${author.phone}</td>
-					<td class="author-data tr-width-12">${author.status}</td>
+					<td class="author-data tr-width-12">${author.status == 1 ? "Kích hoạt" : "Không kích hoạt"}</td>
 					<td class="author-data tr-width-12"><fmt:formatDate
 							value="${author.modTime}" pattern="dd/MM/yyyy" /></td>
 					<td class="book-data ">
