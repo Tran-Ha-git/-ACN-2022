@@ -10,7 +10,8 @@
 
 
 	<div class="list-book-container">
-		<form action="/admin/editBook/${book.id}" method="post" enctype="multipart/form-data">
+		<form action="/admin/editBook/${book.id}" method="post"
+			enctype="multipart/form-data">
 			<label>Tên sách</label> <input type="text" name="name"
 				class="width-input" value="${book.name}" /><br /> <br /> <label>Upload
 				hình</label><br /> <input type="file" name="fileUpload" class="width-input"
@@ -20,7 +21,7 @@
 				<div class="form-lable-3">
 					<label>Trạng thái</label><br /> <select name="status"
 						class="width-input">
-				
+
 						<option value="1">Hoàn thành</option>
 						<option value="2">Đang cập nhật</option>
 						<option value="0">Đã xóa</option>
@@ -29,7 +30,7 @@
 
 				<div class="form-lable-3">
 					<label>Loại</label><br /> <input type="checkbox"
-						class="width-input"  value="false" name="vip" ${check}/> <label>Vip</label>
+						class="width-input" value="false" name="vip" ${check} /> <label>Vip</label>
 
 				</div>
 
@@ -46,12 +47,12 @@
 			</div>
 
 			<label>Meta title</label><br /> <input type="text" name="metaTitle"
-				class="width-input" value="${book.metaDescription}" /><br /> <br /> <label>Meta
-				Description</label> <input type="text" name="metaDescription"
 				class="width-input" value="${book.metaDescription}" /><br /> <br />
-			<label>Giới thiệu sách</label><br /> <input type="text"
-				name="description" class="width-input" value="${book.description}">
-			<br /> <br />
+			<label>Meta Description</label> <input type="text"
+				name="metaDescription" class="width-input"
+				value="${book.metaDescription}" /><br /> <br /> <label>Giới
+				thiệu sách</label><br /> <input type="text" name="description"
+				class="width-input" value="${book.description}"> <br /> <br />
 
 			<div class="listCheck_three">
 				<div class="list-checkbox">
@@ -82,7 +83,6 @@
 					<div class="form-1">
 						<c:forEach items="${book.categories}" var="category">
 							<div class="form_input">
-							
 							<input class="categoryName"
 							       type="radio" 
 							       name ="radio"
@@ -98,7 +98,7 @@
 						</c:forEach>
 					</div>
 				</div>
-				
+
 				<div class="list-checkbox pdf-links">
 					<p>Link pdf</p>
 					<div class="form-1">
@@ -125,7 +125,7 @@
 						</c:url>
 						<a href="${url}" class="grey">Cập nhật danh sách Audio</a>
 					</div>
-					
+
 				</div>
 			</div>
 

@@ -1,21 +1,33 @@
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <div class='center'>
 	<div class='right-panel-active container' id="container">
 		<div class='form-container sign-up-container'>
-			<form action="#">
+			<form:form action="/auth/signup" modelAttribute="user">
 				<h1>Create Account</h1>
 				<div class='social-container'>
 					<a href="#" class='social'><i class="fab fa-facebook-f"></i></a> <a
 						href="#" class='social'><i class="fab fa-google-plus-g"></i></a> <a
 						href="#" class='social'><i class="fab fa-linkedin-in"></i></a>
 				</div>
-				<span>or use your email for registration</span> <input type="text"
-					placeholder="Name" /> <input type="email" placeholder="Email" />
-				<input type="password" placeholder="Password" />
+				<form:input  path="username"  placeholder="Username" />
+				<form:errors path="username" cssClass="error"/>
+				<form:input  path="email" type="email" placeholder="Email" />
+				<form:errors path="email" cssClass="error"/>
+				<form:input  path="password" type="password" placeholder="Password" />
+				<form:errors path="password" cssClass="error"/> 
+				<form:input  path="fullname" placeholder="Full name" />
+				<form:errors path="fullname" cssClass="error"/>
+				<form:input  path="birthday" type="date" placeholder="Birthday" /> 
+				<form:errors path="birthday" cssClass="error"/>  
+				<form:input  path="address" placeholder="Address" /> 
+				<form:errors path="address" cssClass="error"/>  
+				<form:input  path="phone" placeholder="Phone" /> 
+				<form:errors path="phone" cssClass="error"/> 
 				<button>Sign Up</button>
-			</form>
+			</form:form>
 		</div>
 		<div class='form-container sign-in-container'>
-			<form method="POST">
+			<form action="/auth/login" method="POST"">
 				<h1>Sign in</h1>
 				<div class='social-container'>
 					<a href="#" class='social'><i class="fab fa-facebook-f"></i></a> <a

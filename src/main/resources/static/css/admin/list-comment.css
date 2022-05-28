@@ -5,7 +5,7 @@
 :root{
     --header-manage-list-height: 64px;
     --side-menu-width:300px;
-    --container-width:1000px;
+    --container-width:1150px;
     
     --light-grey-color:#E8E8E8;
     --btn-blue-color: #0000FF;
@@ -29,6 +29,11 @@
 .header-manage-list .account-menu{
     margin: 8px 16px;
     
+}
+.search-bookname-input{
+    
+   
+
 }
 .dropdown {
     position: relative;
@@ -99,25 +104,30 @@
     background-color:  var(--light-grey-color);
     
 }
-
-.side-menu .menu-manage-user{
-    background-color: #CFCFCF;
+.menu-manage-book{
+border:1px solid rgb(190, 190, 190);
+background-color:#E8E8E8 ;
+}
+.side-menu .menu-manage-book{
+   
+    
     padding:16px 10px;   
 }
-.side-menu .menu-manage-user-name{
+.manage-review{
+    background-color:#ccc ;
+}
+.side-menu .menu-manage-book-name{
     font-size:20px;
 }
 .search{
-    margin: 10px 0px;
-}
-.search .search-by-username{
-    display: inline-block;
     
-    margin: 10px 0px;
+    margin: 10px 5px;
 }
-.search-username-input{
-    padding: 4px;
-    width: 500px;
+.search .search-by-bookname, .search-by-authorname{
+     display: inline; 
+   
+     margin: 10px 20px;
+    
 }
 .search .search-btn{
     text-decoration: none;
@@ -126,56 +136,45 @@
     color: #fff;
     border-radius: 5px;
 }
-.user-role{
+.manage-filter{
+    text-decoration: none;
+    color: black;
+}
+.manage-book{
     position: relative;
-    margin-bottom: 64px;
+    margin: 30px 5px;
+}
+.manage-book .manage-book-btn{
+    position: relative;
+    top: 10px;   
+}
+.manage-book .add-book-btn, 
+.manage-book .delete-book-btn {
+    margin-right: 15px;
+    text-decoration: none;
+    padding: 8px 20px;
+    border-radius: 5px;
+}
 
+.manage-book .add-book-btn{
+    background-color:  var(--btn-blue-color);
+    color: #fff;
 }
-.role-control{
-    position: absolute;
-    top : 5px;
-}
-.user-role .manage-user-btn{
-    position: relative;
-    top: 5px;
-  
-}
-.edit-user-btns .cancel-btn, .edit-user-btns .save-change-btn{
-  
-    right:0px;  
-    text-decoration: none;
-    padding: 12px 36px;
-    border-radius: 5px;
-}
-.user-role .delete-user-btn {
-    position: absolute;
-    right:0px;  
-    text-decoration: none;
-    padding: 12px 36px;
-    border-radius: 5px;
-   
-}
-.cancel-btn{
+.manage-book .delete-book-btn{
     background-color: #696969;
-    color: #fff;
-}
-.save-change-btn{
-    background-color: var(--btn-blue-color);
-    color: #fff;
-}
-
-.delete-user-btn{
-    background-color: rgb(196, 17, 17);
     color: #fff;  
 }
-
-
-.list-user-container{
+.manage-book  .books-amount{
+    position: absolute;
+    right: 0;
+    top:0;
+}
+.list-book-container{
     margin-top: 50px;
     width: 100%;
     position: relative;
 }
-.list-user-container .list-user-table{
+.list-book-container .list-book-table{
    
     width: 100%;
 
@@ -184,24 +183,27 @@
     border-right: 1px solid #000;
     text-align: center;
 }
-.list-user-container .list-user-table, th, td{
+.list-book-container .list-book-table, th, td{
     border-top:1px solid #000;
     border-bottom:1px solid #000;
     padding-top:10px;
     padding-bottom:10px;
 }
-.data-row .user-data .user-image{
+.data-row .book-data .book-image{
   width:36px;
   height: 36px;
 }
 
-.custom-btn .edit-custom-btn, 
-.custom-btn .delete-custom-btn{
+
+.custom-btn .spam-custom-btn, 
+.custom-btn .delete-custom-btn,
+.custom-btn .approved-custom-btn{
     text-decoration: none;
     padding: 5px 15px;
     background-color:  var(--btn-blue-color);
     color: #fff;
     border-radius: 20px;
+    margin:1px;
 }
 .add-image .add-image-btn{
     text-decoration: none;
@@ -211,6 +213,26 @@
     border-radius: 50px;
     text-align: center;
 }
+.comment-img{
+   width: 20px;
+   margin-left: 24px;
+
+}
+.comment-icon{
+    height: 20px;
+}
+.commnet-space{
+display: flex;
+}
+
+.comment-email{
+    margin-left: 40px;
+}
+
+.comment-width{
+font-size: 30px;
+}
+
 
 .paging{
     position: absolute;
@@ -247,35 +269,7 @@
 .fas, .far{
     border: none;
 }
-.edit-content{
-    border: 1px solid #000;
-    padding: 12px 36px;
 
-    
-}
-.user-info-title, .user-info-value{
-    font-size:20px;
-    margin-bottom: 24px;
-}
-.user-info-title{
-    display: inline-block;
-    width:160px;
-
-}
-.select-role{
-    font-size:16px;
-    width:100px;
-}
-.role-user, .role-admin{
-    font-size:20px;
-   
-}
-.role-admin{
-    text-decoration: none;
-}
-.edit-user-btns{
-    position: absolute;
-    right: 32px;
-    bottom: -50px;
-    padding: 8px 12px;
+.side-menu .menu-manage-book.active {
+    background-color: #e8e8e8;
 }

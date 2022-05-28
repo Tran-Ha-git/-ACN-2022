@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.web.dacn.entity.book.Audio;
 import com.web.dacn.entity.user.User;
 
 @Repository
@@ -22,7 +23,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	public Optional<User> findByEmail(String email);
 
 	User findUserById(long id);
-  
 	
 	@Query(value = "select * from user u join user_role ur"
 			+ " on u.id=ur.user_id where u.status <> 0 and  "
@@ -34,6 +34,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	
 	Page<User> findByPhone(Pageable pageable, String phone);
 
-	
-	
 }

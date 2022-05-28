@@ -59,9 +59,7 @@
 			</div>
 
 			<div class="books-total">
-
 				<p class="books-amount">Tổng số sách là  ${total} quyển</p>
-
 			</div>
 		</div>
 		<!-- Manage book button-->
@@ -200,4 +198,3 @@ checkboxBtn.onclick= function(){
 	}
 }
 
-</script>

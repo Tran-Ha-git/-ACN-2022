@@ -1,4 +1,5 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 
 <header>
 	<div class="container-header container">
@@ -25,9 +26,12 @@
 				<li><a href="/books?type=pdf">Truyện</a></li>
 				<li><a href="#">VIP</a></li>
 				<li><a href="/quotes">Danh ngôn</a></li>
+				<c:if test="${user == null}" > 
+				<li><a href="/auth/login">Đăng nhập</a></li>
+				</c:if>
 				</ul>
 			</nav>
-			<c:if test="${pageContext.request.userPrincipal.name != null}">
+			<c:if test="${user != null}" >
 				<span class="my-account">
 				<a href="#" class="account">
 					<div class="avatar">
@@ -35,16 +39,14 @@
 					</div>
 					<div class="info">
 						<div class="title-info">Tài khoản</div>
-						<div class="name-info">${pageContext.request.userPrincipal.name}</div>
+						<div class="name-info">${user.fullname}</div>
 					</div>
 				</a>
-				<a  href="/logout" class="logout-btn"  >Đăng xuất</a>
-					
-					<input type="hidden" id="username" name="username" value="${pageContext.request.userPrincipal.name}">
-					<input type="hidden" id="userId" name="custId" value="">
+				<c:if test="${user != null}" > 
+				<a  href="/auth/logout" class="logout-btn"  >Đăng xuất</a>
+				</c:if>
 				</span>
-								 
-			 </c:if>
+			</c:if>			 
 		</div>
 	</div>
 </header>

@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,7 +37,7 @@ public class AddBookController {
 	@RequestMapping(value = "/books/add")
 
 	public String add(@ModelAttribute Book book, ModelMap model, HttpServletRequest request,
-			@RequestParam("fileUpload") MultipartFile file) throws ParseException, IOException {
+			@RequestParam("fileUpload") MultipartFile file, HttpSession session) throws ParseException, IOException {
 		String authorName = request.getParameter("fullname");
 		String categoryName = request.getParameter("categoryName");
 		String vip = request.getParameter("vip");
@@ -45,60 +46,62 @@ public class AddBookController {
 			book.setVip(true);
 		}
 
-		// sd @manyToMany
-		User user = userService.getById(14L);
-		long millis = System.currentTimeMillis();
-		Date date = new Date(millis);
-		String serverImageFilePath = uploadFile.upload(file, request, "/assets/images/");
+		User user = (User) session.getAttribute("user");
+		if (user != null) {
+			book.setUser(user);
 
-		if (serverImageFilePath == null) {
-			model.addAttribute("message", "Your image has not been upload yet");
+			long millis = System.currentTimeMillis();
+			Date date = new Date(millis);
+			String serverImageFilePath = uploadFile.upload(file, request, "/assets/images/");
 
-			return "message";
+			if (serverImageFilePath == null) {
+				model.addAttribute("message", "Your image has not been upload yet");
 
+				return "message";
+
+			}
+			book.setModTime(date);
+			book.setUser(user);
+			book.setThumbnail(serverImageFilePath);
+
+			Author author = bookService.findAuthorByFullName(authorName);
+			if (author != null) {
+				book.getAuthors().add(author);
+			} else {
+				Author newAuthor = new Author();
+
+				newAuthor.setFullname(authorName);
+				newAuthor.setDescription("default");
+				newAuthor.setSlug(authorName.trim().replaceAll(" ", "-"));
+				newAuthor.setModTime(date);
+				newAuthor.setUser(user);
+
+				bookService.saveAuthor(newAuthor);
+				book.getAuthors().add(newAuthor);
+
+			}
+
+			List<BookCategory> categories = bookService.findCategoryByName(categoryName);
+
+			if (categories.size() > 0) {
+				BookCategory category = categories.get(0);
+				// category.getBooks().add(book);
+				book.getCategories().add(category);
+
+			} else {
+				BookCategory newCategory = new BookCategory();
+
+				newCategory.setName(categoryName);
+				newCategory.setSlug(categoryName.trim().replaceAll(" ", "-"));
+
+				bookService.saveCategory(newCategory);
+				// newCategory.getBooks().add(book);
+				book.getCategories().add(newCategory);
+
+			}
+
+			bookService.saveBook(book);
 		}
-		book.setModTime(date);
-		book.setUser(user);
-		book.setThumbnail(serverImageFilePath);
-
-		Author author = bookService.findAuthorByFullName(authorName);
-		if (author != null) {
-			book.getAuthors().add(author);
-
-		} else {
-			Author newAuthor = new Author();
-
-			newAuthor.setFullname(authorName);
-			newAuthor.setDescription("default");
-			newAuthor.setSlug(authorName.trim().replaceAll(" ", "-"));
-			newAuthor.setModTime(date);
-			newAuthor.setUser(user);
-
-			bookService.saveAuthor(newAuthor);
-			book.getAuthors().add(newAuthor);
-
-		}
-
-		List<BookCategory> categories = bookService.findCategoryByName(categoryName);
-
-		if (categories.size() > 0) {
-			BookCategory category = categories.get(0);
-
-			book.getCategories().add(category);
-
-		} else {
-			BookCategory newCategory = new BookCategory();
-
-			newCategory.setName(categoryName);
-			newCategory.setSlug(categoryName.trim().replaceAll(" ", "-"));
-
-			bookService.saveCategory(newCategory);
-			book.getCategories().add(newCategory);
-
-		}
-
-		bookService.saveBook(book);
-
 		return "redirect:/admin/books";
 
 	}
