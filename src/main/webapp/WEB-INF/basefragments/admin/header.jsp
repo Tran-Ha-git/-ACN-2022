@@ -14,17 +14,7 @@
 				<button class="dropbtn">
 					<img src="/assets/images/dacnhantam.png" alt="Account's image"
 						class="account-image-circle" /> 
-						<!--  Thoai Anh  -->
-						 
-						 <c:if test="${pageContext.request.userPrincipal.name != null}">
-						 ${pageContext.request.userPrincipal.name}
-						 
-						 <input type="hidden" id="username" name="username" value="${pageContext.request.userPrincipal.name}">
-						 <input type="hidden" id="userId" name="custId" value="">
-						  </c:if>
-				
-						 Thoai Anh <i
-						class="fas fa-caret-down"></i>
+						${user.fullname} <i class="fas fa-caret-down"></i>
 				</button>
 			</div>
 
@@ -32,7 +22,7 @@
 				<a href="#">Trang cá nhân</a>
 				 <a href="#">Thông báo</a>
 				  <a href="#">Cài đặt</a>
-				  <a href="<c:url value="/logout" />" >Đăng xuất</a>
+				  <a href="/auth/logout" >Đăng xuất</a>
 			</div>
 		</div>
 
