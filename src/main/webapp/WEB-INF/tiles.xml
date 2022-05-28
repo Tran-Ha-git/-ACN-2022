@@ -187,7 +187,7 @@
 		<put-attribute name="body"
 			value="/WEB-INF/bodyfragments/admin/usermanagement.jsp" />
 		<put-attribute name="user-style"
-			value="css/admin/userstyles.css" />
+			value="css/admin/list-book.css" />
 	</definition>
 	
 		<!-- Admin Edit User Page -->
@@ -196,7 +196,7 @@
 		<put-attribute name="title" value="Admin Edit User Page" />
 		<put-attribute name="body"
 			value="/WEB-INF/bodyfragments/admin/edituser.jsp" />
-		<put-attribute name="user-style" value="css/admin/userstyles.css" />
+		<put-attribute name="user-style" value="css/admin/list-book.css" />
 	</definition>
 
 </tiles-definitions> 
