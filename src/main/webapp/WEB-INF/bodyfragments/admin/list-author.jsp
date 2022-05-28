@@ -39,7 +39,7 @@
 	<!-- Manage author button -->
 	<div class="manage-author">
 		<div class="manage-author-btn">
-			<a href="#" class="add-author-btn"><i class="fas fa-plus-circle"></i>Thêm
+			<a href="/admin/authors/new" class="add-author-btn"><i class="fas fa-plus-circle"></i>Thêm
 				tác giả</a> <a href="#" class="delete-author-btn" id="delete-author-btn"><i
 				class="far fa-times-circle"></i>Xóa</a>
 		</div>
@@ -208,7 +208,7 @@
 							value="${author.modTime}" pattern="dd/MM/yyyy" /></td>
 					<td class="book-data ">
 						<div class="custom-btn">
-							<a href="#" class="edit-custom-btn">Sửa</a> <a href="#"
+							<a href="/admin/authors/update/${author.id}" class="edit-custom-btn">Sửa</a> <a href="#"
 								class="delete-custom-btn" onclick="deleteSelected([${author.id}])">Xóa</a>
 						</div>
 					</td>

@@ -17,12 +17,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.web.dacn.entity.book.Book;
+import com.web.dacn.entity.quote.Quote;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -59,6 +61,12 @@ public class Author implements Serializable {
 	@Column(columnDefinition = "nvarchar(MAX)")
 	private String description;
 
+	@Column(name = "meta_title")
+	private String metaTitle;
+	
+	@Column(name = "meta_description")
+	private String metaDescription;
+	
 	private Integer status;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -74,6 +82,10 @@ public class Author implements Serializable {
 	@JsonIgnore
 	private List<Book> books = new ArrayList<>();
 
+	@OneToMany(targetEntity = Quote.class, mappedBy = "author", cascade = CascadeType.PERSIST)
+	@JsonIgnore
+	private List<Quote> quotes;
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(getId());

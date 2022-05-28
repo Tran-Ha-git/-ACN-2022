@@ -23,6 +23,7 @@ table tr {
 
 table tr, table td {
   padding: 10px;
+  text-align: left;
 }
 
 form {
@@ -59,10 +60,10 @@ form button:hover {
   opacity: 0.8;
 }
 
-form button.btn-save {
+form button.btn-update {
   border: none;
   color: white;
-  background-color: green;
+  background-color: rgb(255, 128, 0);
   border-radius: 5px;
 }
 
@@ -71,6 +72,29 @@ form button.btn-clear {
   color: white;
   background-color: red;
   border-radius: 5px;
+}
+
+.section {
+	margin-bottom: 20px;
+}
+
+.section h1 {
+	margin-bottom: 20px;
+}
+
+.section .books {
+	list-style-type: none;
+	padding: 0px;
+}
+
+.section .books li {
+	padding: 10px 0px;
+}
+
+.section .books a {
+	text-decoration: none;
+	font-size: 20px;
+	color: #727200;
 }
 
 @media screen and (max-width: 900px) {

@@ -15,4 +15,6 @@ public interface AuthorRepository extends JpaRepository<Author, Long> {
 	Page<Author> findByFullnameContaining(String fullname, Pageable page);
 	Author findByFullname(String name);
 	Optional<Author> findBySlug(String slug);
+	boolean existsBySlug(String slug);
+	boolean existsByIdNotAndSlug(Long id, String slug);
 }

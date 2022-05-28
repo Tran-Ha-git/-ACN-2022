@@ -6,10 +6,9 @@ import java.util.Date;
 import java.util.List;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 import com.web.dacn.dto.book.BookDTO;
-import com.web.dacn.entity.book.Book;
+import com.web.dacn.dto.quote.QuoteDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,8 +31,13 @@ public class AuthorDTO implements Serializable{
 	
 	@NotBlank(message = "Description must be not blank")
 	private String description;
+	
+	private String metaTitle;
+	private String metaDescription;
+
 	private Integer status;
 	private Date modTime;
 	private UserDto user;
 	private List<BookDTO> books = new ArrayList<>();	
+	private List<QuoteDto> quotes = new ArrayList<>();
 }

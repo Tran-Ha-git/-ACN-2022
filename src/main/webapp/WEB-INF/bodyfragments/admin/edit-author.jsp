@@ -6,22 +6,23 @@
 <div class="main">
 	<div class="title">
 		<a href="/admin/authors" class="back"><i class="fa-solid fa-arrow-left"></i></a>
-		<h1>Thêm mới tác giả</h1>
+		<h1>Sửa thông tin tác giả</h1>
 	</div>
-	<form method="POST" action="/api/authors" id="form">
+	<form method="PUT" action="/api/authors" id="form">
+		<input type="hidden" name="id" value="${author.id}" />
 		<table>
 			<tbody>
 				<tr>
 					<td>
 						<div class="input">
 							<label for=""><span class="required">*</span>Họ tên</label> <input
-								type="text" name="fullname" required />
+								type="text" name="fullname" required value="${author.fullname}" />
 						</div>
 					</td>
 					<td>
 						<div class="input">
 							<label for=""><span class="required">*</span>Mô tả</label> <input
-								type="text" name="description" required />
+								type="text" name="description" required value="${author.description}" />
 						</div>
 					</td>
 				</tr>
@@ -29,13 +30,13 @@
 					<td>
 						<div class="input">
 							<label for=""><span class="required">*</span>Slug</label> <input
-								type="text" name="slug" required />
+								type="text" name="slug" required value="${author.slug}" />
 						</div>
 					</td>
 					<td>
 						<div class="input">
 							<label for="">Số điện thoại</label> <input type="text"
-								name="phone" />
+								name="phone" value="${author.phone}" />
 						</div>
 					</td>
 				</tr>
@@ -43,12 +44,12 @@
 					<td>
 						<div class="input">
 							<label for="">Ngày sinh</label> <input type="date"
-								name="birthday" />
+								name="birthday" value="<fmt:formatDate value="${author.birthday}" pattern="yyyy-MM-dd" />" />
 						</div>
 					</td>
 					<td>
 						<div class="input">
-							<label for="">Địa chỉ</label> <input type="text" name="address" />
+							<label for="">Địa chỉ</label> <input type="text" name="address" value="${author.address}" />
 						</div>
 					</td>
 				</tr>
@@ -56,13 +57,13 @@
 					<td>
 						<div class="input">
 							<label for="">Tiêu đề SEO</label> <input
-								type="text" name="metaTitle" />
+								type="text" name="metaTitle" value="${author.metaTitle}" />
 						</div>
 					</td>
 					<td>
 						<div class="input">
 							<label for="">Mô tả SEO</label> <input type="text"
-								name="metaDescription" />
+								name="metaDescription" value="${author.metaDescription}" />
 						</div>
 					</td>
 				</tr>
@@ -71,17 +72,44 @@
 					<td>
 						<div class="input checkbox">
 							<label for="">Kích hoạt</label> <input type="checkbox"
-								name="status" value="1" />
+								name="status" value="${author.status}" ${author.status == 1 ? 'checked' : ''}/>
 						</div>					
 					</td>
 					<td>
-						<button class="btn-save" type="submit">Lưu</button>
+						<button class="btn-update" type="submit">Sửa</button>
 						<button class="btn-clear" type="reset">Clear</button>
 					</td>
 				</tr>
 			</tbody>
 		</table>
 	</form>
+	<c:if test="${author.books.size() > 0}">
+		<div class="section">
+			<h1>Sách của tác giả</h1>
+			
+			<ul class="books">
+				<c:forEach items="${author.books}" var="book" varStatus="loop">
+					<li>
+						<a href="/admin/books/${book.id}">${loop.index + 1}. ${book.name}</a>
+					</li>	
+				</c:forEach>
+			</ul>
+		</div>	
+	</c:if>
+	<c:if test="${author.quotes.size() > 0}">
+		<div class="section">
+			<h1>Danh ngôn của tác giả</h1>
+			
+			<ul class="books">
+				<c:forEach items="${author.quotes}" var="quote" varStatus="loop">
+					<li>
+						<a href="/admin/quotes/${quote.id}">${loop.index + 1}. ${quote.content}</a>
+					</li>	
+				</c:forEach>
+			</ul>
+		</div>	
+	</c:if>
+
 </div>
 
 <div class="modal" data-modal="trigger-1" id="modal">
@@ -141,7 +169,7 @@ $("#form").submit(function(e) {
     if(!request.status) request.status = 0;
     
     $.ajax({
-        type: "POST",
+        type: "PUT",
         url: actionUrl,
         contentType: "application/json; charset=utf-8",
         data : JSON.stringify(request),        

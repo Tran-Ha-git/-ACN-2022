@@ -2,11 +2,14 @@ package com.web.dacn.controller.admin.author;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.web.dacn.dto.user.AuthorDTO;
 import com.web.dacn.service.admin.AuthorService;
 
 @Controller
@@ -39,6 +42,24 @@ public class AuthorController {
 	public ModelAndView newAuthor() {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("adminNewAuthor");
+		return modelAndView;
+	}
+	
+	@GetMapping("/update/{id}")
+	@ExceptionHandler(Exception.class)
+	public ModelAndView update(@PathVariable Long id, Exception ex) {
+		ModelAndView modelAndView = new ModelAndView();
+		if(ex == null) {			
+			modelAndView.setViewName("404");
+		} else {
+			AuthorDTO authorDTO = authorService.findById(id);
+			if(authorDTO != null) {
+				modelAndView.addObject("author", authorDTO);
+				modelAndView.setViewName("adminUpdateAuthor");
+			} else {
+				modelAndView.setViewName("404");				
+			}
+		}
 		return modelAndView;
 	}
 }

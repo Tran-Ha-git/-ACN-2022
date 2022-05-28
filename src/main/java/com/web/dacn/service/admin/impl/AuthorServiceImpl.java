@@ -1,5 +1,7 @@
 package com.web.dacn.service.admin.impl;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 
 import org.springframework.beans.BeanUtils;
@@ -9,11 +11,17 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.web.dacn.dto.book.BookDTO;
+import com.web.dacn.dto.quote.QuoteDto;
 import com.web.dacn.dto.user.AuthorDTO;
 import com.web.dacn.dto.user.UserDto;
+import com.web.dacn.entity.book.Book;
+import com.web.dacn.entity.quote.Quote;
 import com.web.dacn.entity.user.Author;
 import com.web.dacn.entity.user.User;
 import com.web.dacn.repository.AuthorRepository;
+import com.web.dacn.repository.BookRepository;
+import com.web.dacn.repository.QuoteRepository;
 import com.web.dacn.service.admin.AuthorService;
 
 @Service
@@ -53,12 +61,35 @@ public class AuthorServiceImpl implements AuthorService {
 		    	if(user != null) {
 			    	UserDto userDTO =  new UserDto();
 			    	BeanUtils.copyProperties(author.getUser(), userDTO);
-			    	authorDTO.setUser(userDTO);		    		
+			    	authorDTO.setUser(userDTO);
 		    	}
-		    			    	
+		    		    			    			    	
 		    	return authorDTO;
 		    }
 		});	
 	}
 
+	@Override
+	public AuthorDTO findById(Long id) {
+		Optional<Author> optional = authorRepository.findById(id);
+		if(optional.isPresent()) {
+			AuthorDTO authorDTO = new AuthorDTO();
+			BeanUtils.copyProperties(optional.get(), authorDTO);
+
+			optional.get().getBooks().stream().forEach(entity -> {
+				BookDTO bookDTO = new BookDTO();
+				BeanUtils.copyProperties(entity, bookDTO);
+				authorDTO.getBooks().add(bookDTO);
+			});
+			
+			optional.get().getQuotes().stream().forEach(entity -> {
+				QuoteDto quoteDTO = new QuoteDto();
+				BeanUtils.copyProperties(entity, quoteDTO);
+				authorDTO.getQuotes().add(quoteDTO);
+			});
+			
+			return authorDTO;
+		} 
+		return null;
+	}
 }

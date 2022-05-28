@@ -1,6 +1,7 @@
 package com.web.dacn.service.api.impl;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
@@ -41,4 +42,31 @@ public class AuthorAPIServiceImpl implements AuthorAPIService {
 		BeanUtils.copyProperties(author, dto);
 		return dto;
 	}
+	
+	@Override
+	public AuthorDTO updateAuthorDTO(AuthorDTO dto) throws RuntimeException {
+		Author author = new Author();
+		BeanUtils.copyProperties(dto, author);
+		author.setModTime(new Date());
+		authorRepository.save(author);
+		BeanUtils.copyProperties(author, dto);
+		return dto;
+	}
+
+	@Override
+	public Optional<Author> findById(Long id) {
+		return authorRepository.findById(id);
+	}
+
+	@Override
+	public boolean isExistsBySlug(String slug) {
+		return authorRepository.existsBySlug(slug);
+	}
+
+	@Override
+	public boolean isExistsByIdNotAndSlug(Long id, String slug) {
+		return authorRepository.existsByIdNotAndSlug(id, slug);
+	}
+	
+	
 }
