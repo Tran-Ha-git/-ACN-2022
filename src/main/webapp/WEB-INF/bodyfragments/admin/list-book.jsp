@@ -39,15 +39,25 @@
 
 	</div>
 	<!-- End Search -->
-
+<form method="post" action="/admin/DeleteAll">
 
 	<!-- Manage book button -->
 	<div class="manage-book">
-		<div class="manage-book-btn">
-			<a href="#" class="add-book-btn"><i class="fas fa-plus-circle"></i>Thêm
-				sách</a> <a href="#" class="delete-book-btn"><i
-				class="far fa-times-circle"></i>Xóa</a>
-		</div>
+			<div class="manage-book-btn">
+				<c:url value="/admin/books/addBook" var="url">
+
+
+				</c:url>
+				<a href="${url}" class="add-book-btn"><i
+					class="fas fa-plus-circle"></i>Thêm sách</a>
+				<c:url value="/admin/DeleteAll" var="url">
+
+
+				</c:url>
+				<button class="delete-book-btn" type="submit">
+					<i class="far fa-times-circle"></i>Xóa
+				</button>
+			</div>
 
 		<div class="books-total">
 
@@ -121,9 +131,19 @@
 
 					<td class="book-data ">
 						<div class="custom-btn">
-							<a href="#" class="edit-custom-btn">Sửa</a> <a href="#"
-								class="delete-custom-btn">Xóa</a>
-						</div>
+
+								<c:url value="/admin/edit" var="url">
+									<c:param name="id" value="${book.id}" />
+
+								</c:url>
+								<a href="${url}" class="edit-custom-btn">Sửa</a>
+								<c:url value="/admin/delete-book" var="url">
+									<c:param name="id" value="${book.id}" />
+
+								</c:url>
+								<a href="${url}" class="delete-custom-btn">Xóa</a>
+
+							</div>
 					</td>
 				</tr>
 			</c:forEach>
