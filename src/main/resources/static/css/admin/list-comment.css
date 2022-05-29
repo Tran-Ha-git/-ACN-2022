@@ -273,3 +273,7 @@ font-size: 30px;
 .side-menu .menu-manage-book.active {
     background-color: #e8e8e8;
 }
+
+.side-menu .menu-manage-book a{
+	text-decoration: none;
+}
