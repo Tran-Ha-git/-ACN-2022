@@ -196,4 +196,4 @@ checkboxBtn.onclick= function(){
 		})	
 	}
 }
-
+</script>
