@@ -27,18 +27,22 @@
 			</form:form>
 		</div>
 		<div class='form-container sign-in-container'>
-			<form action="/auth/login" method="POST"">
+			<form action="/auth/login" method="POST">
 				<h1>Sign in</h1>
 				<div class='social-container'>
 					<a href="#" class='social'><i class="fab fa-facebook-f"></i></a> <a
 						href="#" class='social'><i class="fab fa-google-plus-g"></i></a> <a
 						href="#" class='social'><i class="fab fa-linkedin-in"></i></a>
 				</div>
-				<span>or use your account</span> <input type="text"
+				<span>or use your account</span> 
+				<span>${error}</span>
+				<input type="text"
 					name="username"
-					placeholder="Username" /> <input type="password"
+					placeholder="Username" value="${userLogin.username}" required/> 
+				<input type="password"
 					name="password"
-					placeholder="Password" /> <a href="#">Forgot your password?</a>
+					placeholder="Password" value="${userLogin.password}" required/> 
+				<a href="#">Forgot your password?</a>
 				<button>Sign In</button>
 			</form>
 		</div>
@@ -48,22 +52,21 @@
 					<h1>Welcome Back!</h1>
 					<p>To keep connected with us please login with your personal
 						info</p>
-					<button class='ghost' onclick="toggleForm()" id="signIn">Sign
-						In</button>
+					<button class='ghost' onclick="toggleForm()" id="signIn">Sign In</button>
 				</div>
 				<div class='overlay-panel overlay-right'>
 					<h1>Hello, Friend!</h1>
 					<p>Enter your personal details and start journey with us</p>
-					<button class='ghost' onclick="toggleForm()" id="signUp">Sign
-						Up</button>
+					<button class='ghost' onclick="toggleForm()" id="signUp">Sign Up</button>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 <script>
-    const toggleForm = () => {
-      const container = document.getElementById('container');
-      container.classList.toggle('right-panel-active');
-    };
-  </script>
+
+function toggleForm() {
+	const container = document.getElementById('container');
+    container.classList.toggle('right-panel-active');
+}
+</script>

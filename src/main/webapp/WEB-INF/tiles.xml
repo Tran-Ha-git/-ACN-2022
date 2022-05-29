@@ -152,7 +152,25 @@
 		<put-attribute name="style" value="css/admin/list-author.css" />
 	</definition>
 	
-
+		<!-- Admin New Author Page -->
+	
+	<definition name="adminNewAuthor" extends="admin.base.definition">
+		<put-attribute name="title" value="Admin List Author Page" />
+		<put-attribute name="body"
+			value="/WEB-INF/bodyfragments/admin/new-author.jsp" />
+		<put-attribute name="style" value="css/admin/new-author.css" />
+	</definition>
+	
+	
+		<!-- Admin Update Author Page -->
+	
+	<definition name="adminUpdateAuthor" extends="admin.base.definition">
+		<put-attribute name="title" value="Admin Update Author Page" />
+		<put-attribute name="body"
+			value="/WEB-INF/bodyfragments/admin/edit-author.jsp" />
+		<put-attribute name="style" value="css/admin/edit-author.css" />
+	</definition>
+	
 	<!-- Admin Edit Book Page -->
 
 	<definition name="adminEditBook" extends="admin.base.definition">

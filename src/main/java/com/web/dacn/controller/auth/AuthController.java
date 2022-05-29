@@ -55,11 +55,14 @@ public class AuthController {
 	@PostMapping("login")
 	public ModelAndView login(ModelMap model, @Valid @ModelAttribute("user") UserLoginDto userLoginDto,
 			BindingResult result) {
-		if (result.hasErrors()) {
-			return new ModelAndView("authPage");
-		}
+//		if (result.hasErrors()) {
+//			return new ModelAndView("authPage");
+//		}
 		User user = userService.login(userLoginDto.getUsername(), userLoginDto.getPassword());
 		if (user == null) {
+			model.addAttribute("openLogin", true);
+			model.addAttribute("user", new UserDto());
+			model.addAttribute("userLogin", userLoginDto);
 			model.addAttribute("error", "Invalid username or email");
 			return new ModelAndView("authPage", model);
 		}

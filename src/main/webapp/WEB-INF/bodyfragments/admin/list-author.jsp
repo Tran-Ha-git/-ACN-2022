@@ -39,7 +39,7 @@
 	<!-- Manage author button -->
 	<div class="manage-author">
 		<div class="manage-author-btn">
-			<a href="#" class="add-author-btn"><i class="fas fa-plus-circle"></i>Thêm
+			<a href="/admin/authors/new" class="add-author-btn"><i class="fas fa-plus-circle"></i>Thêm
 				tác giả</a> <a href="#" class="delete-author-btn" id="delete-author-btn"><i
 				class="far fa-times-circle"></i>Xóa</a>
 		</div>
@@ -174,19 +174,19 @@
 					<c:when test="${sortName == 'modTime' && sortType == 'DESC'}">
 						<th class="header-row-content"><a
 							href="/admin/authors?search=${search}&sort=modTime__ASC">Ngày
-								tạo <i class="fa-solid fa-arrow-down"></i>
+								cập nhật <i class="fa-solid fa-arrow-down"></i>
 						</a></th>
 					</c:when>
 					<c:when test="${sortName == 'modTime' && sortType == 'ASC'}">
 						<th class="header-row-content"><a
 							href="/admin/authors?search=${search}&sort=modTime__DESC">Ngày
-								tạo <i class="fa-solid fa-arrow-up"></i>
+								cập nhật <i class="fa-solid fa-arrow-up"></i>
 						</a></th>
 					</c:when>
 					<c:otherwise>
 						<th class="header-row-content"><a
 							href="/admin/authors?search=${search}&sort=modTime__DESC">Ngày
-								tạo </a></th>
+								cập nhật </a></th>
 					</c:otherwise>
 				</c:choose>
 				<th class="header-row-content">Tùy chỉnh</th>
@@ -203,13 +203,13 @@
 							value="${author.birthday}" pattern="dd/MM/yyyy" /></td>
 					<td class="author-data tr-width-12">${author.address}</td>
 					<td class="author-data tr-width-12">${author.phone}</td>
-					<td class="author-data tr-width-12">${author.status}</td>
+					<td class="author-data tr-width-12">${author.status == 1 ? "Kích hoạt" : "Không kích hoạt"}</td>
 					<td class="author-data tr-width-12"><fmt:formatDate
 							value="${author.modTime}" pattern="dd/MM/yyyy" /></td>
 					<td class="book-data ">
 						<div class="custom-btn">
-							<a href="#" class="edit-custom-btn">Sửa</a> <a href="#"
-								class="delete-custom-btn">Xóa</a>
+							<a href="/admin/authors/update/${author.id}" class="edit-custom-btn">Sửa</a> <a href="#"
+								class="delete-custom-btn" onclick="deleteSelected([${author.id}])">Xóa</a>
 						</div>
 					</td>
 				</tr>
@@ -224,23 +224,23 @@
 				<ul class="list-paging-numbers justify-content-center">
 					<c:if test="${not pageObj.first}">
 						<li class="page-item"><a class="page-link"
-							href="/admin/authors?search=${search}&&page=${pageObj.number-1}"
+							href="/admin/authors?search=${search}&&page=${pageObj.number}"
 							aria-label="Previous"> <span aria-hidden="true">&lt</span>
 						</a></li>
 					</c:if>
 					<c:if test="${pageObj.number > 0}">
 						<li class="page-item"><a class="page-link"
-							href="/admin/authors?search=${search}&page=${pageObj.number-1}">${pageObj.number}</a></li>
+							href="/admin/authors?search=${search}&page=${pageObj.number}">${pageObj.number}</a></li>
 					</c:if>
 					<li class="page-item"><a class="page-link active"
-						href="/admin/authors?search=${search}&page=${pageObj.number}">${pageObj.number + 1}</a></li>
+						href="/admin/authors?search=${search}&page=${pageObj.number + 1}">${pageObj.number + 1}</a></li>
 					<c:if test="${pageObj.number + 1 < pageObj.totalPages}">
 						<li class="page-item"><a class="page-link"
-							href="/admin/authors?search=${search}&page=${pageObj.number + 1}">${pageObj.number + 2}</a></li>
+							href="/admin/authors?search=${search}&page=${pageObj.number + 2}">${pageObj.number + 2}</a></li>
 					</c:if>
 					<c:if test="${not pageObj.last}">
 						<li class="page-item"><a class="page-link"
-							href="/admin/authors?search=${search}&page=${pageObj.number + 1}"
+							href="/admin/authors?search=${search}&page=${pageObj.number + 2}"
 							aria-label="Next"> <span aria-hidden="true">&gt</span>
 						</a></li>
 					</c:if>
@@ -256,14 +256,13 @@
 </div>
 
 <div class="modal" data-modal="trigger-1" id="modal">
-  <article class="content-wrapper" id="content-wrapper">
-    <button class="close" id="close"></button>
-    <header class="modal-header">
-      <h2>Thông báo</h2>
-    </header>
-    <div class="content" id="content">
-    </div>
-  </article>
+	<article class="content-wrapper" id="content-wrapper">
+		<button class="close" id="close"></button>
+		<header class="modal-header">
+			<h2>Thông báo</h2>
+		</header>
+		<div class="content" id="content"></div>
+	</article>
 </div>
 
 <script>
@@ -285,6 +284,26 @@
 	});
 	contentWrapper.addEventListener('click', (e) => e.stopPropagation());
 
+	function deleteSelected(selected) {
+		$.ajax({
+			  method: "DELETE",
+			  url: "/api/authors",
+			  contentType: 'application/json',
+			  data: JSON.stringify(selected),
+			    success: ( response ) => {
+			    	console.log(response)
+					content.innerHTML = "<div><img src='/assets/images/success.png' /></div><br />"+ "<h3>" + response.message + "</h3>";
+					modal.classList.toggle('open');
+		      	},
+		      	error: (error) => {
+		      		console.log(error);
+					content.innerHTML = "<div><img src='/assets/images/fail.png' /></div>"+ "<h3>" + error.responseJSON.message + "</h3>";
+					modal.classList.toggle('open');
+			    }
+		});		
+	}
+
+	
 	
 	deleteBtn.onclick = (e) => {
 		e.preventDefault();
@@ -293,22 +312,9 @@
 			if(selectRows[i].checked) selected.push(selectRows[i].value);
 		}
 		
-		
-		$.ajax({
-		  method: "DELETE",
-		  url: "/api/authors",
-		  contentType: 'application/json',
-		  data: JSON.stringify(selected),
-		  success: ( response ) => {
-			content.innerHTML = "<div><img src='https://caribtots2teens.com/wp-content/uploads/2020/06/check-circle-blue-512.png' /></div><br />"+ "<h3>" + response.message + "</h3>";
-			modal.classList.toggle('open');
-	      },
-	      error: (error) => {
-				content.innerHTML = "<div><img src='https://icon-library.com/images/failed-icon/failed-icon-7.jpg' /></div>"+ "<h3>" + error.response.message + "</h3>";
-				modal.classList.toggle('open');
-	      }
-		});
+		deleteSelected(selected);
 	}
+	
 	
 	selectAll.onclick = (e) => {
 		const isSelectAll = selectAll.checked;

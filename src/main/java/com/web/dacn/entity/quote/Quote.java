@@ -50,7 +50,7 @@ public class Quote implements Serializable {
 	@Column(columnDefinition = "nvarchar(MAX)")
 	private String content;
 	private int view;
-	@ManyToOne(targetEntity = Author.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = Author.class, cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinColumn(name = "author_id")
 	private Author author;
 	@Column(name = "meta_title")
