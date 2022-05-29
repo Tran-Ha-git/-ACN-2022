@@ -38,35 +38,12 @@
 
 	</div>
 	<!-- End Search -->
-<<<<<<< HEAD
-<form method="post" action="/admin/DeleteAll">
-
-	<!-- Manage book button -->
-	<div class="manage-book">
-			<div class="manage-book-btn">
-				<c:url value="/admin/books/addBook" var="url">
-
-
-				</c:url>
-				<a href="${url}" class="add-book-btn"><i
-					class="fas fa-plus-circle"></i>Thêm sách</a>
-				<c:url value="/admin/DeleteAll" var="url">
-
-
-				</c:url>
-				<button class="delete-book-btn" type="submit">
-					<i class="far fa-times-circle"></i>Xóa
-				</button>
-			</div>
-=======
 
 	<form method="post" action="/admin/DeleteAll">
 		<!-- Manage book button -->
 		<div class="manage-book">
 			<div class="manage-book-btn">
 				<c:url value="/admin/books/addBook" var="url">
-
->>>>>>> main
 
 				</c:url>
 				<a href="${url}" class="add-book-btn"><i

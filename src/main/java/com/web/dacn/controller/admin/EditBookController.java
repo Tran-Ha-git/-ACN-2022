@@ -64,9 +64,11 @@ public class EditBookController {
 			newBook.setVip(true);
 		}
 
-		// tu cho du liệu test
-		User user = userService.getById(1L);
-
+		User user = (User) session.getAttribute("user");
+		if (user != null) {
+			book.setUser(user);
+	
+		
 		long millis = System.currentTimeMillis();
 		Date date = new Date(millis);
 		String serverImageFilePath = uploadFile.upload(file, request, "/assets/images/");
@@ -92,7 +94,7 @@ public class EditBookController {
 		}
 		// Author
 		if (authorName != null) {
-			Author author = bookService.findAuthorByFullName(authorName);			
+			Author author = bookService.findAuthorByFullName(authorName);
 			Author authorBeforeChange = bookService.findAuthorById(authorId);
 			newBook.getAuthors().remove(authorBeforeChange);
 			if (author != null) {
@@ -128,7 +130,7 @@ public class EditBookController {
 				newBook.getCategories().add(newCategory);
 
 			} else {
-		
+
 				BookCategory category = categories.get(0);
 				newBook.getCategories().add(category);
 			}
@@ -136,6 +138,8 @@ public class EditBookController {
 		}
 
 		bookService.saveBook(newBook);
+		}
+	
 		return "redirect:/admin/books";
 
 	}
