@@ -479,6 +479,20 @@
 		</div>
 	</div>
 </main>
+<div id="modal-info" class="modal modal-message modal-info fade" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <i class="fa fa-info-circle"></i>
+                </div>
+                <div class="modal-title">Thông báo</div>
+                <div class="modal-body">Vui lòng đăng nhập!</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div> <!-- / .modal-content -->
+        </div> <!-- / .modal-dialog -->
+ </div>
 <script src="./../vendor/jquery/jquery3.6.0.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
@@ -503,6 +517,7 @@ function checkReviewed(){
 			if(response){
 				$("#star").modal("hide");
 				$("#show-review-btn").hide()
+				$('.rating input[type="radio"][name="rating"]:checked').prop('checked', false);
 				$("#comment").modal("show");
 			}else{
 				 $('#star').modal('show');
@@ -511,7 +526,7 @@ function checkReviewed(){
 	});
 }
 function alertLogin(){
-	alert("Vui lòng đăng nhập");
+	 $('#modal-info').modal('show');
 	$('#star').modal('hide');
 }
 

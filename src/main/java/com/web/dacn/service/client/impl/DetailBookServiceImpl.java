@@ -245,19 +245,13 @@ public class DetailBookServiceImpl implements DetailBookService{
 	@Override
 	public User getLoggedInUser() {
 		User user = (User) session.getAttribute("user");
-
-		// user temporary
-		if (user == null) {
-			user = userService.findById(1L).orElse(null);
-		}
-
 		return user;
 	}
 
 	@Transactional
 	@Override
 	public CommentBookDTO createComment(String slug, int star, String content) {
-		User user = getLoggedInUser();
+		User user = userService.findById(getLoggedInUser().getId()).orElseThrow(RuntimeException::new);
 		Book book = bookRepository.findOneBySlug(slug).orElse(null);
 		if (user == null || book == null)
 			return null;
@@ -270,7 +264,6 @@ public class DetailBookServiceImpl implements DetailBookService{
 		commentBook.setBook(book);
 		commentBook.setStatus(1);
 
-		ReviewBook newReviewBook = new ReviewBook();
 		if (star > 0) {
 			ReviewBook reviewBook = reviewBookRepository.findTop1ByBookIdAndUserIdOrderByModTime(book.getId(),
 					user.getId());
@@ -282,7 +275,8 @@ public class DetailBookServiceImpl implements DetailBookService{
 			reviewBook.setStar(star);
 			reviewBook.setUser(user);
 			reviewBook.setContent(content);
-			newReviewBook = reviewBookRepository.save(reviewBook);
+			
+			reviewBookRepository.save(reviewBook);
 		}
 
 		CommentBook newCommentBook = commentBookRepository.save(commentBook);
