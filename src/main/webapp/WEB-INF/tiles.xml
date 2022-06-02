@@ -229,4 +229,18 @@
 		<put-attribute name="style" value="css/admin/list-comment.css" />
 	</definition>
 	
+	<!-- Lovebook Page -->
+	<definition name="lovebook" extends="client.base.definition">
+		<put-attribute name="title" value="Sách yêu thích" />
+		<put-attribute name="body" value="/WEB-INF/bodyfragments/client/lovebook.jsp" />
+		<put-attribute name="style" value="css/client/lovebook.css" />
+	</definition>
+	
+	<!-- Bookmark Page -->
+	<definition name="bookmark" extends="client.base.definition">
+		<put-attribute name="title" value="Danh sách đánh dấu" />
+		<put-attribute name="body" value="/WEB-INF/bodyfragments/client/bookmark.jsp" />
+		<put-attribute name="style" value="css/client/lovebook.css" />
+	</definition>
+	
 </tiles-definitions> 
