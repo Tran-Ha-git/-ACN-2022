@@ -6,3 +6,13 @@ table a {
     color: #0d6efd !important;
     text-decoration: underline !important;
 }
+#closeAlertSuccess {
+	float: right;
+    border: 1px solid green;
+    padding: 0px 10px;
+    padding-bottom: 5px;
+    padding-top: 0px;
+}
+.alert-success{
+	display: none;
+}

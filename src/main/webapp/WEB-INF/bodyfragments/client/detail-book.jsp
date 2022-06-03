@@ -55,6 +55,14 @@
 			<div class="col-lg-6 col-sm-12 px-4">
 				<h3>Giới thiệu sách</h3>
 				<p>${bookDTO.description }</p>
+				<div class = "box-like show-like">
+					<div class="heart-like-button"><i class="fa-regular fa-heart"></i></div>
+					<span id="title-like">Thêm vào yêu thích</span>
+				</div>
+				<div class = "box-unlike">
+					<div class="heart-like-button"><i class="fa-solid fa-heart"></i></div>
+					<span id="title-unlike">Bỏ yêu thích</span>
+				</div>
 				<div class="socials">
 					<div class="social">
 						<i class="fa-brands fa-facebook-f"></i>
@@ -806,4 +814,47 @@ function addEventButtonResponse(){
 		$("#response").modal("show");
 	});
 }
+
+$(document).ready(function () {
+    $(".box-like").click(function () {
+    	
+    	 $.ajax({url: "/api/book/checkLogin", success: function(result){
+  		   if(!result){
+  			   alertLogin();
+  		   }else{  	    	
+  	    	 $.ajax({type: "POST", url: "/api/book/"+$("#slug").val()+"/love", success: function(result){
+  	    		 $(".box-unlike").addClass("show-like");
+  	  	    	$(".box-like").removeClass("show-like");
+  	 		  }});
+  		   }
+  		}});
+    	
+    });
+    
+    $(".box-unlike").click(function () {
+    	 $.ajax({type: "DELETE", url: "/api/book/"+$("#slug").val()+"/love", success: function(result){
+    		 $(".box-like").addClass("show-like");
+    	    $(".box-unlike").removeClass("show-like");
+  		  }});
+    });
+    
+    $.ajax({url: "/api/book/checkLogin", success: function(result){
+		   if(result){
+			   showLoveBook();
+		   }
+	}});
+    
+    
+  });
+  
+  function showLoveBook(){
+	  $.ajax({type: "GET", url: "/api/book/"+$("#slug").val()+"/love", success: function(result){
+		    if(result){
+		    	$(".box-unlike").addClass("show-like");
+		    	$(".box-like").removeClass("show-like");
+		    }
+		  }
+  	});
+  }
+
 </script>

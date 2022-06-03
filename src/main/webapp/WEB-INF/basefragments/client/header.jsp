@@ -42,31 +42,14 @@
 						<div class="name-info">${user.fullname}</div>
 					</div>
 				</a>
-				<c:if test="${user != null}" > 
-				<a  href="/auth/logout" class="logout-btn"  >Đăng xuất</a>
-				</c:if>
+				<div class="dropdown-content">
+				    <a href="/lovebook">Sách yêu thích</a>
+				    <a href="/bookmark">Đánh dấu</a>
+				    <a href="/auth/logout">Đăng xuất</a>
+				 </div>
 				</span>
 			</c:if>			 
 		</div>
 	</div>
 </header>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-		<script>
-		$(document).ready(function(){
-			$.ajax({       
-			       type : "GET",
-			       data : "username="+ $("#username").val(),
-			       url : "/api/auth/get-id",       
-			       success : function(result){
-			    	   console.log(result);
-			    	   $("#custId").val(result);
-			       },
-			       error : function(result){
-			    	   console.log(result)
-			       }
-			    });
-		});
-		</script>
-		</div>
-	</div>
-</header>
+

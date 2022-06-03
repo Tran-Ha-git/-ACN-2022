@@ -7,32 +7,30 @@
       <h2 class="title">Sách yêu thích - Love books</h2>
       <div class="row mt-5 operations">
         <div class="col-md-2 text-start">
-          <button class="btn btn-outline-secondary btn-block">
-            <span class="btn-label"
-              ><i class="fa-solid fa-trash-can"></i>
-            </span>
-            Xóa
+          <button class="btn btn-outline-secondary btn-block " id="delete-many-btn">
+            <span class="btn-label"><i class="fa-solid fa-trash-can"></i></span> Xóa
           </button>
         </div>
         <div class="col-md-10">
           <div class="row d-flex justify-content-end g-3">
             <div class="col-md-6">
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Tên sách ..."
-              />
+              <input type="text" class="form-control" placeholder="Tên sách ..." id="search" />
             </div>
             <div class="col-md-3">
-              <button class="btn btn-primary btn-block">
+              <button class="btn btn-primary btn-block" onclick="search();">
                 <i class="fa-solid fa-magnifying-glass"></i>&nbsp Tìm kiếm
               </button>
             </div>
           </div>
         </div>
       </div>
+      
+      <div class="alert alert-success mt-4">
+	    <strong>Thành công!</strong>  Đã xóa thành công.
+	    <a id= "closeAlertSuccess"><strong>x</strong></a>
+	  </div>
 
-      <div class="table-responsive mt-5">
+      <div class="table-responsive mt-5 mb-5">
         <table
           class="table table-responsive table-borderless text-center align-middle"
         >
@@ -49,71 +47,200 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">
-                <input type="checkbox" class="checkSingle" />
-              </th>
-              <td>
-                <img
-                  src="https://th.bing.com/th/id/OIP.8XZTWEPTNkyiJZyLe-LRzQHaEK?pid=ImgDet&rs=1"
-                  width="55"
-                />
-              </td>
-              <td>
-                <a href="#">Nóng giận là bản năng, tĩnh lặng là bản lĩnh</a>
-              </td>
-              <td>
-                <a href="#">Tống Mặc </a>,
-                <a href="#">Hà Giang </a>
-              </td>
-              <td>
-                <a href="#">Self Help </a>,
-                <a href="#">Nonfiction </a>
-              </td>
-              <td class="text-end">
-                <button type="button" class="btn btn-primary btn-sm">
-                  <i class="fa-solid fa-arrow-up-right-from-square"></i> Xem
-                  sách
-                </button>
-                <button class="btn btn-secondary btn-block btn-sm">
-                  <i class="fa-solid fa-trash-can"></i>
-                  Xóa
-                </button>
-              </td>
-            </tr>
+          
+          
+          <c:choose>
+			<c:when test="${lovebooks.totalElements > 0}">
+				<c:forEach items="${lovebooks.content}" var="lovebook" varStatus="loop">
+				
+				<tr id="love-${lovebook.slug}"  class="love-id-${lovebook.id}">
+	              <th scope="row">
+	                <input type="checkbox" class="checkSingle" value="${lovebook.id}"/>
+	              </th>
+	              <td>
+	                <img src="${lovebook.thumbnail}" width="55" />
+	              </td>
+	              <td>
+	                <a href="/books/${lovebook.slug}">${lovebook.name}</a>
+	              </td>
+	              <td>
+	              		<c:forEach items="${lovebook.authors}" var="author" varStatus="loop">
+						<a href="/books?author=${author.slug}">
+							<span class="info-item">${author.fullname}</span>
+							<c:if test="${loop.index != bookDTO.authors.size() - 1}"> <span class="mr-3">,</span> </c:if>
+						</a>
+						</c:forEach>
+	              </td>
+	              <td>
+	                <c:forEach items="${lovebook.categories}" var="category" varStatus="loop">
+					<a href="/books?category_id=${category.id}">
+						<span class="info-item">${category.name}</span>
+						<c:if test="${loop.index != bookDTO.categories.size() - 1}"> <span class="mr-3">,</span> </c:if>
+					</a> 
+					</c:forEach>
+	              </td>
+	              <td class="text-end">
+	                <button type="button" class="btn btn-primary btn-sm" onclick="window.location.href = '/books/${lovebook.slug}'"><i class="fa-solid fa-arrow-up-right-from-square"></i> Xem sách</button>
+	                <button class="btn btn-secondary btn-block btn-sm" onclick="showDelete('${lovebook.slug}');"> <i class="fa-solid fa-trash-can"></i> Xóa</button>
+	              </td>
+	            </tr>
+					
+				</c:forEach>
+			
+			</c:when>
+			<c:otherwise><tr> <td colspan="5">Danh sách còn đang rỗng</td> </tr></c:otherwise>
+		  </c:choose>
+            
           </tbody>
         </table>
       </div>
-
+      
+      <c:if test="${lovebooks.totalPages > 0}">
       <div class="row">
-        <div class="col-4 mt-4">Hiện thị 4 trên 8 cuốn sách</div>
+        <div class="col-4 mt-4">Hiện thị ${lovebooks.numberOfElements } trên ${lovebooks.totalElements } cuốn sách</div>
         <div class="col-8">
           <ul class="pagination justify-content-end" style="margin: 20px 0">
-            <li class="page-item disabled">
-              <a class="page-link" href="#"
-                ><i class="fa-solid fa-angle-left"></i
-              ></a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#"
-                ><i class="fa-solid fa-angle-right"></i
-              ></a>
-            </li>
+          	<c:if test="${not lovebooks.first}">
+	            <li class="page-item">
+	              <a class="page-link" name="${lovebooks.number-1}"><i class="fa-solid fa-angle-left"></i></a>
+	            </li>
+            </c:if>
+            <c:if test="${ lovebooks.number > 0}">
+            	<li class="page-item"><a class="page-link"  name="${lovebooks.number-1}">${lovebooks.number}</a></li>
+            </c:if>
+            <li class="page-item active"><a class="page-link" name="${lovebooks.number}">${lovebooks.number+1}</a></li>
+            <c:if test="${ lovebooks.number +1 < lovebooks.totalPages}">
+            	<li class="page-item"><a class="page-link" name="${lovebooks.number+1}">${lovebooks.number+2}</a></li>
+            </c:if>
+            <c:if test="${not lovebooks.last}">
+	            <li class="page-item">
+	              <a class="page-link" name="${lovebooks.number+1}"><i class="fa-solid fa-angle-right"></i></a>
+	            </li>
+	        </c:if>
           </ul>
         </div>
       </div>
+      </c:if>
+      
     </div>
 
 </main>
-
+<div class="modal fade" id="confirmModal">
+	<div class="modal-dialog ">
+		<div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title"><i class="fa-solid fa-trash-can"></i> Xóa sách yêu thích</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        <p>Bạn có muốn xóa sách đã chọn?</p>
+	        <input type="hidden" value="" id="deletingSlugBook">
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+	        <button type="button" class="btn btn-primary" id="deleteLovebook">Xác nhận</button>
+	      </div>
+	    </div>
+	</div>
+</div>
+<div class="modal fade" id="confirmDeleteManyModal">
+	<div class="modal-dialog ">
+		<div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title"><i class="fa-solid fa-trash-can"></i> Xóa sách yêu thích</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        <p>Bạn có muốn xóa sách đã chọn?</p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+	        <button type="button" class="btn btn-danger" id="deleteManyLovebook">Xác nhận</button>
+	      </div>
+	    </div>
+	</div>
+</div>
 
 <script src="./../vendor/jquery/jquery3.6.0.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <script>
+$(document).ready(function () {
+	let deletingBooks = [];
+    
+	$("#delete-many-btn").click(function () {
+		$('input:checkbox.checkSingle:checked').each(function() {
+	    	deletingBooks.push($(this).val());
+	    });
+		if(deletingBooks.length <= 0){
+	    	$('#delete-many-btn').prop('disabled', true);
+	    	alert("Vui lòng chọn sách trước")
+	    }else{
+			$("#confirmDeleteManyModal").modal("show");
+	    }
+	})
+	
+	$("#deleteManyLovebook").click(function () {
+		let param = '';
+		$.each(deletingBooks, function( index, value ) {
+			param += "&ids="+value;
+		});
+		$.ajax({type: "DELETE", url: "/api/book/love/books?1=1"+param,
+			success: function(result){
+				$("#confirmDeleteManyModal").modal("hide");
+				$.each(deletingBooks, function( index, value ) {
+					$(".love-id-"+value).css("display","none");
+				});
+				$(".alert-success").css("display","block");
+				setTimeout(
+					function() {
+						$(".alert-success").css("display","none");
+						document.location.href= "/lovebook";
+				}, 5000);
+			}
+		});
+	})
+});
+
+function search(){
+	document.location.href= "/lovebook?search="+$("#search").val();
+}
+
+$(document).ready(function () {
+	$("#closeAlertSuccess").click(function () {
+		$(".alert-success").css("display","none");
+	});
+});
+
+function showDelete(bookSlug){
+	$("#confirmModal").modal("show");
+	$("#deletingSlugBook").val(bookSlug);
+}
+
+$(document).ready(function () {
+	$("#deleteLovebook").click(function () {
+		let bookSlug = $("#deletingSlugBook").val();
+		$.ajax({type: "DELETE", url: "/api/book/"+bookSlug+"/love", success: function(result){
+			$("#confirmModal").modal("hide");
+			$(".alert-success").css("display","block");
+			$("#love-"+bookSlug).css("display","none");
+			setTimeout(
+				function() {
+					$(".alert-success").css("display","none");
+			}, 5000);
+		}});
+	});
+});
+
+$(document).ready(function () {
+	let search = $("#search").val();
+	$(".page-link").each(function(){
+		let page = $(this).attr("name");
+		let url = "/lovebook?search="+search+"&page="+page
+		$(this).attr("href",url)
+	});
+});
+
   $(document).ready(function () {
     $("#checkedAll").change(function () {
       if (this.checked) {
@@ -121,17 +248,20 @@
           this.checked = true;
         });
         $("input:checkbox.checkSingle").prop("checked", true);
+        $('#delete-many-btn').prop('disabled', false);
       } else {
         $("input:checkbox.checkSingle").each(function () {
           this.checked = false;
         });
+        $('#delete-many-btn').prop('disabled', true);
       }
     });
 
     $(".checkSingle").click(function () {
       if ($(this).is(":checked")) {
         var isAllChecked = 0;
-
+        $('#delete-many-btn').prop('disabled', false);
+        
         $(".checkSingle").each(function () {
           if (!this.checked) isAllChecked = 1;
         });
