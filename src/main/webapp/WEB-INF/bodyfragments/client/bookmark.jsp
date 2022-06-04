@@ -99,7 +99,7 @@
 		              </td>
 		              <td>Audio</td>
 		              <td>
-		                <a href="/audio/${mark.book.slug}?chapter=${mark.audio.priority}">
+		                <a href="/audio/${mark.book.slug}?chapter=${mark.audio.id}">
 		                  Chương ${mark.audio.priority}: ${mark.audio.name}</a
 		                >
 		              </td>
@@ -147,7 +147,7 @@
 		              <td>Online</td>
 		              <td>
 		                <a href="/doc-online/${mark.book.slug}?id=${mark.online.id}">
-		                  Chương ${mark.online.priority}: ${mark.online.name}</a
+		                  Chương : ${mark.online.name}</a
 		                >
 		              </td>
 		              <td class="text-end">
