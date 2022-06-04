@@ -26,7 +26,7 @@
 	</div>
 	<div class="menu-manage-book manage-review">
 		<p class="menu-manage-book-name">
-			<i class="fas fa-book-open"></i> <b> <a href="/admin/types">Quản lý thể loại</a></b>
+			<i class="fas fa-book-open"></i> <b> <a href="/admin/book/category">Quản lý thể loại</a></b>
 		</p>
 	</div>
 </div>

@@ -69,7 +69,7 @@ public class QuoteController {
 			ModelMap model,
 			@RequestParam(name= "page") Optional<Integer> page, 
 			@RequestParam(name= "size") Optional<Integer> size) {
-		int pageSize = size.orElse(9	);
+		int pageSize = size.orElse(9);
 		model.addAttribute("size", pageSize);
 		int currentPage = page.orElse(1);
 		Pageable pageable;
