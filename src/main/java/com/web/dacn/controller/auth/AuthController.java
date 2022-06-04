@@ -67,6 +67,13 @@ public class AuthController {
 			return new ModelAndView("authPage", model);
 		}
 		session.setAttribute("user", user);
+		for(Role role : user.getRoles()) {
+			if(role.getName().equalsIgnoreCase("Admin")) {
+				session.setAttribute("ad", true);
+			}
+		}
+		
+		
 //		Object redirectUri= session.getAttribute("redirect-uri");
 //		if(redirectUri!=null) {
 //			session.removeAttribute("redirect-uri");

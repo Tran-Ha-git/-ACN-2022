@@ -46,6 +46,14 @@
 				    <a href="/lovebook">Sách yêu thích</a>
 				    <a href="/bookmark">Đánh dấu</a>
 				    <a href="/auth/logout">Đăng xuất</a>
+				    
+				    <c:forEach items="${user.roles}" var="role" varStatus="loop">		
+				    <c:if test="${role.name == 'ADMIN'}" >
+				    	<a href="/admin/books">
+							Admin Page
+						</a>
+				    </c:if>					
+				</c:forEach>
 				 </div>
 				</span>
 			</c:if>			 
