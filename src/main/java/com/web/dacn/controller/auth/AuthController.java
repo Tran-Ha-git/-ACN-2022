@@ -113,12 +113,18 @@ public class AuthController {
 			userRoleService.save(userRole);
 		}
 		session.setAttribute("user", user);
+		for(Role role : user.getRoles()) {
+			if(role.getName().equalsIgnoreCase("Admin")) {
+				session.setAttribute("ad", true);
+			}
+		}
 		return new ModelAndView("redirect:/");
 	}
 
 	@RequestMapping("logout")
 	public ModelAndView logout(ModelMap model) {
 		session.removeAttribute("user");
+		session.removeAttribute("ad");
 		return new ModelAndView("redirect:/");
 	}
 
