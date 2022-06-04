@@ -28,4 +28,6 @@ public interface OnlineRepository extends JpaRepository<Online, Long>{
 	@Modifying	
 	@Query(value="delete from online where id=?1 ",nativeQuery = true)
 	void deleteById(long id);
+	
+	Online findByBook_SlugAndName(String bookSlug, String chapterName);
 }

@@ -47,8 +47,6 @@
             </tr>
           </thead>
           <tbody>
-          
-          
           <c:choose>
 			<c:when test="${lovebooks.totalElements > 0}">
 				<c:forEach items="${lovebooks.content}" var="lovebook" varStatus="loop">
@@ -67,7 +65,7 @@
 	              		<c:forEach items="${lovebook.authors}" var="author" varStatus="loop">
 						<a href="/books?author=${author.slug}">
 							<span class="info-item">${author.fullname}</span>
-							<c:if test="${loop.index != bookDTO.authors.size() - 1}"> <span class="mr-3">,</span> </c:if>
+							<c:if test="${loop.index != lovebook.authors.size() - 1}"> <span class="mr-3">,</span> </c:if>
 						</a>
 						</c:forEach>
 	              </td>
@@ -75,7 +73,7 @@
 	                <c:forEach items="${lovebook.categories}" var="category" varStatus="loop">
 					<a href="/books?category_id=${category.id}">
 						<span class="info-item">${category.name}</span>
-						<c:if test="${loop.index != bookDTO.categories.size() - 1}"> <span class="mr-3">,</span> </c:if>
+						<c:if test="${loop.index != lovebook.categories.size() - 1}"> <span class="mr-3">,</span> </c:if>
 					</a> 
 					</c:forEach>
 	              </td>
@@ -165,6 +163,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <script>
+/*  delete many */
 $(document).ready(function () {
 	let deletingBooks = [];
     
@@ -205,7 +204,7 @@ $(document).ready(function () {
 function search(){
 	document.location.href= "/lovebook?search="+$("#search").val();
 }
-
+/* close alert */
 $(document).ready(function () {
 	$("#closeAlertSuccess").click(function () {
 		$(".alert-success").css("display","none");
@@ -217,6 +216,7 @@ function showDelete(bookSlug){
 	$("#deletingSlugBook").val(bookSlug);
 }
 
+/* delete a lovebook */
 $(document).ready(function () {
 	$("#deleteLovebook").click(function () {
 		let bookSlug = $("#deletingSlugBook").val();
@@ -232,6 +232,7 @@ $(document).ready(function () {
 	});
 });
 
+/*  pagination */
 $(document).ready(function () {
 	let search = $("#search").val();
 	$(".page-link").each(function(){
@@ -240,7 +241,7 @@ $(document).ready(function () {
 		$(this).attr("href",url)
 	});
 });
-
+	/* check all */
   $(document).ready(function () {
     $("#checkedAll").change(function () {
       if (this.checked) {

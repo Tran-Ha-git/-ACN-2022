@@ -817,7 +817,6 @@ function addEventButtonResponse(){
 
 $(document).ready(function () {
     $(".box-like").click(function () {
-    	
     	 $.ajax({url: "/api/book/checkLogin", success: function(result){
   		   if(!result){
   			   alertLogin();

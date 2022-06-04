@@ -53,9 +53,22 @@
 		<div class="content-sort">
 			<select class="chapter">
 				<c:forEach items="${book.onlines}" var="online" varStatus="loop">
-					<option value="${loop.index + 1}" <c:if test='${online.id == onlineSelected.id}'>selected</c:if>>Chương ${loop.index + 1}: ${online.name}</option>				
+					<option value="${loop.index + 1}" <c:if test='${online.id == onlineSelected.id}'>selected</c:if> id="chapter-id-${online.id}">Chương ${loop.index + 1}: ${online.name}</option>				
 				</c:forEach>
 			</select>
+			<div class="bookmark-area">
+					<input type="hidden" value="${book.slug}" id="book-slug">
+					<input type="hidden" value="${onlineSelected.name}" id="chapter-name">
+					
+					<div class = "box-mark show-mark">
+						<div class="book-mark-button"><i class="fa-regular fa-bookmark"></i></div>
+						<span id="title-mark">Đánh dấu</span>
+					</div>
+					<div class = "box-unmark">
+						<div class="book-mark-button"><i class="fa-solid fa-bookmark"></i></div>
+						<span id="title-unmark">Bỏ đánh dấu</span>
+					</div>
+			</div>
 		</div>
 		<div class="content-container" id="content">
 			${onlineSelected.content}
@@ -77,4 +90,75 @@
 			window.location.replace("?chapter="+chapter.value);
 		}	
 	}
+</script>
+<script src="./../vendor/jquery/jquery3.6.0.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+/* bookmark */
+$(document).ready(function () {	
+    $(".box-mark").click(function () {
+    	 $.ajax({url: "/api/book/checkLogin", success: function(result){
+  		   if(!result){
+  			   alert("Vui lòng đăng nhập!")
+  		   }else{  	
+  			 let slug = $("#book-slug").val();
+  			let chapter = $("#chapter-name").val();
+  			 
+  	    	 $.ajax({type: "POST", url: "/api/mark/" + slug+ "/online/" + chapter, success: function(result){
+  	    		 $(".box-unmark").addClass("show-mark");
+  	  	    	$(".box-mark").removeClass("show-mark");
+  	 		  }});
+  		   }
+  		}});
+    	
+    });
+    
+    $(".box-unmark").click(function () {
+    	let slug = $("#book-slug").val();
+		let chapter = $("#chapter-name").val();
+		
+    	 $.ajax({type: "DELETE", url: "/api/mark/" + slug + "/online/" + chapter, success: function(result){
+    		 $(".box-mark").addClass("show-mark");
+    	    $(".box-unmark").removeClass("show-mark");
+  		  }});
+    });
+    
+    $.ajax({url: "/api/book/checkLogin", success: function(result){
+		   if(result){
+			   showBookmark();
+		   }
+	}});
+    /* open mark */
+    let searchParams = new URLSearchParams(window.location.search);
+	if(searchParams.has('id')) {
+		let id = searchParams.get('id');
+		let value = document.getElementById("chapter-id-"+id).value;
+		$("div.content-sort select.chapter").val(value).change();
+	}
+  });
+function checkValueOption(value){
+	var exists = false;
+	$('#chapter option').each(function(){
+	    if (this.value == value) {
+	        exists = true;
+	        return false;
+	    }
+	});
+	return exists;
+}
+  function showBookmark(){
+	  let slug = $("#book-slug").val();
+	  let chapter = $("#chapter-name").val();
+ 
+	  $.ajax({type: "GET", url: "/api/mark/"+slug+"/online/" + chapter, success: function(result){
+		    if(result){
+		    	$(".box-unmark").addClass("show-mark");
+		    	$(".box-mark").removeClass("show-mark");
+		    }else{
+		    	$(".box-mark").addClass("show-mark");
+		    	$(".box-unmark").removeClass("show-mark");
+		    }
+		  }
+  	});
+  }
 </script>

@@ -322,3 +322,52 @@ header a:hover {
 	color: #00bfff;
 	text-decoration: underline!important;	
 }
+
+/* book mark */
+.bookmark-area{
+	display: inline-block;
+    margin-left: 15px;
+}
+
+.box-mark, .box-unmark{
+	display:none;
+}
+.book-mark-button{
+   display: inline-block;
+   width: 40px;
+   height: 40px;
+   color: #fd7e14;
+   font-size: 22px;
+   margin: 0px ;
+   box-shadow: rgb(60 64 67 / 30%) 0px 1px 2px 0px, rgb(60 64 67 / 15%) 0px 1px 3px 1px;
+   text-align: center;
+   line-height: 40px;
+   border-radius: 50%;
+    background: #fcfcfc;
+}
+span#title-mark, span#title-unmark{
+	visibility: hidden;
+}
+.book-mark-button:hover{
+	box-shadow: rgb(240 168 46 / 40%) 5px 5px, rgb(240 177 46 / 30%) 10px 10px, rgb(240 177 46 / 20%) 15px 15px, rgb(240 177 46 / 10%) 20px 20px, rgb(240 148 46 / 5%) 25px 25px;
+}
+.box-mark:hover span#title-mark{
+	visibility: visible;
+	font-size: 15px;
+	display: inline-block;
+	padding-left: 20px;
+	color:#fd7e14;
+	font-weight: bold;
+}
+
+.box-unmark:hover span#title-unmark{
+	visibility: visible;
+	font-size: 15px;
+	display: inline-block;
+	padding-left: 20px;
+	color:#808080;
+	font-weight: bold;
+}
+.show-mark{
+	display:block;
+}
