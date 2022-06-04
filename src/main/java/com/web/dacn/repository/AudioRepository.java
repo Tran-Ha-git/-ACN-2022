@@ -26,6 +26,10 @@ public interface AudioRepository extends JpaRepository<Audio, Long> {
 	@Modifying	
 	void deleteById(long id);
 
+	Audio findByBook_SlugAndPriority(String bookSlug, Integer priority);
+
+	Audio findByBook_SlugAndName(String bookSlug, String name);
+
 
 	
 }

@@ -27,7 +27,8 @@
 
 					<div class="audio-bg">
 						<div class="title-chapter">
-							<span class="audio-item-no">${audioSelected.priority}. </span> ${audioSelected.name}
+							<span class="audio-item-no" id="no-item-playing">${audioSelected.priority}. </span>
+							<span class="audio-item-name">${audioSelected.name} </span> 
 						</div>
 						<img src="${bookDTO.thumbnail}" alt="${bookDTO.name}">
 					</div>
@@ -48,6 +49,19 @@
 					<a href="#" class="btn btn-danger pinterest" role="button" data-bs-toggle="button"> <i class="fa-brands fa-pinterest"></i></a> 
 					<a href="#" class="btn btn-primary linkedin" role="button" data-bs-toggle="button"> <i class="fa-brands fa-linkedin"></i></a>
 				</div>
+				<div class="bookmark-area">
+					<input type="hidden" value="${bookDTO.slug}" id="book-slug">
+					<input type="hidden" value="${audioSelected.id}" id="audio-id">
+					
+					<div class = "box-mark show-mark">
+						<div class="book-mark-button"><i class="fa-regular fa-bookmark"></i></div>
+						<span id="title-mark">Đánh dấu</span>
+					</div>
+					<div class = "box-unmark">
+						<div class="book-mark-button"><i class="fa-solid fa-bookmark"></i></div>
+						<span id="title-unmark">Bỏ đánh dấu</span>
+					</div>
+				</div>
 				<div class="reading-format">
 					<c:if test="${existsEbook}">
 						<a href="/doc-online/${bookDTO.slug}?chapter=1" class="btn btn-primary read-online">Đọc online</a>
@@ -60,7 +74,7 @@
 			</div>
 
 			<ul class="audio-list">
-				<li class="audio-item js-play active">
+				<li class="audio-item js-play active" id="audio-id-${audioSelected.id}">
 					<a	class="audio-link"> 
 						<span class="audio-item-no">${audioSelected.priority}.</span> 
 						<span class="audio-item-name">${audioSelected.name} </span> 
@@ -68,7 +82,7 @@
 					<input type="hidden" class="url-audio-item" value="${audioSelected.url}">
 				</li>
 				<c:forEach items="${audioDTOs}" var="audio" >
-				<li class="audio-item js-play" >
+				<li class="audio-item js-play" id="audio-id-${audio.id}">
 					<a	 class="audio-link">
 						<span class="audio-item-no">${audio.priority}. </span> 
 						<span class="audio-item-name">${audio.name} </span> 
@@ -93,20 +107,90 @@ $(document).ready(function(){
 	  $(".audio-player .audio-img .audio-bg .title-chapter .audio-item-no").text(priority);
 	  $(".audio-player .audio-img .audio-bg .title-chapter .audio-item-name").text(name);
 	  
-	  change(url);
+	  let currentId = $(this).attr('id');
+	  let audioId = currentId.replace("audio-id-", "");
+	  $("#audio-id").val(audioId);
 	  
+	  change(url);
+	  showBookmark();
   });
+  
+  document.getElementById("player").volume = 0.1;
 });
 function change(sourceUrl) {
     var audio = $("#player"); 
     $("#mp3_src").attr("src", sourceUrl);
     $("#ogg_src").attr("src", sourceUrl);
     /****************/
-    audio[0].pause();
-    audio[0].load();//suspends and restores all audio element
+     audio[0].pause();
+    audio[0].load();//suspends and restores all audio element 
 
     //audio[0].play(); changed based on Sprachprofi's comment below
     audio[0].oncanplaythrough = audio[0].play();
     /****************/
 }
+
+/* bookmark */
+$(document).ready(function () {
+    $(".box-mark").click(function () {
+    	 $.ajax({url: "/api/book/checkLogin", success: function(result){
+  		   if(!result){
+  			   alert("Vui lòng đăng nhập!")
+  		   }else{  	
+  			 let slug = $("#book-slug").val();
+  			 let id = $("#audio-id").val();
+  			 
+  	    	 $.ajax({type: "POST", url: "/api/mark/" + slug+ "/audio/" + id, success: function(result){
+  	    		 $(".box-unmark").addClass("show-mark");
+  	  	    	$(".box-mark").removeClass("show-mark");
+  	 		  }});
+  		   }
+  		}});
+    	
+    });
+    
+    $(".box-unmark").click(function () {
+    	let slug = $("#book-slug").val();
+    	let id = $("#audio-id").val();
+		
+    	 $.ajax({type: "DELETE", url: "/api/mark/" + slug + "/audio/id-" + id, success: function(result){
+    		 $(".box-mark").addClass("show-mark");
+    	    $(".box-unmark").removeClass("show-mark");
+  		  }});
+    });
+    
+    $.ajax({url: "/api/book/checkLogin", success: function(result){
+		   if(result){
+			   showBookmark();
+		   }
+	}});
+
+    let searchParams = new URLSearchParams(window.location.search);
+	if(searchParams.has('chapter')) {
+		let chapter = searchParams.get('chapter');
+		$("li#audio-id-"+chapter).trigger("click");
+	}else{
+		let id = $("#audio-id").val();
+		$("li#audio-id-"+id).trigger("click");
+	}
+  });
+
+function playAudio(){
+	audioPlayer.play();
+}
+  function showBookmark(){
+	  let slug = $("#book-slug").val();
+	  let id = $("#audio-id").val();
+ 
+	  $.ajax({type: "GET", url: "/api/mark/"+slug+"/audio/"+id, success: function(result){
+		    if(result){
+		    	$(".box-unmark").addClass("show-mark");
+		    	$(".box-mark").removeClass("show-mark");
+		    }else{
+		    	$(".box-mark").addClass("show-mark");
+		    	$(".box-unmark").removeClass("show-mark");
+		    }
+		  }
+  	});
+  }
 </script>

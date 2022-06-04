@@ -55,6 +55,14 @@
 			<div class="col-lg-6 col-sm-12 px-4">
 				<h3>Giới thiệu sách</h3>
 				<p>${bookDTO.description }</p>
+				<div class = "box-like show-like">
+					<div class="heart-like-button"><i class="fa-regular fa-heart"></i></div>
+					<span id="title-like">Thêm vào yêu thích</span>
+				</div>
+				<div class = "box-unlike">
+					<div class="heart-like-button"><i class="fa-solid fa-heart"></i></div>
+					<span id="title-unlike">Bỏ yêu thích</span>
+				</div>
 				<div class="socials">
 					<div class="social">
 						<i class="fa-brands fa-facebook-f"></i>
@@ -479,6 +487,20 @@
 		</div>
 	</div>
 </main>
+<div id="modal-info" class="modal modal-message modal-info fade" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <i class="fa fa-info-circle"></i>
+                </div>
+                <div class="modal-title">Thông báo</div>
+                <div class="modal-body">Vui lòng đăng nhập!</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div> <!-- / .modal-content -->
+        </div> <!-- / .modal-dialog -->
+ </div>
 <script src="./../vendor/jquery/jquery3.6.0.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
@@ -503,6 +525,7 @@ function checkReviewed(){
 			if(response){
 				$("#star").modal("hide");
 				$("#show-review-btn").hide()
+				$('.rating input[type="radio"][name="rating"]:checked').prop('checked', false);
 				$("#comment").modal("show");
 			}else{
 				 $('#star').modal('show');
@@ -511,7 +534,7 @@ function checkReviewed(){
 	});
 }
 function alertLogin(){
-	alert("Vui lòng đăng nhập");
+	 $('#modal-info').modal('show');
 	$('#star').modal('hide');
 }
 
@@ -791,4 +814,46 @@ function addEventButtonResponse(){
 		$("#response").modal("show");
 	});
 }
+
+$(document).ready(function () {
+    $(".box-like").click(function () {
+    	 $.ajax({url: "/api/book/checkLogin", success: function(result){
+  		   if(!result){
+  			   alertLogin();
+  		   }else{  	    	
+  	    	 $.ajax({type: "POST", url: "/api/book/"+$("#slug").val()+"/love", success: function(result){
+  	    		 $(".box-unlike").addClass("show-like");
+  	  	    	$(".box-like").removeClass("show-like");
+  	 		  }});
+  		   }
+  		}});
+    	
+    });
+    
+    $(".box-unlike").click(function () {
+    	 $.ajax({type: "DELETE", url: "/api/book/"+$("#slug").val()+"/love", success: function(result){
+    		 $(".box-like").addClass("show-like");
+    	    $(".box-unlike").removeClass("show-like");
+  		  }});
+    });
+    
+    $.ajax({url: "/api/book/checkLogin", success: function(result){
+		   if(result){
+			   showLoveBook();
+		   }
+	}});
+    
+    
+  });
+  
+  function showLoveBook(){
+	  $.ajax({type: "GET", url: "/api/book/"+$("#slug").val()+"/love", success: function(result){
+		    if(result){
+		    	$(".box-unlike").addClass("show-like");
+		    	$(".box-like").removeClass("show-like");
+		    }
+		  }
+  	});
+  }
+
 </script>

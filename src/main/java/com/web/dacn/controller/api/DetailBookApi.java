@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.web.dacn.dto.book.CommentBookDTO;
 import com.web.dacn.service.client.DetailBookService;
+
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @RestController
 @RequestMapping("/api/book")
@@ -45,5 +48,25 @@ public class DetailBookApi {
 	public CommentBookDTO createComment(@PathVariable String slug, @PathVariable Long commentId,
 			@RequestParam String content) {
 		return detailBookService.createResponse(slug, commentId, content);
+	}
+	
+	@PostMapping("/{slug}/love")
+	public Boolean addLovebook(@PathVariable String slug) {
+		return detailBookService.addLovebook(slug);
+	}
+	
+	@DeleteMapping("/{slug}/love")
+	public Boolean deleteLovebook(@PathVariable String slug) {
+		return detailBookService.deleteLovebook(slug);
+	}
+	
+	@GetMapping("/{slug}/love")
+	public Boolean checkLovebook(@PathVariable String slug) {
+		return detailBookService.checkLovebook(slug);
+	}
+	
+	@DeleteMapping("/love/books")
+	public Boolean checkLovebook( @RequestParam Long[] ids) {
+		return detailBookService.deleteLovebook(ids);
 	}
 }

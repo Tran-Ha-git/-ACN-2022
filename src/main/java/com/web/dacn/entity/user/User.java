@@ -24,7 +24,9 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.web.dacn.entity.book.Book;
 import com.web.dacn.entity.book.BookMark;
+import com.web.dacn.entity.book.CommentBook;
 import com.web.dacn.entity.book.FavoriteBook;
+import com.web.dacn.entity.book.ReviewBook;
 import com.web.dacn.entity.quote.Quote;
 
 import lombok.AllArgsConstructor;

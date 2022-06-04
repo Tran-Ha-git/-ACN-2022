@@ -67,36 +67,12 @@ CREATE TABLE book_bookcategory (
 	FOREIGN KEY (`category_id`) REFERENCES `bookcategory`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE quote (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	`content` TEXT NOT NULL,
-	thumbnail TEXT,
-	`view` INT DEFAULT 0,
-	author_id INT,
-	slug VARCHAR(2000),
-	meta_title VARCHAR(50),
-	meta_description TEXT,
-	`status` INT DEFAULT 1,
-	mod_time DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
-	mod_user_id INT,
-	FOREIGN KEY (`mod_user_id`) REFERENCES `user`(`id`) ON DELETE SET NULL ON UPDATE CASCADE
-	FOREIGN KEY (`author_id`) REFERENCES `author` ON DELETE SET NULL ON UPDATE CASCADE
-);
-
 CREATE TABLE favoritebook (
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	`user_id` INT NOT NULL,
 	book_id INT NOT NULL,
 	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (`book_id`) REFERENCES `book`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
-CREATE TABLE favoritequote (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	`user_id` INT NOT NULL,
-	quote_id INT NOT NULL,
-	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (`quote_id`) REFERENCES `quote`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE audio (
@@ -148,6 +124,30 @@ CREATE TABLE book_author (
 	author_id INT NOT NULL,
 	FOREIGN KEY (`book_id`) REFERENCES book(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (`author_id`) REFERENCES `author`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE quote (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	`content` TEXT NOT NULL,
+	thumbnail TEXT,
+	`view` INT DEFAULT 0,
+	author_id INT,
+	slug VARCHAR(2000),
+	meta_title VARCHAR(50),
+	meta_description TEXT,
+	`status` INT DEFAULT 1,
+	mod_time DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	mod_user_id INT,
+	FOREIGN KEY (`mod_user_id`) REFERENCES `user`(`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+	FOREIGN KEY (`author_id`) REFERENCES `author`(`id`) ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+CREATE TABLE favoritequote (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	`user_id` INT NOT NULL,
+	quote_id INT NOT NULL,
+	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (`quote_id`) REFERENCES `quote`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE quotecategory (

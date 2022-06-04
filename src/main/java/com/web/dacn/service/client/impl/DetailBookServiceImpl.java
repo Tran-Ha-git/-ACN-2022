@@ -26,10 +26,12 @@ import com.web.dacn.dto.user.AuthorDTO;
 import com.web.dacn.dto.user.UserDto;
 import com.web.dacn.entity.book.Book;
 import com.web.dacn.entity.book.CommentBook;
+import com.web.dacn.entity.book.FavoriteBook;
 import com.web.dacn.entity.book.ReviewBook;
 import com.web.dacn.entity.user.User;
 import com.web.dacn.repository.BookRepository;
 import com.web.dacn.repository.CommentBookRepository;
+import com.web.dacn.repository.FavoriteBookRepository;
 import com.web.dacn.repository.ReviewBookRepository;
 import com.web.dacn.service.auth.UserService;
 import com.web.dacn.service.client.DetailBookService;
@@ -50,6 +52,9 @@ public class DetailBookServiceImpl implements DetailBookService{
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private FavoriteBookRepository favoriteBookRepository;
 
 	@Override
 	public BookDTO getDetailBookBySlug(String slug) {
@@ -113,7 +118,7 @@ public class DetailBookServiceImpl implements DetailBookService{
 
 		if (categories.size() > 0) {
 			categories.forEach(bookCategotyDTO -> {
-				List<Book> books = bookRepository.findByCategoriesIdOrderByViewDesc(bookCategotyDTO.getId());
+				List<Book> books = bookRepository.findByCategoriesIdAndStatusOrderByViewDesc(bookCategotyDTO.getId(),1);
 				books.forEach(book -> {
 					BookDTO bookDTO = convertBookToSimilarBook(book);
 
@@ -132,7 +137,7 @@ public class DetailBookServiceImpl implements DetailBookService{
 		} else {
 			if (authors.size() > 0) {
 				authors.forEach(authorDTO -> {
-					List<Book> books = bookRepository.findByAuthorsIdOrderByViewDesc(authorDTO.getId());
+					List<Book> books = bookRepository.findByAuthorsIdAndStatusOrderByViewDesc(authorDTO.getId(),1);
 					books.forEach(book -> {
 						BookDTO bookDTO = convertBookToSimilarBook(book);
 
@@ -245,19 +250,13 @@ public class DetailBookServiceImpl implements DetailBookService{
 	@Override
 	public User getLoggedInUser() {
 		User user = (User) session.getAttribute("user");
-
-		// user temporary
-		if (user == null) {
-			user = userService.findById(1L).orElse(null);
-		}
-
 		return user;
 	}
 
 	@Transactional
 	@Override
 	public CommentBookDTO createComment(String slug, int star, String content) {
-		User user = getLoggedInUser();
+		User user = userService.findById(getLoggedInUser().getId()).orElseThrow(RuntimeException::new);
 		Book book = bookRepository.findOneBySlug(slug).orElse(null);
 		if (user == null || book == null)
 			return null;
@@ -270,7 +269,6 @@ public class DetailBookServiceImpl implements DetailBookService{
 		commentBook.setBook(book);
 		commentBook.setStatus(1);
 
-		ReviewBook newReviewBook = new ReviewBook();
 		if (star > 0) {
 			ReviewBook reviewBook = reviewBookRepository.findTop1ByBookIdAndUserIdOrderByModTime(book.getId(),
 					user.getId());
@@ -282,7 +280,8 @@ public class DetailBookServiceImpl implements DetailBookService{
 			reviewBook.setStar(star);
 			reviewBook.setUser(user);
 			reviewBook.setContent(content);
-			newReviewBook = reviewBookRepository.save(reviewBook);
+			
+			reviewBookRepository.save(reviewBook);
 		}
 
 		CommentBook newCommentBook = commentBookRepository.save(commentBook);
@@ -309,7 +308,8 @@ public class DetailBookServiceImpl implements DetailBookService{
 	public List<CommentBookDTO> getCommentBooksByBookSlug(String slug, Integer page) {
 		return getCommentsByBookSlug(slug, page).getContent();
 	}
-
+	
+	@Transactional
 	@Override
 	public CommentBookDTO createResponse(String slug, Long commentId, String content) {
 		User user = getLoggedInUser();
@@ -335,5 +335,59 @@ public class DetailBookServiceImpl implements DetailBookService{
 		commentBookDTO.setUser(userDto);
 
 		return commentBookDTO;
+	}
+
+	@Transactional
+	@Override
+	public Boolean addLovebook(String slug) {
+		User user = getLoggedInUser();
+		Book book = bookRepository.findOneBySlug(slug).orElse(null);
+		if (user == null || book == null)
+			return false;
+		//user = userService.findById(getLoggedInUser().getId()).orElseThrow(RuntimeException::new);
+
+		FavoriteBook favoriteBook = new FavoriteBook();
+		favoriteBook.setBook(book);
+		favoriteBook.setUser(user);
+		
+		if(!favoriteBookRepository.existsByUser_IdAndBook_Slug(user.getId(), slug)) {
+			favoriteBookRepository.save(favoriteBook);
+		}		
+		return true;
+	}
+	
+	@Transactional
+	@Override
+	public Boolean deleteLovebook(String slug) {
+		User user = userService.findById(getLoggedInUser().getId()).orElse(null);
+		Book book = bookRepository.findOneBySlug(slug).orElse(null);
+		if (user == null || book == null)
+			return false;
+		if( favoriteBookRepository.deleteByUser_IdAndBook_Slug(user.getId(), slug)>0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public Boolean checkLovebook(String slug) {
+		User user = getLoggedInUser();
+		Book book = bookRepository.findOneBySlug(slug).orElse(null);
+		if (user == null || book == null)
+			return false;
+		return favoriteBookRepository.existsByUser_IdAndBook_Slug(user.getId(), slug);
+	}
+	
+	@Transactional
+	@Override
+	public Boolean deleteLovebook(Long[] ids) {
+		for (Long id : ids) {
+			if(favoriteBookRepository.deleteByBookId(id)<0) {
+				return false;
+			}
+		}
+		return true;
 	}
 }

@@ -30,4 +30,12 @@ public interface DetailBookService {
 	List<CommentBookDTO> getCommentBooksByBookSlug(String slug, Integer page);
 
 	CommentBookDTO createResponse(String slug, Long commentId, String content);
+
+	Boolean addLovebook(String slug);
+
+	Boolean deleteLovebook(String slug);
+
+	Boolean checkLovebook(String slug);
+
+	Boolean deleteLovebook(Long[] ids);
 }

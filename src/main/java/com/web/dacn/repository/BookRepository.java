@@ -83,4 +83,11 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 	List<Book> findByCategoriesIdOrderByViewDesc(Long id);
 
 	List<Book> findByAuthorsIdOrderByViewDesc(Long id);
+
+	Page<Book> findByFavoriteBooks_UserIdAndNameContainingIgnoreCaseAndStatus(Long id, String search,
+			 int status, Pageable pageable);
+
+	List<Book> findByCategoriesIdAndStatusOrderByViewDesc(Long id, int status);
+
+	List<Book> findByAuthorsIdAndStatusOrderByViewDesc(Long id, int status);
 }

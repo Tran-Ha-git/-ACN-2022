@@ -112,6 +112,10 @@ public class Book {
 	@OneToMany(mappedBy = "book")
 	@JsonIgnore
 	private List<Pdf> pdfs = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "book")
+	@JsonIgnore
+	private List<FavoriteBook> favoriteBooks = new ArrayList<>();
 
 	@Override
     public int hashCode() {
