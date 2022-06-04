@@ -189,6 +189,16 @@
 		<put-attribute name="style" value="css/admin/list-book.css" />
 	</definition>
 
+	<!-- Admin List Type Page -->
+
+	<definition name="adminListType" extends="admin.base.definition">
+		<put-attribute name="title" value="Admin List Type Page" />
+		<put-attribute name="body"
+					   value="/WEB-INF/bodyfragments/admin/list-type.jsp" />
+		<put-attribute name="style" value="css/admin/list-type.css" />
+	</definition>
+
+
 	<!-- Admin ListAudio Page -->
 	
 	<definition name="adminListChapterAudio" extends="admin.base.definition">

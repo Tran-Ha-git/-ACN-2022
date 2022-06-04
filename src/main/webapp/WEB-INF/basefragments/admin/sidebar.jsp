@@ -24,4 +24,9 @@
 		<i class="fas fa-book-open"></i> <b> <a href="/admin/comments">Quản lý bình luận</a></b>
 		</p>
 	</div>
+	<div class="menu-manage-book manage-review">
+		<p class="menu-manage-book-name">
+			<i class="fas fa-book-open"></i> <b> <a href="/admin/types">Quản lý thể loại</a></b>
+		</p>
+	</div>
 </div>
