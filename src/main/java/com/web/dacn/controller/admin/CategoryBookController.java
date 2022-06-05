@@ -141,7 +141,8 @@ public class CategoryBookController {
     	if(bookCategoryDTO.getSlug()!=null) {
     		books = bookCategoryService.findBySlug(bookCategoryDTO.getSlug());
     	}
-    	if (result.hasErrors() || (books!=null && books.size()> 0)) {
+    	BookCategory bookCategory = bookCategoryService.getById(bookCategoryDTO.getId());
+    	if (result.hasErrors() || (!bookCategory.getSlug().equalsIgnoreCase(bookCategoryDTO.getSlug()) && books!=null && books.size()> 0)) {
     		result.addError(new FieldError("slug", "slug", "Slug already exists!"));
     		int pageSize = size.orElse(9);
     		model.addAttribute("size", pageSize);
@@ -176,7 +177,7 @@ public class CategoryBookController {
 		}
     	
     	
-    	BookCategory bookCategory = new BookCategory();
+    	
     	BeanUtils.copyProperties(bookCategoryDTO, bookCategory);
     	bookCategoryService.save(bookCategory);
     	return new ModelAndView("redirect:/admin/book/category");

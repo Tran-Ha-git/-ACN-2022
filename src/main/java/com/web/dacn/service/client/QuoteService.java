@@ -78,4 +78,6 @@ public interface QuoteService {
 
 	Page<Quote> findAllByContentContainingAndQuoteCategories_slug(String content, String categorySlug, Pageable pageable);
 
+	List<Quote> findBySlug(String slug);
+
 }

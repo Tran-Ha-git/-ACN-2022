@@ -247,6 +247,23 @@
 		<put-attribute name="style" value="css/admin/list-quote.css" />
 	</definition>
 	
+	<!-- Admin edit quote Page -->
+	<definition name="adminEditQuote" extends="admin.base.definition">
+		<put-attribute name="title" value="Admin edit quote Page" />
+		<put-attribute name="body"
+			value="/WEB-INF/bodyfragments/admin/edit-quote.jsp" />
+		<put-attribute name="style" value="css/admin/edit-quote.css" />
+	</definition>
+	
+	<!-- Admin edit quote Page -->
+	<definition name="adminCreateQuote" extends="admin.base.definition">
+		<put-attribute name="title" value="Admin create quote Page" />
+		<put-attribute name="body"
+			value="/WEB-INF/bodyfragments/admin/create-quote.jsp" />
+		<put-attribute name="style" value="css/admin/edit-quote.css" />
+	</definition>
+	
+	
 	<!-- Lovebook Page -->
 	<definition name="lovebook" extends="client.base.definition">
 		<put-attribute name="title" value="Sách yêu thích" />
