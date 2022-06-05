@@ -61,7 +61,7 @@
 					</button>
 				</form>
 			</div>
-			<p class="total">Tổng số: 15</p>
+			<p class="total">Tổng số: ${results.totalElements}</p>
 			<div class="table__wrapper">
 				<table class="table">
 					<thead>

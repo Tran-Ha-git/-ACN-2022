@@ -1,0 +1,368 @@
+.search{
+    margin: 10px 5px;
+}
+.search .search-by-authorname, .search-by-authorname{
+    display: inline;
+    margin: 10px 0px;
+}
+.search .search-by-authorname{
+  margin-right: 20px;	
+}
+.search .search-btn{
+    text-decoration: none;
+    padding: 5px 15px;
+    background-color: var(--btn-blue-color);
+    color: #fff;
+    border-radius: 5px;
+}
+.manage-author{
+    position: relative;
+    margin: 30px 5px;
+}
+.manage-author .manage-author-btn{
+    position: relative;
+    top: 10px;   
+}
+.manage-author .add-author-btn, 
+.manage-author .delete-author-btn {
+    margin-right: 15px;
+    text-decoration: none;
+    padding: 8px 20px;
+    border-radius: 5px;
+}
+
+.manage-author .add-author-btn{
+    background-color:  var(--btn-blue-color);
+    color: #fff;
+}
+.manage-author .delete-author-btn{
+    background-color: #696969;
+    color: #fff;  
+}
+.manage-author  .authors-amount{
+    position: absolute;
+    right: 0;
+    top:0;
+}
+.list-author-container{
+    margin-top: 50px;
+    width: 100%;
+    position: relative;
+}
+.list-author-container .list-author-table{
+   
+    width: 100%;
+
+    border-collapse:collapse;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+    text-align: center;
+}
+.list-author-container .list-author-table, th, td{
+    border-top:1px solid #000;
+    border-bottom:1px solid #000;
+    padding-top:10px;
+    padding-bottom:10px;
+}
+
+table th a {
+	text-decoration: none;
+}
+/*Tang do rong 2 column tac gia va category*/
+.tr-width-12{
+	width:12%;
+}
+
+.data-row .author-data .author-image{
+  width:36px;
+  height: 36px;
+}
+
+.custom-btn .edit-custom-btn, 
+.custom-btn .delete-custom-btn{
+    text-decoration: none;
+    padding: 5px 15px;
+    background-color:  var(--btn-blue-color);
+    color: #fff;
+    border-radius: 20px;
+}
+.add-image .add-image-btn{
+    text-decoration: none;
+    padding: 0px 5px;
+    margin-right: 10px;
+    border: 1px solid #ccc;   
+    border-radius: 50px;
+    text-align: center;
+}
+
+.paging {
+    position: absolute;
+    border: 1px solid #ccc;
+    border-radius: 50px;
+    right: 32px;
+    bottom: -50px;
+    padding: 8px 12px;
+}
+.paging a{
+    text-decoration: none;
+}
+.list-paging-numbers {
+    list-style-type: none;
+    display: block;
+    padding-left: 16px;
+    padding-right:16px;
+    border-radius: 20px;
+}
+.list-paging-numbers li{
+    display: inline-block;
+    margin: 4px 4px;
+}
+
+
+.paging .active{
+    padding: 4px 8px;
+    background-color:  var(--btn-blue-color);
+    color: #fff;
+    border-radius: 20px;
+   
+}
+
+.fas, .far{
+    border: none;
+}
+
+/* PC */
+@media (min-width: 64em) {
+    .container{
+        grid-template-columns: 25% 70%;
+    }  
+    .header-manage-list{
+        width: 100%;
+     
+    }
+}
+/* Tablet + Mobile */
+@media (max-width: 63.9375em) {
+    
+}
+/* Tablet */
+@media(min-width: 46.25em) and (max-width:63.9375em){
+    .container{
+        grid-template-columns: 25% 70%;
+    }
+    .search-by-authorname .search-authorname-label{
+        margin-right: 12px;
+    }
+    
+    .search .search-by-authorname{
+        display:inline-block;
+        margin-left:96px;
+    }
+    .custom-btn .edit-custom-btn, 
+    .custom-btn .delete-custom-btn{   
+        padding: 0px 15px;
+   
+    }
+    .list-author-container{
+        position: relative;
+     
+    }
+    .paging{
+          position: absolute;
+         
+    }
+    .header-manage-list{
+        width: 100%;
+     
+    }
+    .list-author-table{
+        width: 100%;
+    }
+    
+}
+
+/* Mobile */
+@media(max-width: 46.25em){
+    
+    .list-author-container{
+        position: relative;
+     width: 100%;
+    }
+    .list-author-table{
+        width: 100%;
+    }
+    .paging{
+        position: absolute;
+        
+    }
+    .header-manage-list{
+        width: 1320px;
+    
+    } 
+}
+
+.pdfobject-container {
+  height: 30rem;
+  border: 1rem solid rgba(0, 0, 0, 0.1);
+}
+
+.trigger {
+  margin: 0 0.75rem;
+  padding: 0.625rem 1.25rem;
+  border: none;
+  border-radius: 0.25rem;
+  box-shadow: 0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.12), 0 0.0625rem 0.125rem rgba(0, 0, 0, 0.24);
+  transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+  font-size: 0.875rem;
+  font-weight: 300;
+}
+.trigger i {
+  margin-right: 0.3125rem;
+}
+.trigger:hover {
+  box-shadow: 0 0.875rem 1.75rem rgba(0, 0, 0, 0.25), 0 0.625rem 0.625rem rgba(0, 0, 0, 0.22);
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 0vh;
+  background-color: transparent;
+  overflow: hidden;
+  transition: background-color 0.25s ease;
+  z-index: 9999;
+}
+.modal.open {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: background-color 0.25s;
+}
+.modal.open > .content-wrapper {
+  transform: scale(1);
+}
+.modal .content-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 50%;
+  margin: 0;
+  padding: 2.5rem;
+  background-color: white;
+  border-radius: 0.3125rem;
+  box-shadow: 0 0 2.5rem rgba(0, 0, 0, 0.5);
+  transform: scale(0);
+  transition: transform 0.25s;
+  transition-delay: 0.15s;
+}
+.modal .content-wrapper .close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  background-color: transparent;
+  font-size: 1.5rem;
+  transition: 0.25s linear;
+}
+.modal .content-wrapper .close:before, .modal .content-wrapper .close:after {
+  position: absolute;
+  content: "";
+  width: 1.25rem;
+  height: 0.125rem;
+  background-color: black;
+}
+.modal .content-wrapper .close:before {
+  transform: rotate(-45deg);
+}
+.modal .content-wrapper .close:after {
+  transform: rotate(45deg);
+}
+.modal .content-wrapper .close:hover {
+  transform: rotate(360deg);
+}
+.modal .content-wrapper .close:hover:before, .modal .content-wrapper .close:hover:after {
+  background-color: tomato;
+}
+.modal .content-wrapper .modal-header {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin: 0;
+  padding: 0 0 1.25rem;
+}
+.modal .content-wrapper .modal-header h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.modal .content-wrapper .content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.modal .content-wrapper .content p {
+  font-size: 0.875rem;
+  line-height: 1.75;
+}
+.modal .content-wrapper .modal-footer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  margin: 0;
+  padding: 1.875rem 0 0;
+}
+.modal .content-wrapper .modal-footer .action {
+  position: relative;
+  margin-left: 0.625rem;
+  padding: 0.625rem 1.25rem;
+  border: none;
+  background-color: slategray;
+  border-radius: 0.25rem;
+  color: white;
+  font-size: 0.87rem;
+  font-weight: 300;
+  overflow: hidden;
+  z-index: 1;
+}
+.modal .content-wrapper .modal-footer .action:before {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.2);
+  transition: width 0.25s;
+  z-index: 0;
+}
+.modal .content-wrapper .modal-footer .action:first-child {
+  background-color: #2ecc71;
+}
+.modal .content-wrapper .modal-footer .action:last-child {
+  background-color: #e74c3c;
+}
+.modal .content-wrapper .modal-footer .action:hover:before {
+  width: 100%;
+}
+
+.modal img {
+	width: 150px;
+	height: 150px;
+}
