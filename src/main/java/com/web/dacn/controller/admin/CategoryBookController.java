@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -140,7 +141,8 @@ public class CategoryBookController {
     	if(bookCategoryDTO.getSlug()!=null) {
     		books = bookCategoryService.findBySlug(bookCategoryDTO.getSlug());
     	}
-    	if (result.hasErrors() || (books!=null && books.size()> 0)) {
+    	BookCategory bookCategory = bookCategoryService.getById(bookCategoryDTO.getId());
+    	if (result.hasErrors() || (!bookCategory.getSlug().equalsIgnoreCase(bookCategoryDTO.getSlug()) && books!=null && books.size()> 0)) {
     		result.addError(new FieldError("slug", "slug", "Slug already exists!"));
     		int pageSize = size.orElse(9);
     		model.addAttribute("size", pageSize);
@@ -175,19 +177,20 @@ public class CategoryBookController {
 		}
     	
     	
-    	BookCategory bookCategory = new BookCategory();
+    	
     	BeanUtils.copyProperties(bookCategoryDTO, bookCategory);
     	bookCategoryService.save(bookCategory);
     	return new ModelAndView("redirect:/admin/book/category");
     }
     
     @GetMapping("/delete/{id}")
-    public ModelAndView delete(@PathVariable("id") Long id) {
+    public ModelAndView delete(@PathVariable("id") Long id,
+    		@RequestHeader(value = "referer", required = false) String referer) {
     	Optional<BookCategory> optional = bookCategoryService.findById(id);
 		if(optional.isPresent()) {
 			bookCategoryService.delete(optional.get());
 		}
-    	return new ModelAndView("redirect:/admin/book/category");
+		return new ModelAndView("redirect:" + referer);
     }
     
 }	

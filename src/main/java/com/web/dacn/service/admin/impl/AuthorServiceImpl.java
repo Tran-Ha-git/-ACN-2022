@@ -6,9 +6,12 @@ import java.util.function.Function;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
 import org.springframework.stereotype.Service;
 
 import com.web.dacn.dto.book.BookDTO;
@@ -28,7 +31,7 @@ import com.web.dacn.service.admin.AuthorService;
 public class AuthorServiceImpl implements AuthorService {
 	@Autowired
 	private AuthorRepository authorRepository;
-
+	
 	@Override
 	public Page<AuthorDTO> getListAuthor(String search, String sortStr, int page) {
 		PageRequest pageRequest = PageRequest.of(page - 1, 10);
@@ -92,4 +95,181 @@ public class AuthorServiceImpl implements AuthorService {
 		} 
 		return null;
 	}
+
+	@Override
+	public Author findById(long id) {
+		return authorRepository.findById(id);
+	}
+
+	@Override
+	public Page<Author> findByFullnameContaining(String fullname, Pageable page) {
+		return authorRepository.findByFullnameContaining(fullname, page);
+	}
+
+	@Override
+	public Author findByFullname(String name) {
+		return authorRepository.findByFullname(name);
+	}
+
+	@Override
+	public Optional<Author> findBySlug(String slug) {
+		return authorRepository.findBySlug(slug);
+	}
+
+	@Override
+	public boolean existsBySlug(String slug) {
+		return authorRepository.existsBySlug(slug);
+	}
+
+	@Override
+	public boolean existsByIdNotAndSlug(Long id, String slug) {
+		return authorRepository.existsByIdNotAndSlug(id, slug);
+	}
+
+	@Override
+	public <S extends Author> S save(S entity) {
+		return authorRepository.save(entity);
+	}
+
+	@Override
+	public <S extends Author> Optional<S> findOne(Example<S> example) {
+		return authorRepository.findOne(example);
+	}
+
+	@Override
+	public List<Author> findAll() {
+		return authorRepository.findAll();
+	}
+
+	@Override
+	public Page<Author> findAll(Pageable pageable) {
+		return authorRepository.findAll(pageable);
+	}
+
+	@Override
+	public List<Author> findAll(Sort sort) {
+		return authorRepository.findAll(sort);
+	}
+
+	@Override
+	public List<Author> findAllById(Iterable<Long> ids) {
+		return authorRepository.findAllById(ids);
+	}
+
+	@Override
+	public <S extends Author> List<S> saveAll(Iterable<S> entities) {
+		return authorRepository.saveAll(entities);
+	}
+
+	@Override
+	public void flush() {
+		authorRepository.flush();
+	}
+
+	@Override
+	public <S extends Author> S saveAndFlush(S entity) {
+		return authorRepository.saveAndFlush(entity);
+	}
+
+	@Override
+	public boolean existsById(Long id) {
+		return authorRepository.existsById(id);
+	}
+
+	@Override
+	public <S extends Author> List<S> saveAllAndFlush(Iterable<S> entities) {
+		return authorRepository.saveAllAndFlush(entities);
+	}
+
+	@Override
+	public <S extends Author> Page<S> findAll(Example<S> example, Pageable pageable) {
+		return authorRepository.findAll(example, pageable);
+	}
+
+	@Override
+	public void deleteInBatch(Iterable<Author> entities) {
+		authorRepository.deleteInBatch(entities);
+	}
+
+	@Override
+	public <S extends Author> long count(Example<S> example) {
+		return authorRepository.count(example);
+	}
+
+	@Override
+	public void deleteAllInBatch(Iterable<Author> entities) {
+		authorRepository.deleteAllInBatch(entities);
+	}
+
+	@Override
+	public long count() {
+		return authorRepository.count();
+	}
+
+	@Override
+	public <S extends Author> boolean exists(Example<S> example) {
+		return authorRepository.exists(example);
+	}
+
+	@Override
+	public void deleteById(Long id) {
+		authorRepository.deleteById(id);
+	}
+
+	@Override
+	public void deleteAllByIdInBatch(Iterable<Long> ids) {
+		authorRepository.deleteAllByIdInBatch(ids);
+	}
+
+	@Override
+	public void delete(Author entity) {
+		authorRepository.delete(entity);
+	}
+
+	@Override
+	public <S extends Author, R> R findBy(Example<S> example, Function<FetchableFluentQuery<S>, R> queryFunction) {
+		return authorRepository.findBy(example, queryFunction);
+	}
+
+	@Override
+	public void deleteAllById(Iterable<? extends Long> ids) {
+		authorRepository.deleteAllById(ids);
+	}
+
+	@Override
+	public void deleteAllInBatch() {
+		authorRepository.deleteAllInBatch();
+	}
+
+	@Override
+	public Author getOne(Long id) {
+		return authorRepository.getOne(id);
+	}
+
+	@Override
+	public void deleteAll(Iterable<? extends Author> entities) {
+		authorRepository.deleteAll(entities);
+	}
+
+	@Override
+	public void deleteAll() {
+		authorRepository.deleteAll();
+	}
+
+	@Override
+	public Author getById(Long id) {
+		return authorRepository.getById(id);
+	}
+
+	@Override
+	public <S extends Author> List<S> findAll(Example<S> example) {
+		return authorRepository.findAll(example);
+	}
+
+	@Override
+	public <S extends Author> List<S> findAll(Example<S> example, Sort sort) {
+		return authorRepository.findAll(example, sort);
+	}
+	
+	
 }

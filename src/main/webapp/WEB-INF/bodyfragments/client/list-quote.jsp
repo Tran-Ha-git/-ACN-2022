@@ -1,5 +1,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -16,31 +17,39 @@
 			<div class="md:col-span-9">
 				<form method="GET" id="form-sort">
 					<div class="flex justify-end mb-3">
-							<select name="sort" id="sort"
-						class="max-w-[200px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-								<option value="">Sort</option>
-								<option value="view_desc" ${sort=='view_desc'? "selected":"" }>
-									<span class="mr-2">View &#8595;</span>
-								</option>
-								<option value="view_asc" ${sort=='view_asc'? "selected":"" }>
-									<span class="mr-2">View &#8593;</span>
-								</option>
-								<option value="feedback_desc" ${sort=='feedback_desc'? "selected":"" }>
-									<span class="mr-2">High feedback &#8595;</span>
-								</option>
-								<option value="feedback_asc" ${sort=='feedback_asc'? "selected":"" }>
-									<span class="mr-2">High feedback &#8593;</span>
-								</option>
-							</select>
+						<select name="sort" id="sort"
+							class="max-w-[200px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+							<option value="">Sort</option>
+							<option value="view_desc" ${sort=='view_desc'? "selected":"" }>
+								<span class="mr-2">View &#8595;</span>
+							</option>
+							<option value="view_asc" ${sort=='view_asc'? "selected":"" }>
+								<span class="mr-2">View &#8593;</span>
+							</option>
+							<option value="feedback_desc"
+								${sort=='feedback_desc'? "selected":"" }><span
+									class="mr-2">High feedback &#8595;</span>
+							</option>
+							<option value="feedback_asc"
+								${sort=='feedback_asc'? "selected":"" }><span
+									class="mr-2">High feedback &#8593;</span>
+							</option>
+						</select>
 					</div>
 				</form>
 				<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
 					<c:forEach items="${results.content }" var="quote">
 						<div
 							class="max-w-sm m-auto h-full py-4 px-2 bg-white rounded-lg border border-gray-200 shadow-md flex flex-col items-center justify-between">
-							<a href="#"> <img
-								class="mx-auto rounded-full h-[150px] w-[150px] mt-3"
-								src="${quote.thumbnail}" alt="" />
+							<a href="#"> 
+							<c:if test="${!fn:contains(quote.thumbnail, 'dummyimage.com')}">
+								<img class="mx-auto rounded-full h-[150px] w-[150px] mt-3"
+									src="/quotes/images/${quote.thumbnail}" alt="" />
+								</c:if> 
+							<c:if test="${fn:contains(quote.thumbnail, 'dummyimage.com')}">
+									<img class="mx-auto rounded-full h-[150px] w-[150px] mt-3"
+									src="${quote.thumbnail}" alt="" />
+							</c:if> 
 							</a>
 							<div class="px-3 py-3 text-center">
 								<p
@@ -98,24 +107,27 @@
 									<span
 										class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">${quote.getAverageStar() }</span>
 								</div>
-								<div class="flex items-center text-gray-600 ml-2  cursor-pointer hover:text-blue-500"
+								<div
+									class="flex items-center text-gray-600 ml-2  cursor-pointer hover:text-blue-500"
 									onclick="showFeedback({
 											id: ${quote.id},
-										})"
-								>
-									<svg class="w-5 h-5 hover:text-blue-500" fill="none" stroke="currentColor"
-										viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+										})">
+									<svg class="w-5 h-5 hover:text-blue-500" fill="none"
+										stroke="currentColor" viewBox="0 0 24 24"
+										xmlns="http://www.w3.org/2000/svg">
 										<path stroke-linecap="round" stroke-linejoin="round"
 											stroke-width="2"
 											d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
 									<span class="ml-2 font-medium">${quote.reviewQuotes.size()}</span>
 								</div>
-								<div class="flex items-center text-gray-600 ml-2 cursor-pointer hover:text-blue-500" 
+								<div
+									class="flex items-center text-gray-600 ml-2 cursor-pointer hover:text-blue-500"
 									onclick="openQuote({
 											id: ${quote.id},
 										})">
-									<svg class="w-6 h-6 text-gray-500 hover:text-blue-500" fill="currentColor"
-										viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+									<svg class="w-6 h-6 text-gray-500 hover:text-blue-500"
+										fill="currentColor" viewBox="0 0 20 20"
+										xmlns="http://www.w3.org/2000/svg">
 										<path fill-rule="evenodd"
 											d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z"
 											clip-rule="evenodd"></path></svg>
@@ -145,16 +157,22 @@
 											quoteId: ${quote.id},
 											userId: ${sessionScope.user!=null ? sessionScope.user.id: 'null' }
 										})">
-									<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-									<span class="ml-2">Rate</span>		
+									<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+										xmlns="http://www.w3.org/2000/svg">
+										<path
+											d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+									<span class="ml-2">Rate</span>
 								</button>
 								<button
 									class="mx-2 inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300"
 									onclick="openQuote({
 											id: ${quote.id},
 										})">
-										<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
-										<span class="ml-2">View</span>
+									<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+										xmlns="http://www.w3.org/2000/svg">
+										<path
+											d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+									<span class="ml-2">View</span>
 								</button>
 							</div>
 						</div>
@@ -355,12 +373,12 @@
 			</div>
 		</div>
 	</div>
-	
-	
+
+
 	<button
 		class="hidden text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-		type="button" data-modal-toggle="feedback-view-modal" id="button-modal-feedback">
-		feeback modal</button>
+		type="button" data-modal-toggle="feedback-view-modal"
+		id="button-modal-feedback">feeback modal</button>
 
 	<!-- Main modal -->
 	<div id="feedback-view-modal" tabindex="-1" aria-hidden="true"
@@ -379,58 +397,84 @@
 							clip-rule="evenodd"></path></svg>
 				</button>
 				<div class="py-6 px-6 lg:px-8">
-					<h3 class="mb-4 text-xl font-medium text-gray-900 flex">View feedback - <span style="display: -webkit-box; max-width: 70%; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;" class="ml-2" id="view-feedback-title"></span></h3>
-					<div class="flex flex-col mt-2" id="list-feedback">
-					</div>
+					<h3 class="mb-4 text-xl font-medium text-gray-900 flex">
+						View feedback - <span
+							style="display: -webkit-box; max-width: 70%; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;"
+							class="ml-2" id="view-feedback-title"></span>
+					</h3>
+					<div class="flex flex-col mt-2" id="list-feedback"></div>
 				</div>
 			</div>
 		</div>
 	</div>
-	
-	
-	<button id="button-authentication-modal" class="hidden text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" 
-		type="button" data-modal-toggle="authentication-modal">
-	 Auth modal
-	</button>
+
+
+	<button id="button-authentication-modal"
+		class="hidden text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+		type="button" data-modal-toggle="authentication-modal">Auth
+		modal</button>
 
 	<!-- Main modal -->
-	<div id="authentication-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
-	    <div class="relative p-4 w-full max-w-md h-full md:h-auto">
-	        <!-- Modal content -->
-	        <div class="relative bg-white rounded-lg shadow">
-	            <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-toggle="authentication-modal">
-	                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
-	            </button>
-	            <div class="py-6 px-6 lg:px-8">
-	                <h3 class="mb-4 text-xl font-medium text-gray-900">Sign in to our platform</h3>
-	                <form class="space-y-6" action="/auth/login" method="post">
-	                    <div>
-	                        <label for="username" class="block mb-2 text-sm font-medium text-gray-900">Your username</label>
-	                        <input type="text" name="username" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="abc" required>
-	                    </div>
-	                    <div>
-	                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Your password</label>
-	                        <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
-	                    </div>
-	                    <div class="flex justify-between">
-	                        <div class="flex items-start">
-	                            <div class="flex items-center h-5">
-	                                <input id="remember" type="checkbox" value="" class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300" required>
-	                            </div>
-	                            <label for="remember" class="ml-2 text-sm font-medium text-gray-900">Remember me</label>
-	                        </div>
-	                        <a href="#" class="text-sm text-blue-700 hover:underline">Lost Password?</a>
-	                    </div>
-	                    <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Login to your account</button>
-	                    <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
-	                        Not registered? <a href="/auth/login" class="text-blue-700 hover:underline">Create account</a>
-	                    </div>
-	                </form>
-	            </div>
-	        </div>
-	    </div>
-	</div> 
-	
+	<div id="authentication-modal" tabindex="-1" aria-hidden="true"
+		class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+		<div class="relative p-4 w-full max-w-md h-full md:h-auto">
+			<!-- Modal content -->
+			<div class="relative bg-white rounded-lg shadow">
+				<button type="button"
+					class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+					data-modal-toggle="authentication-modal">
+					<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+						xmlns="http://www.w3.org/2000/svg">
+						<path fill-rule="evenodd"
+							d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+							clip-rule="evenodd"></path></svg>
+				</button>
+				<div class="py-6 px-6 lg:px-8">
+					<h3 class="mb-4 text-xl font-medium text-gray-900">Sign in to
+						our platform</h3>
+					<form class="space-y-6" action="/auth/login" method="post">
+						<div>
+							<label for="username"
+								class="block mb-2 text-sm font-medium text-gray-900">Your
+								username</label> <input type="text" name="username" id="username"
+								class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+								placeholder="abc" required>
+						</div>
+						<div>
+							<label for="password"
+								class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Your
+								password</label> <input type="password" name="password" id="password"
+								placeholder="••••••••"
+								class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+								required>
+						</div>
+						<div class="flex justify-between">
+							<div class="flex items-start">
+								<div class="flex items-center h-5">
+									<input id="remember" type="checkbox" value=""
+										class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300"
+										required>
+								</div>
+								<label for="remember"
+									class="ml-2 text-sm font-medium text-gray-900">Remember
+									me</label>
+							</div>
+							<a href="#" class="text-sm text-blue-700 hover:underline">Lost
+								Password?</a>
+						</div>
+						<button type="submit"
+							class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Login
+							to your account</button>
+						<div class="text-sm font-medium text-gray-500 dark:text-gray-300">
+							Not registered? <a href="/auth/login"
+								class="text-blue-700 hover:underline">Create account</a>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<script src="https://unpkg.com/flowbite@1.4.3/dist/flowbite.js"></script>
 	<script>
             const url_string = window.location.href;

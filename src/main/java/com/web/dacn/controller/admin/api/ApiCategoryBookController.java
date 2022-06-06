@@ -1,5 +1,6 @@
 package com.web.dacn.controller.admin.api;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,10 @@ public class ApiCategoryBookController {
 	@PostMapping("/edit")
 	public BookCategory edit(BookCategoryDTO bookCategoryDTO) {
 		Optional<BookCategory> optional = bookCategoryService.findById(bookCategoryDTO.getId());
-		if(optional.isPresent()) {
+		List<BookCategory> bookCategories = bookCategoryService.findBySlug(bookCategoryDTO.getSlug());
+		if(!optional.get().getSlug().equalsIgnoreCase(bookCategoryDTO.getSlug()) && bookCategories!=null && bookCategories.size()>0) {
+			return null;
+		} else if(optional.isPresent()) {
 			BookCategory bookCategory = optional.get();
 			bookCategory.setName(bookCategoryDTO.getName());
 			bookCategory.setSlug(bookCategoryDTO.getSlug());
