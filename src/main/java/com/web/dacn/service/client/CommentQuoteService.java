@@ -75,5 +75,7 @@ public interface CommentQuoteService {
 	<S extends CommentQuote> S save(S entity);
 
 	List<CommentQuote> findByQuoteId(Long quoteId);
+	
+	Page<CommentQuote> findByUserUsernameOrUserEmailOrUserFullnameContaining(String username, String email, String fullname, Pageable pageable);
 
 }

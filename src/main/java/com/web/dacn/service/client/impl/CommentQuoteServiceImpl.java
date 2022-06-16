@@ -21,6 +21,15 @@ public class CommentQuoteServiceImpl implements CommentQuoteService{
 	@Autowired
 	private CommentQuoteRepository commentQuoteRepository;
 	
+	
+	
+	@Override
+	public Page<CommentQuote> findByUserUsernameOrUserEmailOrUserFullnameContaining(String username, String email,
+			String fullname, Pageable pageable) {
+		return commentQuoteRepository.findByUserUsernameOrUserEmailOrUserFullnameContaining(username, email, fullname,
+				pageable);
+	}
+
 	@Override
 	public List<CommentQuote> findByQuoteId(Long quoteId) {
 		return commentQuoteRepository.findByQuoteId(quoteId);
