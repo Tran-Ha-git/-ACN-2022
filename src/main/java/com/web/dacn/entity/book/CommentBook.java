@@ -49,7 +49,7 @@ public class CommentBook implements Serializable{
 	@Column(name="mod_time")
 	private Date modTime;
 	
-	@ManyToOne(cascade = CascadeType.ALL, targetEntity = CommentBook.class)
+	@ManyToOne(targetEntity = CommentBook.class)
 	@JoinColumn(name="parent_id")
 	@JsonIgnore
 	private CommentBook commentBook;

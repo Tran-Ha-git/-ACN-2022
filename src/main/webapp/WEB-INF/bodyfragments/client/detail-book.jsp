@@ -811,7 +811,15 @@ function addEventButtonResponse(){
 	$(".comment .review .content-comment button").click(function(e) {
 		let commentId = $(this).siblings("input[type=hidden].commentId").val();
 		$("#response-comment-id").val(commentId);
-		$("#response").modal("show");
+		$.ajax({url: "/api/book/checkLogin", success: function(result){
+	  		   if(!result){
+	  			   alertLogin();
+	  		   }else{
+	  			$("#response").modal("show");
+	  		   }
+			}
+		});
+		
 	});
 }
 
