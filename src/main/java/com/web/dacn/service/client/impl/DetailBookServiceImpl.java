@@ -312,7 +312,8 @@ public class DetailBookServiceImpl implements DetailBookService{
 	@Transactional
 	@Override
 	public CommentBookDTO createResponse(String slug, Long commentId, String content) {
-		User user = getLoggedInUser();
+		Long userId = getLoggedInUser().getId();
+		User user = userService.getById(userId);
 		Book book = bookRepository.findOneBySlug(slug).orElse(null);
 		if (user == null || book == null)
 			return null;
