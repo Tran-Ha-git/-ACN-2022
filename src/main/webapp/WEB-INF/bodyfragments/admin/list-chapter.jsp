@@ -51,11 +51,12 @@
 			<form action="/admin/addChapter" method="post">
 				<div class="form__add-chapter">
 					<label>Tên chương</label><br /> <input type="text" name="name"
-						class="width-input" /><br /> <br /> <label>Nội dung</label><br />
+						class="width-input" required/><br /> <br /> <label>Nội dung</label><br />
 
-					<input name="content" rows="3" class="width-input height-input"></input>
+					<input name="content" rows="3" class="width-input height-input" required></input>
 					<label>Priority</label><br /> <input type="text" name="priority"
-						class="width-input width-input-prioty" /><br /> <br />
+						class="width-input width-input-prioty width-input isNum"  /><br /> <br />
+							<label class="warning"></label><br /> 
 				</div>
 				<div class="btn spacing">
 					<a href="" class="grey">Hủy</a> <input type="submit"
@@ -79,14 +80,16 @@
 				<div class="form__add-chapter">
 					<label>Tên chương</label><br />
 					<input type="text" name="name"
-						class="width-input" value="${currentOnline.name }"/><br /> <br /> 
+						class="width-input" value="${currentOnline.name } " required/><br /> <br /> 
 						
 					<label>Nội dung</label><br />
 					<input name="content" rows="3" class="width-input height-input" 
-					value="${currentOnline.content }"/>
+					value="${currentOnline.content } " required/>
 					
 					<label>Priority</label><br /> <input type="text" name="priority"
-						class="width-input width-input-prioty" value="${currentOnline.priority}"/><br /> <br />
+						class="width-input width-input-prioty width-input isNum" value="${currentOnline.priority}" />
+						<label class="warning"></label><br /> 
+						<br />
 				</div>
 				<div class="btn spacing">
 					<a href="" class="grey">Hủy</a> <input type="submit"
@@ -109,6 +112,17 @@ var submitEdit = document.querySelector('#submit-edit-online');
 var editform = document.querySelector('#edit-form');
 var addformDiv = document.querySelector('#add-online');
 var editformDiv = document.querySelector('#edit-online');
+
+var numInput= document.querySelector('.isNum');
+var warning= document.querySelector('.warning');
+numInput.onblur= function(){
+if (!Number.isInteger(numInput.value))
+	
+  warning.innerHTML='Dữ liệu phải là số'
+  numInput.value='';
+	
+}
+console.log(numInput)
 
 editOnlineBtn.forEach(editBtn => {
 		 
@@ -140,6 +154,8 @@ addOnlineBtn.onclick=function(){
 	 editformDiv.style.display='none';
 	 addformDiv.style.display='block';
 }
+
+
 
 </script>
 

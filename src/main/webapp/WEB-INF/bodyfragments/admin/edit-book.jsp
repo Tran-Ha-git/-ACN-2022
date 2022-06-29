@@ -13,7 +13,7 @@
 		<form action="/admin/editBook/${book.id}" method="post"
 			enctype="multipart/form-data">
 			<label>Tên sách</label> <input type="text" name="name"
-				class="width-input" value="${book.name}" /><br /> <br /> <label>Upload
+				class="width-input" value="${book.name}"  required/><br /> <br /> <label>Upload
 				hình</label><br /> <input type="file" name="fileUpload" class="width-input"
 				value="${book.thumbnail}" /><br /> <br />
 
@@ -36,23 +36,24 @@
 
 				<div class="form-lable-3">
 					<label>Giá</label><br /> <input type="text" name="price"
-						class="width-input" value="${book.price}" />
+						class="width-input  isNum" value="${book.price}" />
+						<label class="warning"></label>
 				</div>
 				<br />
 				<div class="form-lable-3">
 					<label>Slug</label><br /> <input type="text" name="slug"
-						class="width-input" value="${book.slug}" />
+						class="width-input" value="${book.slug}"  required/>
 				</div>
 				<br />
 			</div>
 
 			<label>Meta title</label><br /> <input type="text" name="metaTitle"
-				class="width-input" value="${book.metaDescription}" /><br /> <br />
+				class="width-input" value="${book.metaDescription}" required/><br /> <br />
 			<label>Meta Description</label> <input type="text"
 				name="metaDescription" class="width-input"
-				value="${book.metaDescription}" /><br /> <br /> <label>Giới
+				value="${book.metaDescription}" required/><br /> <br /> <label>Giới
 				thiệu sách</label><br /> <input type="text" name="description"
-				class="width-input" value="${book.description}"> <br /> <br />
+				class="width-input" value="${book.description}" required> <br /> <br />
 
 			<div class="listCheck_three">
 				<div class="list-checkbox">
@@ -171,5 +172,15 @@ categoryNames.forEach(name =>{
 	}
 	
 })
+var numInput= document.querySelector('.isNum');
+var warning= document.querySelector('.warning');
+numInput.onblur= function(){
+if (!Number.isInteger(numInput.value))
+	
+  warning.innerHTML='Dữ liệu phải là số'
+  numInput.value='';
+	
+}
+console.log(numInput)
 
 </script>

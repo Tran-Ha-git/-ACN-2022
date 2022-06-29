@@ -69,7 +69,7 @@
 
 						<td class="book-data">${comment.id }</td>
 
-						<td class="book-data">
+						<td class="book-data tr-width-12">
 							<div class="commnet-space">
 								<div class="comment-img">
 									<i class="fas fa-user comment-width"></i>
@@ -97,7 +97,7 @@
 							</c:otherwise>
 						</c:choose>
 
-						<td class="book-data">
+						<td class="book-data tr-width-12">
 							<div class="custom-btn custom-btn-3" style="display:flex;">
 								<c:url value="/admin/DeleteCommentBook" var="url">
 									<c:param name="id" value="${comment.id}" />

@@ -19,7 +19,7 @@
 	<div class="list-book-container">
 		<form action="/admin/books/add" method="post" enctype="multipart/form-data">
 			<label>Tên sách</label> <input type="text" name="name"
-				class="width-input" /><br />
+				class="width-input" required /><br />
 			<br /> <label>Upload hình</label><br /> <input type="file"
 				name="fileUpload" class="width-input" /><br />
 			<br />
@@ -43,29 +43,30 @@
 
 				<div class="form-lable-3">
 					<label>Giá</label><br> <input type="text" name="price"
-						class="width-input" />
+						class="width-input isNum" />
+						<label class="warning"></label>
 				</div>
 				<br>
 				<div class="form-lable-3">
 					<label>Slug</label><br> <input type="text" name="slug"
-						class="width-input" />
+						class="width-input" required/>
 				</div>
 				<br>
 
 			</div>
 			<br> <label>Meta title</label><br /> <input type="text"
-				name="metaTitle" class="width-input" /><br />
+				name="metaTitle" class="width-input" required /><br />
 			<br /> <label>Meta Description</label> <input type="text"
-				name="metaDescription" class="width-input" /><br />
+				name="metaDescription" class="width-input" required/><br />
 			<br /> <label>Giới thiệu sách</label><br />
 
 			<textarea rows="3" class="width-input height-input"
-				name="description"></textarea>
+				name="description" required></textarea>
 			<br />
 			<br> <label>Tác giả</label><br /> <input type="text"
-				name="fullname" class="width-input" /><br />
+				name="fullname" class="width-input" required/><br />
 			<br /> <label>Thể loại</label><br /> <input type="text"
-				name="categoryName" class="width-input" /><br />
+				name="categoryName" class="width-input" required/><br />
 			<br />
 			<div class="btn spacing">
 				<a href="" class="grey">Hủy</a>
@@ -76,3 +77,15 @@
 		</form>
 	</div>
 	</div>
+	<script>
+	var numInput= document.querySelector('.isNum');
+	var warning= document.querySelector('.warning');
+	numInput.onblur= function(){
+	if (!Number.isInteger(numInput.value))
+		
+	  warning.innerHTML='Dữ liệu phải là số'
+	  numInput.value='';
+		
+	}
+	console.log(numInput)
+	</script>
