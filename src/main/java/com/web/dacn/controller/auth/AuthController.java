@@ -70,6 +70,7 @@ public class AuthController {
 		for(Role role : user.getRoles()) {
 			if(role.getName().equalsIgnoreCase("Admin")) {
 				session.setAttribute("ad", true);
+				return new ModelAndView("redirect:/admin/books");
 			}
 		}
 		
