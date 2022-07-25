@@ -2,6 +2,7 @@ package com.web.dacn.service.client.impl;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuer
 import org.springframework.stereotype.Service;
 
 import com.web.dacn.entity.quote.Quote;
+import com.web.dacn.entity.quote.QuoteCategory;
 import com.web.dacn.repository.QuoteRepository;
 import com.web.dacn.service.client.QuoteService;
 
@@ -69,7 +71,8 @@ public class QuoteServiceImpl implements QuoteService {
 
 	@Override
 	public Optional<Quote> findById(Long id) {
-		return quoteRepository.findById(id);
+		Optional<Quote> result = quoteRepository.findById(id);
+		return result;
 	}
 
 	@Override

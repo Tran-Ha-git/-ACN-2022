@@ -2,7 +2,7 @@
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 
 <header>
-	<div class="container-header container">
+	<div class="container-header container ">
 		<div class="nav-btn d-block d-lg-none">
 			<span><i class="fa-solid fa-bars"></i></span>
 			<ul>

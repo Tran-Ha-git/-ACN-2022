@@ -36,20 +36,20 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 	@Query(value = "SELECT * FROM book b WHERE EXISTS(SELECT * FROM audio WHERE book_id = b.id) ORDER BY view DESC LIMIT 10", nativeQuery = true)
 	List<Book> findTop10AudioBook();
 
-	@Query(value = "SELECT * FROM book b WHERE name LIKE %:search%", nativeQuery = true)
+	@Query(value = "SELECT * FROM book b WHERE name LIKE %:search% AND status =1", nativeQuery = true)
 	Page<Book> findBookContainingSearchOrderBySort(String search, Pageable pageable);
 	
 	Page<Book> findByNameContaining(String search, Pageable pageable);
 
 	// exist audio, online, pdf
 
-	@Query(value = "SELECT * FROM book b WHERE EXISTS(SELECT * FROM audio WHERE book_id = b.id) AND name LIKE %:search%", nativeQuery = true)
+	@Query(value = "SELECT * FROM book b WHERE EXISTS(SELECT * FROM audio WHERE book_id = b.id) AND name LIKE %:search% AND status =1", nativeQuery = true)
 	Page<Book> findAudioBookContainingSearchOrderBySort(String search, Pageable pageable);
 
-	@Query(value = "SELECT * FROM book b WHERE EXISTS(SELECT * FROM online WHERE book_id = b.id) AND name LIKE %:search%", nativeQuery = true)
+	@Query(value = "SELECT * FROM book b WHERE EXISTS(SELECT * FROM online WHERE book_id = b.id) AND name LIKE %:search% AND status =1", nativeQuery = true)
 	Page<Book> findOnlineBookContainingSearchOrderBySort(String search, Pageable pageable);
 
-	@Query(value = "SELECT * FROM book b WHERE EXISTS(SELECT * FROM pdf WHERE book_id = b.id) AND name LIKE %:search%", nativeQuery = true)
+	@Query(value = "SELECT * FROM book b WHERE EXISTS(SELECT * FROM pdf WHERE book_id = b.id) AND name LIKE %:search% AND status =1", nativeQuery = true)
 	Page<Book> findPdfBookContainingSearchOrderBySort(String search, Pageable pageable);
 	
 	// Filter by category id
@@ -60,7 +60,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
 	
 	@Query(value = "SELECT * FROM book b WHERE EXISTS("
-			+ "SELECT * FROM book_bookcategory WHERE book_id = b.id AND category_id = :categoryId) AND name LIKE %:search%", nativeQuery = true)
+			+ "SELECT * FROM book_bookcategory WHERE book_id = b.id AND category_id = :categoryId) AND name LIKE %:search% AND status = 1", nativeQuery = true)
 	Page<Book> findBookByCategoryIdAndContainingSearchOrderBySort(String search, Pageable pageable, Long categoryId);
 	
 	@Query(value = "SELECT * FROM book b WHERE EXISTS("
