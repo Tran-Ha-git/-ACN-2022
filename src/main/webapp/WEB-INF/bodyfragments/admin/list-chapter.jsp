@@ -51,9 +51,10 @@
 			<form action="/admin/addChapter" method="post">
 				<div class="form__add-chapter">
 					<label>Tên chương</label><br /> <input type="text" name="name"
-						class="width-input" required/><br /> <br /> <label>Nội dung</label><br />
+						class="width-input" required/><br /> <br /> 
+						<label>Nội dung</label><br />
 
-					<input name="content" rows="3" class="width-input height-input" required></input>
+					<textarea name="content" rows="15" style="width: 100%" required></textarea>
 					<label>Priority</label><br /> <input type="text" name="priority"
 						class="width-input width-input-prioty width-input isNum"  /><br /> <br />
 							<label class="warning"></label><br /> 
