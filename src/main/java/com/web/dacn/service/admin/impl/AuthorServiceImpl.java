@@ -47,7 +47,7 @@ public class AuthorServiceImpl implements AuthorService {
 			}			
 		}
 		
-		Page<Author> authorsPageEntity = authorRepository.findByFullnameContaining(search, pageRequest);
+		Page<Author> authorsPageEntity = authorRepository.findByFullnameContainingAndStatus(search, 1, pageRequest);
 		
 		
 		return convertEntityToDTO(authorsPageEntity);
@@ -103,7 +103,7 @@ public class AuthorServiceImpl implements AuthorService {
 
 	@Override
 	public Page<Author> findByFullnameContaining(String fullname, Pageable page) {
-		return authorRepository.findByFullnameContaining(fullname, page);
+		return authorRepository.findByFullnameContainingAndStatus(fullname, 1, page);
 	}
 
 	@Override

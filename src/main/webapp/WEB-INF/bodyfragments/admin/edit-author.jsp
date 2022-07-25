@@ -90,7 +90,7 @@
 			<ul class="books">
 				<c:forEach items="${author.books}" var="book" varStatus="loop">
 					<li>
-						<a href="/admin/books/${book.id}">${loop.index + 1}. ${book.name}</a>
+						<a href="/admin/edit?id=${book.id}">${loop.index + 1}. ${book.name}</a>
 					</li>	
 				</c:forEach>
 			</ul>
@@ -103,7 +103,7 @@
 			<ul class="books">
 				<c:forEach items="${author.quotes}" var="quote" varStatus="loop">
 					<li>
-						<a href="/admin/quotes/${quote.id}">${loop.index + 1}. ${quote.content}</a>
+						<a href="/admin/quote/edit/${quote.id}">${loop.index + 1}. ${quote.content}</a>
 					</li>	
 				</c:forEach>
 			</ul>

@@ -1,4 +1,4 @@
-package com.web.dacn.controller.admin.author;
+package com.web.dacn.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

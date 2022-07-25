@@ -7,8 +7,7 @@
 	<div class="title">
 		<h2 class="title-content">
 
-			<a class="title-content" href="/admin/authors">Danh tác giả quản
-				lý</a>
+			<a class="title-content" href="/admin/authors">Danh sách tác giả</a>
 
 		</h2>
 	</div>
