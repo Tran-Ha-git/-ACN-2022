@@ -168,10 +168,13 @@ addAudioBtn.onclick=function(){
 var numInput= document.querySelector('.isNum');
 var warning= document.querySelector('.warning');
 numInput.onblur= function(){
-if (!Number.isInteger(numInput.value))
-	
-  warning.innerHTML='Dữ liệu phải là số'
-  numInput.value='';
+	if (!Number(numInput.value)){
+		  warning.innerHTML='Dữ liệu phải là số';
+		  numInput.value='';
+		}
+		else{
+			warning.innerHTML='';
+		}
 	
 }
 console.log(numInput)

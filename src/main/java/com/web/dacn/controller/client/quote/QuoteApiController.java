@@ -37,6 +37,13 @@ public class QuoteApiController {
 		Optional<Quote> optional = quoteService.findById(quoteId);
 		return optional.get();
 	}
+	
+	@GetMapping("/view-{id}")
+	public Quote view(@PathVariable("id") Long quoteId) {
+		Optional<Quote> optional = quoteService.findById(quoteId);
+		optional.get().setQuoteCategories(null);
+		return optional.get();
+	}
 
 	@GetMapping("/{id}/comments")
 	public List<CommentQuote> comments(@PathVariable("id") Long quoteId) {

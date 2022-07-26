@@ -3,15 +3,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
-<html>
-<head>
 <link rel="stylesheet"
 	href="https://unpkg.com/flowbite@1.4.3/dist/flowbite.min.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
-<body>
 	<div class="container py-4">
 		<div class="grid md:grid-cols-12 gap-4 mt-2">
 			<div class="md:col-span-9">
@@ -43,7 +38,7 @@
 							class="max-w-sm m-auto h-full py-4 px-2 bg-white rounded-lg border border-gray-200 shadow-md flex flex-col items-center justify-between">
 							<a href="#"> 
 							<c:if test="${!fn:contains(quote.thumbnail, 'dummyimage.com')}">
-								<img class="mx-auto rounded-full h-[150px] w-[150px] mt-3"
+								<img style="object-fit: cover;" class="mx-auto rounded-full h-[150px] w-[150px] mt-3"
 									src="/quotes/images/${quote.thumbnail}" alt="" />
 								</c:if> 
 							<c:if test="${fn:contains(quote.thumbnail, 'dummyimage.com')}">
@@ -347,9 +342,9 @@
 								<p class="font-normal text-gray-700">
 									Author: <span class="text-red-500" id="quote-author"></span>
 								</p>
-								<p class="font-normal text-gray-700">
+								<!-- <p class="font-normal text-gray-700">
 									Keyword: <span class="text-red-500" id="quote-keyword"></span>
-								</p>
+								</p> -->
 							</div>
 						</div>
 					</div>
@@ -539,15 +534,15 @@
         		let quote_data;
         		$.ajax({
         			 method: "GET",
-        			 url: "/api/v1/quotes/"+quote?.id,
+        			 url: "/api/v1/quotes/view-"+quote?.id,
         		}).done(function (data){
         			quote_data=data;
         			console.log(quote_data);
         			$("#comment-quote").val(quote_data?.id);
         			$("#quote-content").text(quote_data?.content);
         			$("#quote-author").text(quote_data?.author?.fullname);
-            		$("#quote-keyword").text(quote_data?.quoteCategories.map(item => item.name).join(", "));
-            		$("#comment-content").val("");
+/*             		$("#quote-keyword").text(quote_data?.quoteCategories.map(item => item.name).join(", "));
+ */            		$("#comment-content").val("");
             		var commentHtml = ``;
             		quote_data.commentQuotes?.reverse()?.forEach(function(item) {
             			commentHtml+=` <div class="mb-3">
@@ -722,5 +717,3 @@
     	});
         	
         </script>
-</body>
-</html>

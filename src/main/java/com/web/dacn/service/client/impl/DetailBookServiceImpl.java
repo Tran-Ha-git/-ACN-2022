@@ -68,7 +68,11 @@ public class DetailBookServiceImpl implements DetailBookService{
 			result.setName(book.getName());
 			result.setThumbnail(book.getThumbnail());
 			result.setDescription(book.getDescription());
-			result.setView(book.getView());
+			if(book.getView()==null) {
+				result.setView(0);
+			}else {
+				result.setView(book.getView());
+			}
 			result.setSlug(book.getSlug());
 
 			book.getAuthors().forEach(author -> {
@@ -102,8 +106,11 @@ public class DetailBookServiceImpl implements DetailBookService{
 				pdfDTO.setId(pdf.getId());
 				result.getPdfs().add(pdfDTO);
 			});
-
-			book.setView(book.getView() + 1);
+			if(book.getView()==null) {
+				book.setView(1);
+			}else {
+				book.setView(book.getView() + 1);
+			}
 			bookRepository.save(book);
 			return result;
 		}

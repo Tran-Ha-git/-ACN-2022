@@ -81,7 +81,7 @@
 					<td class="author-data">
 						<c:if test = "${!fn:contains(quote.thumbnail, 'dummyimage.com')}">
 						    <img src="/admin/quote/images/${quote.thumbnail}"
-									style="max-width: 100px; max-height: 100px" />
+									style="max-width: 80px; max-height: 80px; object-fit: cover;" />
 						</c:if>
 						<c:if test = "${fn:contains(quote.thumbnail, 'dummyimage.com')}">
 						    <img src="${quote.thumbnail}"
